@@ -1,7 +1,6 @@
 # OSX
 #
 .DS_Store
-.env
 
 # Xcode
 #
@@ -23,6 +22,8 @@ DerivedData
 *.xcuserstate
 ios/.xcode.env.local
 
+# Secret File
+.env
 # Android/IntelliJ
 #
 build/
