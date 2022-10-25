@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native'
+import { Pressable, Text, View, ActivityIndicator } from 'react-native'
 import React, {useState} from 'react'
 import {styles} from './styles'
 import Button from '../../components/Button/Button';
@@ -58,11 +58,15 @@ const SignInScreen = ({ navigation }) => {
         <Pressable>
           <Text style={styles.text}>Forgot password?</Text>
         </Pressable>
-        <View style={{paddingHorizontal: 20, marginTop: 60}}>
-        <Button
-          title="Log in"
-          onPress={() => signInWithEmail()}
-          />
+        <View style={{ paddingHorizontal: 20, marginTop: 60 }}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#00a6fb" />
+          ) : (
+            <Button
+              title="Log in"
+              onPress={() => signInWithEmail()}
+            />
+          )}
         </View>
         <Text style={styles.continue}>Or continue with..</Text>
         <View style={styles.socialButtons}>

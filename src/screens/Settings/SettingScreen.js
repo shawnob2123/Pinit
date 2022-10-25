@@ -1,11 +1,26 @@
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import React, {useState, useEffect} from 'react';
 import { styles } from './styles';
 import { supabase } from '../../../server/server';
 import Button from '../../components/Button/Button';
 import Settings from '../../components/Settings/Settings';
 
-const SettingScreen = ({navigation}) => {
+const SettingScreen = ({ navigation }) => {
+  
+  const [loading, setLoading] = useState(false);
+  
+    const signOut = async () => {
+      setLoading(true);
+      try {
+        await supabase.auth.signOut();
+      } catch (error) {
+        console.log('Error: ', error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+  
 
 
   return (
@@ -34,11 +49,15 @@ const SettingScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Upgrade')}
           />
         </View>
-        <View style={{paddingTop: 40, paddingHorizontal: 10}}>
-        <Button
-          title="Sign out"
-          onPress={() => supabase.auth.signOut()}
-          />
+      <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+            <Button
+              title="Sign out"
+              onPress={signOut}
+            />
+          )}
       
       </View>
     </View>

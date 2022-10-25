@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {Pressable, Text, View, Alert} from 'react-native';
+import {Pressable, Text, View, ActivityIndicator} from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
 import {Input, CheckBox} from '@rneui/themed';
 import {styles} from './styles';
@@ -87,11 +87,19 @@ const SignUpScreen = ({navigation}) => {
           containerStyle={styles.checkbox}
           textStyle={styles.checkboxText}
         />
-        <View style={{paddingHorizontal: 20}}>
-          <Button
+        <View style={{ paddingHorizontal: 20 }}>
+          {loading ? (
+            <ActivityIndicator 
+              size="large"
+              color="#00a6fb"
+            />
+          ) : (
+             <Button
             title="Create Account"
             onPress={() => signUpWithEmail()}
-          />
+              />
+          )}
+         
         </View>
         <Text style={styles.continue}>Or continue with..</Text>
         <View style={styles.socialButtons}>
