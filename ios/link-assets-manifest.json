@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/AlbertSans-Light.ttf",
+      "sha1": "d60780e9fa36a3dba69192d12031eb700300e762"
+    },
+    {
+      "path": "assets/fonts/AlbertSans-Regular.ttf",
+      "sha1": "17813e4886d2da95f62f25ce40eb94e35856b513"
+    },
+    {
+      "path": "assets/fonts/AlbertSans-SemiBold.ttf",
+      "sha1": "f01e57b3b2848ef566da68540ee3fdd9d817edfb"
+    }
+  ]
+}
