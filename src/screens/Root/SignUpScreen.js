@@ -23,17 +23,25 @@ const SignUpScreen = ({navigation}) => {
   const signUpWithEmail = async () => {
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
-      }, {
-        data: {
-          name: name,
+        options: {
+          data: {
+            name: name,
+          }
         }
       });
-      if (error) {
-        setError(error.message);
-        
+      if (error.message == 'Database error saving new user') {
+        setError('Error creating account. Please try again.');
+        setTimeout(() => { 
+          setError('');
+        } , 3000);
+      } else if (!name || !email || !password || !checked) {
+        setError('Please fill out all fields.');
+        setTimeout(() => { 
+          setError('');
+        } , 3000);
       } else {
         navigation.navigate('Cycles');
       }
@@ -88,7 +96,9 @@ const SignUpScreen = ({navigation}) => {
           // errorMessage={'Password must be 6 characters'}
         />
      
-        
+        {error ? (
+          <Text style={{color: 'red', alignSelf: 'flex-start', paddingLeft: 10}}>{error}</Text>
+        ) : null}
         <Pressable onPress={() => setShowPassword(!showPassword)}>
           <Text style={styles.text}>Show Password</Text>
         </Pressable>
@@ -132,7 +142,7 @@ const SignUpScreen = ({navigation}) => {
         <Pressable
           onPress={() => navigation.navigate('SignIn')}
           style={{paddingTop: 20, alignSelf: 'center'}}>
-          <Text style={[styles.text, {fontWeight: 'bold'}]}>
+          <Text style={[styles.text, {fontWeight: '200'}]}>
             Already have an account? Sign In
           </Text>
         </Pressable>
