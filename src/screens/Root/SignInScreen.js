@@ -85,7 +85,7 @@ const SignInScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('SignUp')}
          style={{paddingTop: 70, alignSelf: 'center'}}
         >
-          <Text style={[styles.text, {fontWeight: 'bold'}]}>Don't have an account? Sign up</Text>
+          <Text style={[styles.text, {fontWeight: '200'}]}>Don't have an account? Sign up</Text>
         </Pressable>
       </View>
     </View>

@@ -4,12 +4,14 @@ import {supabase} from '../../../server/server';
 import {styles} from './styles';
 import {Input} from '@rneui/themed';
 import Button from '../../components/Button/Button';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const EditProfileScreen = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     getUserProfile();
@@ -17,31 +19,16 @@ const EditProfileScreen = () => {
 
   const getUserProfile = async () => {
     try {
-      const {
-        data: {user},
-      } = await supabase.auth.getUser();
-      if (user) {
-        setName(user.name);
-        setEmail(user.email);
-      }
-    } catch (error) {
-      setError('There was an error fetching your profile');
-    }
-  };
-
-  const updateProfile = async () => {
-    try {
-      setLoading(true);
-      const {error} = await supabase.auth.update({name: name, email: email});
-      if (error) {
-        setError(error.message);
-      } else {
-        setError('Profile updated successfully');
-      }
-    } catch (error) {
+      const { data: profile } = await supabase.auth.getUser();
+      setProfile(profile);
+      setName((profile.user.user_metadata.name));
+      setEmail((profile.user.email));
+    } catch (error) { 
       setError(error.message);
     }
   };
+
+
 
   const resetPassword = async () => {
     try {
@@ -50,7 +37,11 @@ const EditProfileScreen = () => {
       if (error) {
         setError(error.message);
       } else {
-        null;
+        showMessage({
+          message: 'Password reset email sent.',
+          type: 'success',
+          duration: 3000,
+        });
       }
     } catch (error) {
       setError(error.message);
@@ -61,11 +52,12 @@ const EditProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Edit Profile</Text>
-        {error && (
-          <Text style={styles.error}>
-            There was an error retrieving your profile
-          </Text>
-        )}
+        {
+          error ? (
+            <Text style={styles.error}>{error}</Text>
+          ) : null
+
+        }
         <Input
           leftIcon={{
             type: 'ionicon',
@@ -89,6 +81,7 @@ const EditProfileScreen = () => {
           value={email}
           placeholderTextColor={'#fff'}
           onChangeText={setEmail}
+          autoCapitalize="none"
           keyboardType="email-address"
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
@@ -100,7 +93,7 @@ const EditProfileScreen = () => {
           </Text>
         </Pressable>
 
-        <Button title="Save" onPress={updateProfile} />
+        <Button title="Save" onPress={null} />
       </View>
     </View>
   );
