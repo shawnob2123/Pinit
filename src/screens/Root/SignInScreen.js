@@ -39,6 +39,7 @@ const SignInScreen = ({ navigation }) => {
         <Input
           placeholder="Email"
           placeholderTextColor={'#fff'}
+          keyboardType="email-address"
           value={email}
           onChangeText={setEmail}
           style={styles.input}

@@ -26,15 +26,26 @@ const SignUpScreen = ({navigation}) => {
       const { error } = await supabase.auth.signUp({
         email: email,
         password: password,
+      }, {
+        data: {
+          name: name,
+        }
       });
       if (error) {
         setError(error.message);
+        
       } else {
         navigation.navigate('Cycles');
       }
-    } catch (error) { 
+    } catch (error) {
       setError(error.message);
     }
+  };
+
+  const closeLoader = () => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }
 
   return (
@@ -51,7 +62,6 @@ const SignUpScreen = ({navigation}) => {
           onChangeText={setName}
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
-          errorMessage={error}
         />
         <Input
           placeholder="Email"
@@ -62,7 +72,9 @@ const SignUpScreen = ({navigation}) => {
           autoCapitalize="none"
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
-          errorMessage={error}
+          errorMessage={
+            error.includes('email') ? 'Please enter a valid email' : null
+          }
         />
         <Input
           placeholder="Password"
@@ -73,9 +85,10 @@ const SignUpScreen = ({navigation}) => {
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
           secureTextEntry={!showPassword}
-          errorMessage={error}
+          // errorMessage={'Password must be 6 characters'}
         />
-    
+     
+        
         <Pressable onPress={() => setShowPassword(!showPassword)}>
           <Text style={styles.text}>Show Password</Text>
         </Pressable>
@@ -89,10 +102,13 @@ const SignUpScreen = ({navigation}) => {
         />
         <View style={{ paddingHorizontal: 20 }}>
           {loading ? (
-            <ActivityIndicator 
+           <ActivityIndicator 
               size="large"
               color="#00a6fb"
+              animating={closeLoader()}
+
             />
+            
           ) : (
              <Button
             title="Create Account"

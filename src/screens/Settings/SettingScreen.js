@@ -51,14 +51,14 @@ const SettingScreen = ({ navigation }) => {
         </View>
       <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#00a6fb" />
         ) : (
             <Button
               title="Sign out"
               onPress={signOut}
             />
           )}
-      
+          <Text style={[styles.title, {color: '#fff', paddingTop: 20, fontSize: 12}]}>Pinit version 1.0</Text>
       </View>
     </View>
   )
