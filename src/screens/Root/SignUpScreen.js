@@ -32,8 +32,8 @@ const SignUpScreen = ({navigation}) => {
           }
         }
       });
-      if (error.message == 'Database error saving new user') {
-        setError('Error creating account. Please try again.');
+       if (error.message === 'User already registered') {
+        setError('Email already exists');
         setTimeout(() => { 
           setError('');
         } , 3000);
@@ -48,6 +48,7 @@ const SignUpScreen = ({navigation}) => {
     } catch (error) {
       setError(error.message);
     }
+     
   };
 
   const closeLoader = () => {
@@ -66,6 +67,7 @@ const SignUpScreen = ({navigation}) => {
         <Input
           placeholder="Name"
           placeholderTextColor={'#fff'}
+          autoCorrect={false}
           value={name}
           onChangeText={setName}
           style={styles.input}
@@ -78,12 +80,11 @@ const SignUpScreen = ({navigation}) => {
           onChangeText={setEmail}
           keyboardType="email-address"
           autoCapitalize="none"
+          autoCorrect={false}
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
-          errorMessage={
-            error.includes('email') ? 'Please enter a valid email' : null
-          }
         />
+        
         <Input
           placeholder="Password"
           placeholderTextColor={'#fff'}
@@ -97,7 +98,9 @@ const SignUpScreen = ({navigation}) => {
         />
      
         {error ? (
-          <Text style={{color: 'red', alignSelf: 'flex-start', paddingLeft: 10}}>{error}</Text>
+          <Text style={{ color: 'red', alignSelf: 'flex-start', paddingLeft: 10 }}>
+            {error}
+          </Text>
         ) : null}
         <Pressable onPress={() => setShowPassword(!showPassword)}>
           <Text style={styles.text}>Show Password</Text>

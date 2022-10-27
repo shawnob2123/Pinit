@@ -78,7 +78,7 @@ const SignInScreen = ({ navigation }) => {
               width: 280, // You must specify a width
               height: 50, // You must specify a height
             }}
-            onPress={() => onAppleButtonPress()}
+            onPress={null}
           />
         </View>
         <Pressable
