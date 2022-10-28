@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AuthStack } from './navigation/AuthStack';
 
 import { supabase } from './server/server';
-import {Session} from '@supabase/supabase-js';
+import FlashMessage from 'react-native-flash-message';
 const App = () => {
   
   const [session, setSession] = useState(false);
@@ -24,7 +24,8 @@ const App = () => {
   return (
     <NavigationContainer>
     <StatusBar barStyle="light-content" />
-    {session ? <Tabs /> : <AuthStack />}
+      {session ? <Tabs /> : <AuthStack />}
+      <FlashMessage position="top" />
       </NavigationContainer>
   )
 }

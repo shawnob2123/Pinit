@@ -1,4 +1,4 @@
-import {Pressable, Text, View} from 'react-native';
+import {Pressable, Text, View, ActivityIndicator, Alert} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {supabase} from '../../../server/server';
 import {styles} from './styles';
@@ -19,16 +19,52 @@ const EditProfileScreen = () => {
 
   const getUserProfile = async () => {
     try {
-      const { data: profile } = await supabase.auth.getUser();
+      const {data: profile} = await supabase.auth.getUser();
       setProfile(profile);
-      setName((profile.user.user_metadata.name));
-      setEmail((profile.user.email));
-    } catch (error) { 
+      setName(profile.user.user_metadata.name);
+      setEmail(profile.user.email);
+    } catch (error) {
       setError(error.message);
     }
   };
 
+  const updateProfile = async () => {
+    try {
+      setLoading(true);
+      const {data, error} = await supabase
+        .from('profiles')
+        .update(
+          email,{
+            data: {
+              name: name,
+              updated_at: new Date(),
+            }
+          }
+        )
+        .eq('id', profile.user.id);
+      if (error) {
+        setError(error.message);
+      } else {
+        showMessage({
+          message: 'Your profile has been updated!',
+          type: 'success',
+          animated: true,
+          animationDuration: 500,
+          icon: 'success',
+        });
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+    setLoading(false);
+  };
 
+  // CLOSE closeLoader
+  const closeLoader = () => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
 
   const resetPassword = async () => {
     try {
@@ -52,12 +88,9 @@ const EditProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Edit Profile</Text>
-        {
-          error ? (
-            <Text style={styles.error}>{error}</Text>
-          ) : null
-
-        }
+        {error ? (
+          <Text style={styles.error}>Error saving your profile</Text>
+        ) : null}
         <Input
           leftIcon={{
             type: 'ionicon',
@@ -66,7 +99,7 @@ const EditProfileScreen = () => {
             size: 20,
           }}
           value={name}
-          placeholderTextColor={'#fff'}
+          placeholderTextColor={'#fff'} 
           onChangeText={setName}
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
@@ -86,14 +119,20 @@ const EditProfileScreen = () => {
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
         />
-        <Pressable onPress={resetPassword}>
-          <Text
-            style={[styles.title, {alignSelf: 'center', fontWeight: '100'}]}>
+        <Pressable style={{alignSelf: 'center'}} onPress={resetPassword}>
+          <Text style={[styles.title, {fontWeight: '100'}]}>
             Reset Password
           </Text>
         </Pressable>
-
-        <Button title="Save" onPress={null} />
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#00a6fb"
+            animating={closeLoader()}
+          />
+        ) : (
+          <Button title="Save" onPress={() => updateProfile()} />
+        )}
       </View>
     </View>
   );

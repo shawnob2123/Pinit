@@ -48,8 +48,9 @@ const SignUpScreen = ({navigation}) => {
     } catch (error) {
       setError(error.message);
     }
-     
   };
+
+ 
 
   const closeLoader = () => {
     setTimeout(() => {
