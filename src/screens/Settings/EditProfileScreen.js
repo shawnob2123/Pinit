@@ -6,60 +6,72 @@ import {Input} from '@rneui/themed';
 import Button from '../../components/Button/Button';
 import {showMessage, hideMessage} from 'react-native-flash-message';
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({session}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
   const [profile, setProfile] = useState(null);
+
 
   useEffect(() => {
     getUserProfile();
   }, []);
 
+
+  // GET
   const getUserProfile = async () => {
+
     try {
-      const {data: profile} = await supabase.auth.getUser();
-      setProfile(profile);
+      const { data: profile } = await supabase.auth.getUser();
       setName(profile.user.user_metadata.name);
       setEmail(profile.user.email);
     } catch (error) {
-      setError(error.message);
+      showMessage({
+        message: 'Error retrieving profile',
+        type: 'danger',
+        animationDuration: 200,
+        icon: 'danger',
+
+      })
     }
   };
+  // UPDATE
 
-  const updateProfile = async () => {
+    const updateProfile = async () => {
     try {
       setLoading(true);
-      const {data, error} = await supabase
-        .from('profiles')
-        .update(
-          email,{
-            data: {
-              name: name,
-              updated_at: new Date(),
-            }
-          }
-        )
-        .eq('id', profile.user.id);
+      const {} = await supabase.auth.update({
+        email: email,
+        data: { name: name, updated_at: new Date() },
+
+      })
       if (error) {
-        setError(error.message);
+        showMessage({
+          message: 'Error saving your profile. Please try again later.',
+          type: 'danger',
+          icon: 'danger',
+          animated: true,
+          animationDuration: 200, 
+        });
       } else {
         showMessage({
           message: 'Your profile has been updated!',
           type: 'success',
           animated: true,
-          animationDuration: 500,
+          animationDuration: 200,
           icon: 'success',
         });
       }
     } catch (error) {
-      setError(error.message);
+      null
     }
     setLoading(false);
   };
 
-  // CLOSE closeLoader
+  
+
+  // CLOSE LOADER
   const closeLoader = () => {
     setTimeout(() => {
       setLoading(false);
@@ -88,9 +100,6 @@ const EditProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Edit Profile</Text>
-        {error ? (
-          <Text style={styles.error}>Error saving your profile</Text>
-        ) : null}
         <Input
           leftIcon={{
             type: 'ionicon',
@@ -111,9 +120,9 @@ const EditProfileScreen = () => {
             color: '#00a6fb',
             size: 20,
           }}
-          value={email}
           placeholderTextColor={'#fff'}
-          onChangeText={setEmail}
+          onChangeText={text => setEmail(text)}
+          value={email}
           autoCapitalize="none"
           keyboardType="email-address"
           style={styles.input}

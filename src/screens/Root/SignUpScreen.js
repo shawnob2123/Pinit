@@ -2,7 +2,7 @@
 import {Pressable, Text, View, ActivityIndicator} from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
 import {Input, CheckBox} from '@rneui/themed';
-import {styles} from './styles';
+import { styles } from './styles';
 import Button from '../../components/Button/Button';
 import {
   appleAuth,

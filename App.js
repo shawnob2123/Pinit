@@ -7,6 +7,7 @@ import { AuthStack } from './navigation/AuthStack';
 
 import { supabase } from './server/server';
 import FlashMessage from 'react-native-flash-message';
+
 const App = () => {
   
   const [session, setSession] = useState(false);

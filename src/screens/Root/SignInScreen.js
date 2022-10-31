@@ -29,6 +29,12 @@ const SignInScreen = ({ navigation }) => {
     }
   }
 
+   const closeLoader = () => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }
+
 
   return (
 
@@ -40,6 +46,8 @@ const SignInScreen = ({ navigation }) => {
           placeholder="Email"
           placeholderTextColor={'#fff'}
           keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
           value={email}
           onChangeText={setEmail}
           style={styles.input}
@@ -49,6 +57,8 @@ const SignInScreen = ({ navigation }) => {
         <Input
           placeholder="Password"
           placeholderTextColor={'#fff'}
+          autoCapitalize="none"
+          autoCorrect={false}
           value={password}
           onChangeText={setPassword}
           style={styles.input}
@@ -61,7 +71,9 @@ const SignInScreen = ({ navigation }) => {
         </Pressable>
         <View style={{ paddingHorizontal: 20, marginTop: 60 }}>
           {loading ? (
-            <ActivityIndicator size="large" color="#00a6fb" />
+            <ActivityIndicator size="large" color="#00a6fb" 
+                animating={closeLoader()}
+            />
           ) : (
             <Button
               title="Log in"
