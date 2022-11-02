@@ -12,7 +12,7 @@ import ProductScreen from '../src/screens/App/Products/ProductScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
 import EditProfileScreen from '../src/screens/Settings/EditProfileScreen';
-import FAQScreen from '../src/screens/Settings/FAQScreen';
+import FAQScreen from '../src/screens/Settings/FAQ/FAQScreen';
 import UpgradeScreen from '../src/screens/Settings/UpgradeScreen';
 import SupportScreen from '../src/screens/Settings/SupportScreen';
 
@@ -102,7 +102,7 @@ export const Settings = () => {
     >
       <Stack.Screen name="Settings" component={SettingScreen} />
       <Stack.Screen name='Edit Profile' component={EditProfileScreen} />
-      <Stack.Screen name='FAQ' component={FAQScreen} />
+    
       <Stack.Screen name='Support' component={SupportScreen} />
       <Stack.Screen name='Upgrade' component={UpgradeScreen} />
     </Stack.Navigator>

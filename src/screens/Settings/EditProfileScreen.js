@@ -9,9 +9,8 @@ import {showMessage, hideMessage} from 'react-native-flash-message';
 const EditProfileScreen = ({session}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [profile, setProfile] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const EditProfileScreen = ({session}) => {
 
 
   // GET
-  const getUserProfile = async () => {
+const getUserProfile = async () => {
 
     try {
       const { data: profile } = await supabase.auth.getUser();
@@ -37,37 +36,7 @@ const EditProfileScreen = ({session}) => {
     }
   };
   // UPDATE
-
-    const updateProfile = async () => {
-    try {
-      setLoading(true);
-      const {} = await supabase.auth.update({
-        email: email,
-        data: { name: name, updated_at: new Date() },
-
-      })
-      if (error) {
-        showMessage({
-          message: 'Error saving your profile. Please try again later.',
-          type: 'danger',
-          icon: 'danger',
-          animated: true,
-          animationDuration: 200, 
-        });
-      } else {
-        showMessage({
-          message: 'Your profile has been updated!',
-          type: 'success',
-          animated: true,
-          animationDuration: 200,
-          icon: 'success',
-        });
-      }
-    } catch (error) {
-      null
-    }
-    setLoading(false);
-  };
+  
 
   
 
@@ -109,7 +78,7 @@ const EditProfileScreen = ({session}) => {
           }}
           value={name}
           placeholderTextColor={'#fff'} 
-          onChangeText={setName}
+          onChangeText={text => setName(text)}
           style={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
         />
@@ -122,7 +91,7 @@ const EditProfileScreen = ({session}) => {
           }}
           placeholderTextColor={'#fff'}
           onChangeText={text => setEmail(text)}
-          value={email}
+          value={email || ''}
           autoCapitalize="none"
           keyboardType="email-address"
           style={styles.input}
@@ -140,7 +109,7 @@ const EditProfileScreen = ({session}) => {
             animating={closeLoader()}
           />
         ) : (
-          <Button title="Save" onPress={() => updateProfile()} />
+            <Button title="Save" onPress={() => updateProfile()} />
         )}
       </View>
     </View>

@@ -32,11 +32,7 @@ const SettingScreen = ({ navigation }) => {
             screenName="Edit Profile"
             onPress={() => navigation.navigate('Edit Profile')}
           />
-          <Settings
-            icon='information-circle-outline'
-            screenName='FAQ'
-            onPress={() => navigation.navigate('FAQ')}
-          />
+         
           <Settings
             icon='chatbubble-ellipses-outline'
           

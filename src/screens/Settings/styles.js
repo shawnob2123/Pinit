@@ -38,5 +38,14 @@ export const styles = StyleSheet.create({
     fontSize: sizes.md,
     fontFamily: fonts.primary,
     borderBottomWidth: 0,
+  },
+  text: {
+    color: colors.white,
+    fontSize: sizes.sm,
+    fontFamily: fonts.primary,
+    fontWeight: weights.regular,
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+    lineHeight: 25
   }
 })
