@@ -30,7 +30,7 @@ const SupportScreen = () => {
     }
   });
 
-  const handleSend = () => { 
+  const handleSend = () => {
     setLoading(true);
     Freshchat.showConversations();
     Freshchat.sendMessage(freshchatMessage, (error) => {
@@ -51,10 +51,9 @@ const SupportScreen = () => {
         });
       }
     });
-  }
-  
- 
+  };
 
+  
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -105,5 +104,3 @@ const SupportScreen = () => {
 };
 
 export default SupportScreen;
-
-// support@pinit.freshdesk.com

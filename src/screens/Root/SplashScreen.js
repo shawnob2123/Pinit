@@ -9,6 +9,7 @@ const SplashScreen = ({navigation}) => {
       <Lottie source={require('../../../assets/lottie/lottie-pinit.json')}
         autoPlay
         loop={false}
+        duration={2000}
         style={styles.lottie}
         onAnimationFinish={() => navigation.navigate('SignUp')}
         resizeMode="contain"
