@@ -12,7 +12,7 @@ import ProductScreen from '../src/screens/App/Products/ProductScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
 import EditProfileScreen from '../src/screens/Settings/EditProfileScreen';
-import FAQScreen from '../src/screens/Settings/FAQ/FAQScreen';
+import RemindersScreen from '../src/screens/Settings/RemindersScreen';
 import UpgradeScreen from '../src/screens/Settings/UpgradeScreen';
 import SupportScreen from '../src/screens/Settings/SupportScreen';
 
@@ -44,11 +44,11 @@ export default Tabs = ({children}) => {
           if (route.name === 'Calendar') {
             iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Cycles') {
-            iconName = focused ? 'list' : 'list-outline';
+            iconName = focused ? 'layers' : 'layers-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === 'Products') {
-            iconName = focused ? 'clipboard' : 'clipboard-outline';
+          } else if (route.name === 'Anabolics') {
+            iconName = focused ? 'barbell' : 'barbell-outline';
           }
           return <Ionicons name={iconName} size={24} color={colors.white} />;
         },
@@ -68,9 +68,9 @@ export default Tabs = ({children}) => {
         component={CalendarScreen}
       />
       <Tab.Screen
-        name="Products"
+        name="Anabolics"
         options={{
-          tabBarLabel: <Text style={styles.text}>Products</Text>,
+          tabBarLabel: <Text style={styles.text}>Anabolics</Text>,
         }}
         component={ProductScreen}
       />
@@ -102,7 +102,7 @@ export const Settings = () => {
     >
       <Stack.Screen name="Settings" component={SettingScreen} />
       <Stack.Screen name='Edit Profile' component={EditProfileScreen} />
-    
+      <Stack.Screen name='Reminders' component={RemindersScreen} />
       <Stack.Screen name='Support' component={SupportScreen} />
       <Stack.Screen name='Upgrade' component={UpgradeScreen} />
     </Stack.Navigator>

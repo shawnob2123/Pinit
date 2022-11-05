@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: sizes.md,
     fontWeight: weights.bold,
     color: colors.white,
+    fontFamily: fonts.primary,
     paddingLeft: 10,
   },
   settingsButtons: {

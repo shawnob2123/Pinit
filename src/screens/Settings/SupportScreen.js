@@ -11,7 +11,7 @@ const SupportScreen = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
+  
 
   let freshchatConfig = new FreshchatConfig(FRESHCHAT_APP_ID, FRESHCHAT_APP_KEY);
   let freshchatUser = new FreshchatUser();
@@ -21,7 +21,7 @@ const SupportScreen = () => {
  
   freshchatUser.firstName = name;
   freshchatUser.email = email;
-  freshchatUser.message = subject;
+
   Freshchat.setUser(freshchatUser, (error) => {
     if (error) {
       console.log(error);
@@ -53,7 +53,7 @@ const SupportScreen = () => {
     });
   };
 
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -61,7 +61,7 @@ const SupportScreen = () => {
         <Text style={styles.text}>
           For any questions, comments, concerns, or any other inquires about
           Pinit, please submit a valid form below. Please include your name,
-          email and message. We will get back to you via email within 24 hours.
+          email. We will get back to you via chat or email.
         </Text>
         <View style={{paddingTop: 50}}>
           <Input
@@ -80,13 +80,6 @@ const SupportScreen = () => {
             style={styles.input}
             inputContainerStyle={{borderBottomWidth: 0}}
           />
-          <Input
-            placeholder="Subject"
-            value={subject}
-            onChangeText={setSubject}
-            style={styles.input}
-            inputContainerStyle={{borderBottomWidth: 0}}
-          />
         </View>
         {loading ? (
           <ActivityIndicator size="large" color="#00a6fb"
@@ -96,7 +89,9 @@ const SupportScreen = () => {
               }, 2000)}
           />
         ) : (
-          <Button title="Submit" onPress={() => handleSend()} />
+            <Button title="Start Chat" onPress={() => handleSend()} 
+            name="chatbubble-ellipses-outline" size={20} color="#fff"
+          />
         )}
       </View>
     </View>

@@ -31,11 +31,15 @@ const SettingScreen = ({ navigation }) => {
             icon='person-outline'
             screenName="Edit Profile"
             onPress={() => navigation.navigate('Edit Profile')}
-          />
+        />
+        <Settings
+          icon='notifications-outline'
+          screenName="Reminders"
+          onPress={() => navigation.navigate('Reminders')}
+        />
          
           <Settings
             icon='chatbubble-ellipses-outline'
-          
             screenName='Support'
             onPress={() => navigation.navigate('Support')}
           />
@@ -50,6 +54,9 @@ const SettingScreen = ({ navigation }) => {
           <ActivityIndicator size="large" color="#00a6fb" />
         ) : (
             <Button
+              name='exit-outline'
+              size={20}
+              color='#fff'
               title="Sign out"
               onPress={signOut}
             />

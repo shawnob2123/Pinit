@@ -20,7 +20,9 @@ export const sizes = {
   md: 16,
   lg: 18,
   xl: 20,
-  xxl: 24
+  xxl: 24,
+  xxxl: 28,
+  xxxxl: 34
 }
 
 export const weights = {

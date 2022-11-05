@@ -41,11 +41,30 @@ export const styles = StyleSheet.create({
   },
   text: {
     color: colors.white,
-    fontSize: sizes.sm,
+    fontSize: sizes.md,
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
     alignSelf: 'flex-start',
     paddingLeft: 10,
     lineHeight: 25
+  },
+  upgrade: {
+    color: colors.primary,
+    fontSize: sizes.xxxl,
+    fontFamily: fonts.primary,
+    fontWeight: weights.bold,
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+    paddingTop: 70
+  },
+  upgradeContainer: {
+    height: '90%',
+    backgroundColor: '#1e1e1e',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  upgradeButton: {
+    backgroundColor: colors.background,
+    borderRadius: 10,
   }
 })

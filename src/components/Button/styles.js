@@ -13,6 +13,12 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: sizes.md,
     fontWeight: weights.bold,
-    alignSelf: "center",
+    fontFamily: fonts.primary,
+    paddingLeft: 10,
+  },
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   }
 })
