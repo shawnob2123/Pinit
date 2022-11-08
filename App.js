@@ -9,8 +9,7 @@ import { supabase } from './server/server';
 import FlashMessage from 'react-native-flash-message';
 
 const App = () => {
-  
-  const [session, setSession] = useState(false);
+  const [session, setSession] = useState(null);
 
   useEffect(() => { 
    supabase.auth.getSession().then(({ data: { session } }) => {

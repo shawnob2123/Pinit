@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 10,
-    paddingTop: 70,
+    paddingTop: 60,
   },
   composeButton: {
     alignSelf: 'flex-end',
@@ -42,8 +42,8 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     width: 30,
     height: 30,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   cyclesContainer: {
     paddingTop: 20,

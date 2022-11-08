@@ -45,7 +45,7 @@ const CycleScreen = () => {
               <Pressable
                 style={styles.addButton}
                 onPress={() => refRBSheet.current.open()}>
-                <FontAwesome name="plus" size={20} color={colors.white} />
+                <FontAwesome name="plus" size={18} color={colors.white} />
               </Pressable>
               <Modal refRBSheet={refRBSheet} />
             </View>
@@ -54,7 +54,14 @@ const CycleScreen = () => {
             </Text>
             <Animatable.View animation="fadeInUpBig" style={{flex: 1}}>
               <HomeCalendarStrip />
-            </Animatable.View>
+              </Animatable.View>
+
+              <View style={styles.contentContainer}>
+                <Text style={styles.title}>Pending</Text>
+                <View>
+
+                </View>
+              </View>
             <View style={styles.contentContainer}>
               <Text style={styles.title}>Cycles</Text>
               <View style={styles.cyclesContainer}>

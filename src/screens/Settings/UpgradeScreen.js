@@ -19,7 +19,7 @@ const UpgradeScreen = () => {
             <Text style={[styles.title, { paddingTop: 20, alignSelf: 'center', fontSize: 30 }]}>Unlock Pinit Premium!</Text>
             <Text style={styles.text}>Pinit premium allows you to unlock cool new features like having unlimited cycles and share with coaches.</Text>
             <View style={{paddingTop: 40, paddingHorizontal: 10}}>
-              <Upgrade duration="Monthly" price="$2.99/mo" onPress={ () => console.log('Monthly')} />
+              <Upgrade duration="Monthly" price="$2.99/mo" />
               <Upgrade duration="Yearly" price="$29.99/yr" />
               <Upgrade duration="Lifetime" price="$99.99" />
             </View>

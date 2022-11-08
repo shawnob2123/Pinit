@@ -17,8 +17,7 @@ export const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: sizes.lg,
-    fontFamily: fonts.primary,
-    fontWeight: weights.bold,
+    fontFamily: fonts.bold,
     color: colors.black,
   },
   createCycleContent: {
@@ -31,7 +30,7 @@ export const styles = StyleSheet.create({
     fontWeight: weights.regular,
   },
   input: {
-    backgroundColor: colors.background,
+    backgroundColor: '#eeeeee',
     borderRadius: 10,
     padding: 15,
     fontSize: sizes.md,
