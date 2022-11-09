@@ -9,6 +9,8 @@ const HomeCalendarStrip = () => {
         calendarAnimation={{type: 'sequence', duration: 30}}
         style={{height: 100, paddingTop: 20, borderRadius: 10}}
         startingDate={new Date()}
+        selectedDate={new Date()}
+        scrollable={true}
         calendarHeaderStyle={{color: 'white', fontFamily: 'AlbertSans-Regular'}}
         calendarColor={'#1e1e1e'}
         dateNumberStyle={{color: 'white', fontFamily: 'AlbertSans-Regular'}}

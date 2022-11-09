@@ -8,26 +8,53 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DatePicker from 'react-native-date-picker';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Modal = ({refRBSheet}) => {
-  const [cycleName, setCycleName] = useState('');
-  const [anabolicUsed, setAnabolicUsed] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [duration, setDuration] = useState(0);
-  const [frequency, setFrequency] = useState(0);
-  const [pct, setPct] = useState('');
-  const [notes, setNotes] = useState('');
+  const [formData, setFormData] = useState({
+    cycleName: '',
+    anabolicUsed: [],
+    startDate: new Date(),
+    endDate: new Date(),
+    duration: 0,
+    frequency: 0,
+    pct: '',
+    notes: '',
+  });
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [showInput, setShowInput] = useState(false);
+  const [show, setShow] = useState(false);
 
-  const createCycle = async () => {
-    const {data, error} = await supabase.from('cycles').insert([{}]);
-    refRBSheet.current.close();
+  const addAnabolic = () => {
+    setFormData({...formData, anabolicUsed: [...formData.anabolicUsed, '']});
   };
 
+  const removeAnabolic = (index) => { 
+    formData.anabolicUsed.splice(index, 1);
+    setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]});
+  }
+
+  const handleAddCycle = async () => {
+    const {data, error} = await supabase.from('cycles').insert([
+      {
+        name: formData.cycleName,
+        anabolic: formData.anabolicUsed,
+        start_date: formData.startDate,
+        end_date: formData.endDate,
+
+        frequency: formData.frequency,
+        pct: formData.pct,
+        notes: formData.notes,
+      },
+    ]);
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+    }
+  };
 
   return (
     <>
@@ -60,8 +87,8 @@ const Modal = ({refRBSheet}) => {
             </View>
             <Input
               style={styles.input}
-              value={cycleName}
-              onChangeText={setCycleName}
+              value={formData.cycleName}
+              onChangeText={text => setFormData({...formData, cycleName: text})}
               placeholder="Cycle Name"
               inputContainerStyle={{borderBottomWidth: 0}}
             />
@@ -69,35 +96,26 @@ const Modal = ({refRBSheet}) => {
             <View style={styles.headingContainer}>
               <Fontisto name="injection-syringe" size={24} color="black" />
               <Text style={[styles.text, {paddingLeft: 10}]}>Anabolic(s)</Text>
+              <Pressable style={{left: 200}} onPress={addAnabolic}>
+                <Ionicons name="add-circle" size={24} color="black" />
+              </Pressable>
             </View>
+
             <Input
               style={styles.input}
-              value={anabolicUsed}
-              onChangeText={setAnabolicUsed}
+              value={formData.anabolicUsed}
+              onChangeText={text =>
+                setFormData({...formData, anabolicUsed: text})
+              }
               placeholder="Ex. Testosterone Cypionat 250mg"
               inputContainerStyle={{borderBottomWidth: 0}}
             />
-            <View style={{flexDirection: 'row', alignItems:'center', justifyContent:'space-between'}}>
-            <Pressable
-             
-              onPress={() => setShowInput(!showInput)}
-            >
-              <Ionicons name="add-circle" size={24} color="black" />
-            </Pressable>
-            { 
-              showInput && (
-                <Input
-                  style={styles.input}
-                  value={anabolicUsed}
-                  onChangeText={setAnabolicUsed}
-                  placeholder=""
-                  inputContainerStyle={{borderBottomWidth: 0}}
-
-                />
-              ) 
-
-          }
-            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}></View>
             {/* CALENDAR START */}
             <View style={styles.headingContainer}>
               <Ionicons name="calendar" size={24} color="black" />
@@ -105,8 +123,10 @@ const Modal = ({refRBSheet}) => {
                 Start-End Date
               </Text>
             </View>
-            <DatePicker
-              modal
+            {
+              show && (
+                <DatePicker
+                   modal
               mode="date"
               open={open}
               onDateChange={setDate}
@@ -118,11 +138,13 @@ const Modal = ({refRBSheet}) => {
               onCancel={() => {
                 setOpen(false);
               }}
-            />
+                />
+              )
+            }
             <Input
               style={styles.input}
-              value={date}
-              onChangeText={setDate}
+              value={formData.startDate}
+              onChangeText={text => setFormData({...formData, startDate: text})}
               placeholder="Start"
               inputContainerStyle={{borderBottomWidth: 0, width: '50%'}}
               onFocus={() => setOpen(true)}
@@ -131,37 +153,7 @@ const Modal = ({refRBSheet}) => {
                 setDate(date);
               }}
             />
-            <Input
-              style={styles.input}
-              value={endDate}
-              placeholder="End"
-              onChangeText={setEndDate}
-              inputContainerStyle={{borderBottomWidth: 0, width: '50%'}}
-              onFocus={() => setOpen(true)}
-              onConfirm={date => {
-                setOpen(false);
-                setEndDate(date);
-              }}
-            />
-          </View>
-          {/* DURATION */}
-          <View style={styles.headingContainer}>
-            <Ionicons name="time" size={24} color="black" />
-            <Text style={[styles.text, {paddingLeft: 10}]}>
-              Duration (in weeks)
-            </Text>
-          </View>
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', width: '40%'}}>
-            <Input
-              placeholder="Ex. 12"
-              keyboardType="numeric"
-              value={duration}
-              onChangeText={setDuration}
-              style={styles.input}
-              inputContainerStyle={{borderBottomWidth: 0, width: '70%'}}
-            />
-            <Text style={[styles.text, {right: 10, bottom: 10}]}>Weeks</Text>
+            
           </View>
 
           <View style={styles.headingContainer}>
@@ -170,7 +162,7 @@ const Modal = ({refRBSheet}) => {
               Please choose your frequency
             </Text>
           </View>
-          <Button title="Add" onPress={createCycle} />
+          <Button title="Add" onPress={handleAddCycle} />
         </ScrollView>
       </RBSheet>
     </>
