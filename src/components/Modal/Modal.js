@@ -42,7 +42,6 @@ const Modal = ({refRBSheet}) => {
         anabolic: formData.anabolicUsed,
         start_date: formData.startDate,
         end_date: formData.endDate,
-
         frequency: formData.frequency,
         pct: formData.pct,
         notes: formData.notes,
@@ -115,7 +114,31 @@ const Modal = ({refRBSheet}) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-              }}></View>
+              }}>
+              {
+                formData.anabolicUsed.map((anabolic, index) => { 
+                  return (
+                    <Swipeable
+                      containerStyle={styles.swipeable}
+                      renderRightActions={() => <Button onPress={() => removeAnabolic(index)} title="Delete" />}>
+                      <Input
+                        style={styles.input}
+                        value={
+                          formData.anabolicUsed[index]
+                        }
+                        onChangeText={text => {
+                          formData.anabolicUsed[index] = text;
+                          setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]})
+                        }}
+                        placeholder="Ex. Testosterone Cypionat 250mg"
+                        inputContainerStyle={{borderBottomWidth: 0}}
+                      />
+                    </Swipeable>
+                  )
+                }
+                )
+              }
+              </View>
             {/* CALENDAR START */}
             <View style={styles.headingContainer}>
               <Ionicons name="calendar" size={24} color="black" />

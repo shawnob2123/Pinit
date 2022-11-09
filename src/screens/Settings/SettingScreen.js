@@ -1,9 +1,10 @@
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text } from 'react-native'
 import React, {useState, useEffect} from 'react';
 import { styles } from './styles';
 import { supabase } from '../../../server/server';
 import Button from '../../components/Button/Button';
 import Settings from '../../components/Settings/Settings';
+import Loader from '../../components/Loader/Loader';
 
 const SettingScreen = ({ navigation }) => {
   
@@ -51,7 +52,9 @@ const SettingScreen = ({ navigation }) => {
         </View>
       <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
         {loading ? (
-          <ActivityIndicator size="large" color="#00a6fb" />
+          <Loader
+            source={require('../../../assets/lottie/loader.json')}
+          />
         ) : (
             <Button
               name='exit-outline'

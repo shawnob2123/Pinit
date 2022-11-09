@@ -42,5 +42,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 20
-  }
+  },
+  swipeable: {
+    width: '100%',
+    marginBottom: 10
+    
+ }
 })
