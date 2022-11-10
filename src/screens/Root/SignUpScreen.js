@@ -9,6 +9,8 @@ import {
   AppleButton,
 } from '@invertase/react-native-apple-authentication';
 import { supabase } from '../../../server/server';
+import Loader from '../../components/Loader/Loader';
+
 
 const SignUpScreen = ({navigation}) => {
 
@@ -52,11 +54,6 @@ const SignUpScreen = ({navigation}) => {
 
  
 
-  const closeLoader = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }
 
   return (
     <View style={styles.container}>
@@ -116,11 +113,9 @@ const SignUpScreen = ({navigation}) => {
         />
         <View style={{ paddingHorizontal: 20 }}>
           {loading ? (
-           <ActivityIndicator 
-              size="large"
-              color="#00a6fb"
-              animating={closeLoader()}
-
+          <Loader
+              source={require('../../../assets/lottie/loader.json')}
+              onAnimationFinish={() => setLoading(false)}
             />
             
           ) : (
@@ -131,7 +126,7 @@ const SignUpScreen = ({navigation}) => {
           )}
          
         </View>
-        <Text style={styles.continue}>Or continue with..</Text>
+        {/* <Text style={styles.continue}>Or continue with..</Text>
         <View style={styles.socialButtons}>
           <AppleButton
             buttonStyle={AppleButton.Style.WHITE}
@@ -142,7 +137,7 @@ const SignUpScreen = ({navigation}) => {
             }}
             // onPress={() => onAppleButtonPress()}
           />
-        </View>
+        </View> */}
         <Pressable
           onPress={() => navigation.navigate('SignIn')}
           style={{paddingTop: 20, alignSelf: 'center'}}>

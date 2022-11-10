@@ -15,9 +15,15 @@ export const styles = StyleSheet.create({
   },
   name: {
     fontSize: sizes.md,
-    fontWeight: weights.bold,
     color: colors.white,
-    fontFamily: fonts.primary
+    fontFamily: fonts.primary,
+    fontWeight: weights.regular,
+    marginLeft: 10,
 
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
   }
 })

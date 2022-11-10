@@ -9,11 +9,14 @@ import {
 } from '@invertase/react-native-apple-authentication';
 import {supabase} from '../../../server/server';
 import Loader from '../../components/Loader/Loader';
+
+
 const SignInScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
 
   const signInWithEmail = async () => {
     try {
@@ -22,8 +25,8 @@ const SignInScreen = ({navigation}) => {
         email: email,
         password: password,
       });
+       
       if (error) {
-        // display the error message then clear it
         setError(error.message);
         setTimeout(() => {
           setError('');
@@ -37,10 +40,11 @@ const SignInScreen = ({navigation}) => {
     }
   };
 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome back, please log in</Text>
-      {/* <Text style={styles.subtitle}>Track your anabolic cycles effortlessly.</Text> */}
       <View style={{marginTop: 20}}>
         <Input
           placeholder="Email"
@@ -79,7 +83,7 @@ const SignInScreen = ({navigation}) => {
             <Button title="Log in" onPress={() => signInWithEmail()} />
           )}
         </View>
-        <Text style={styles.continue}>Or continue with..</Text>
+        {/* <Text style={styles.continue}>Or continue with..</Text>
         <View style={styles.socialButtons}>
           <AppleButton
             buttonStyle={AppleButton.Style.WHITE}
@@ -90,7 +94,7 @@ const SignInScreen = ({navigation}) => {
             }}
             onPress={null}
           />
-        </View>
+        </View> */}
         <Pressable
           onPress={() => navigation.navigate('SignUp')}
           style={{paddingTop: 70, alignSelf: 'center'}}>

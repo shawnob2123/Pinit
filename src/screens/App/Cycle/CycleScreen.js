@@ -37,9 +37,12 @@ const CycleScreen = () => {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <Animatable.View
-            style={styles.contentContainer}
-            animation="fadeInUpBig"
-            duration={1300}>
+              style={styles.contentContainer}
+              animation="fadeInUpBig"
+              duration={1300}
+              useNativeDriver={true}
+              delay={500}
+            >
             <View style={styles.todayContainer}>
               <Text style={styles.title}>Today</Text>
               <Pressable

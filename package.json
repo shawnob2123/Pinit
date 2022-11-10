@@ -32,6 +32,7 @@
     "react-native-flash-message": "^0.3.1",
     "react-native-freshchat-sdk": "^4.1.1",
     "react-native-gesture-handler": "^2.7.1",
+    "react-native-keychain": "^8.1.1",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-modalize": "^2.1.1",
     "react-native-paper": "^4.12.5",
