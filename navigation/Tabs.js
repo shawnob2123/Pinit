@@ -8,7 +8,7 @@ import { colors, fonts, sizes, weights } from '../src/theme/theme';
 // APP STACK
 import CalendarScreen from '../src/screens/App/Calendar/CalendarScreen';
 import CycleScreen from '../src/screens/App/Cycle/CycleScreen';
-import ProductScreen from '../src/screens/App/Products/ProductScreen';
+import AnabolicsScreen from '../src/screens/App/Anabolics/AnabolicsScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
 import EditProfileScreen from '../src/screens/Settings/EditProfileScreen';
@@ -72,7 +72,7 @@ export default Tabs = ({children}) => {
         options={{
           tabBarLabel: <Text style={styles.text}>Anabolics</Text>,
         }}
-        component={ProductScreen}
+        component={AnabolicsScreen}
       />
       <Tab.Screen name="Settings"
         options={{
