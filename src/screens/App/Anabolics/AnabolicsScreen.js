@@ -10,6 +10,7 @@ import * as Animatable from 'react-native-animatable';
 const ProductScreen = () => {
   const [fetchError, setFetchError] = useState(null);
   const [anabolics, setAnabolics] = useState(null);
+  const [data, setData] = useState(null);
   
   
   // useEffect(() => {
@@ -26,7 +27,9 @@ const ProductScreen = () => {
   //     }
   //   }
   //   fetchProducts();
-  // }, []);
+  // }, [anabolics]);
+
+    
     
 
 

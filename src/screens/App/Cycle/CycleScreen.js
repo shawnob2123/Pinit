@@ -13,7 +13,7 @@ import Modal from '../../../components/Modal/Modal';
 import HomeCalendarStrip from '../../../components/CalendarStrip/CalendarStrip';
 import CycleCard from '../../../components/Cycle/Cycle';
 import * as Animatable from 'react-native-animatable';
-
+import Pending from '../../../components/Pending/Pending';
 const CycleScreen = () => {
   const [loading, setLoading] = useState(false);
   const refRBSheet = useRef();
@@ -38,8 +38,8 @@ const CycleScreen = () => {
         ) : (
           <Animatable.View
               style={styles.contentContainer}
-              animation="fadeInLeft"
-              duration={500}
+              animation="fadeInUpBig"
+              duration={600}
               useNativeDriver={true}
               delay={500}
             >
@@ -57,17 +57,21 @@ const CycleScreen = () => {
             </Text>
               <Animatable.View
                 useNativeDriver={true}
-                duration={500}
-                animation="fadeInLeft" style={{ flex: 1 }}>
+                duration={600}
+                animation="fadeInUpBig" style={{ flex: 1 }}>
               <HomeCalendarStrip />
               </Animatable.View>
 
+            {/* PENDING START */}
               <View style={styles.contentContainer}>
                 <Text style={styles.title}>Pending</Text>
                 <View>
-
+                  <Pending 
+                    
+                  />
                 </View>
               </View>
+            {/* PENDING END */}
             <View style={styles.contentContainer}>
               <Text style={styles.title}>Cycles</Text>
               <View style={styles.cyclesContainer}>
