@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import { colors, fonts, sizes, weights } from '../../../theme/theme';
 
 export const styles = StyleSheet.create({
@@ -8,6 +8,10 @@ export const styles = StyleSheet.create({
     height: '100%',
     paddingTop: 80, 
 
+  },
+  contentContainer: {
+    height: 200,
+    width: Dimensions.get('screen').width,
   },
   title: {
     fontSize: sizes.xxl,

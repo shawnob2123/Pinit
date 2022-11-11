@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     color: colors.primary,
     fontFamily: fonts.primary,
     alignSelf: 'flex-start',
-    marginBottom: 30,
+    marginBottom: 20,
     paddingLeft: 10,
   },
   error: {
@@ -66,5 +66,9 @@ export const styles = StyleSheet.create({
   upgradeButton: {
     backgroundColor: colors.background,
     borderRadius: 10,
+  },
+  bulletContainer: {
+    alignSelf: 'center'
+    
   }
 })

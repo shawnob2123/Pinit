@@ -4,8 +4,7 @@ import { colors, fonts, sizes, weights } from '../../theme/theme';
 export const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
-    padding: 5,
-    marginBottom: 10,
+    paddingVertical: 10,
     shadowColor: colors.black,
     shadowOffset: {
       width: 0,
@@ -18,12 +17,18 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
-    marginLeft: 10,
+    paddingLeft: 10,
 
   },
   contentContainer: {
     flexDirection: 'row',
     padding: 10,
     alignItems: 'center',
+   
+    width: '100%',
+  },
+  icon: {
+    position: 'absolute',
+    right: 10,
   }
 })

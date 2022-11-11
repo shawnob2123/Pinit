@@ -38,8 +38,8 @@ const CycleScreen = () => {
         ) : (
           <Animatable.View
               style={styles.contentContainer}
-              animation="fadeInUpBig"
-              duration={1300}
+              animation="fadeInLeft"
+              duration={500}
               useNativeDriver={true}
               delay={500}
             >
@@ -55,7 +55,10 @@ const CycleScreen = () => {
             <Text style={[styles.text, {color: '#ffff', paddingLeft: 10}]}>
               {getCurrentDate()}
             </Text>
-            <Animatable.View animation="fadeInUpBig" style={{flex: 1}}>
+              <Animatable.View
+                useNativeDriver={true}
+                duration={500}
+                animation="fadeInLeft" style={{ flex: 1 }}>
               <HomeCalendarStrip />
               </Animatable.View>
 
