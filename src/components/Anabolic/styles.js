@@ -5,11 +5,7 @@ export const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     paddingVertical: 10,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    }
+    
 
   },
   name: {

@@ -16,6 +16,9 @@ import RemindersScreen from '../src/screens/Settings/RemindersScreen';
 import UpgradeScreen from '../src/screens/Settings/UpgradeScreen';
 import SupportScreen from '../src/screens/Settings/SupportScreen';
 
+// ANABOLICS STACK
+import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScreen';
+
 
 
 
@@ -72,7 +75,7 @@ export default Tabs = ({children}) => {
         options={{
           tabBarLabel: <Text style={styles.text}>Anabolics</Text>,
         }}
-        component={AnabolicsScreen}
+        component={Anabolics}
       />
       <Tab.Screen name="Settings"
         options={{
@@ -100,14 +103,46 @@ export const Settings = () => {
         headerShadowVisible: false,
       }}
     >
-      <Stack.Screen name="Settings" component={SettingScreen} />
+      <Stack.Screen name="Settings Nav" component={SettingScreen} />
       <Stack.Screen name='Edit Profile' component={EditProfileScreen} />
       <Stack.Screen name='Reminders' component={RemindersScreen} />
       <Stack.Screen name='Support' component={SupportScreen} />
       <Stack.Screen name='Upgrade' component={UpgradeScreen} />
     </Stack.Navigator>
   );
+};
+
+const AnabolicsStack = createNativeStackNavigator();
+export const Anabolics = () => { 
+  return (
+    <AnabolicsStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: colors.background,
+          shadowColor: 'transparent',
+          elevation: 0,
+          shadowOpacity: 0,
+          
+        },
+        headerShadowVisible: false,
+      }}
+    >
+      <AnabolicsStack.Screen name="Anabolics" component={AnabolicsScreen} />
+      <AnabolicsStack.Screen
+        screenOptions={{
+          headerShown: true,
+          headerTitle: '',
+          headerStyle: {
+            backgroundColor: colors.background,
+          }
+        }}
+        name='View Anabolics' component={ViewAnabolicsScreen} />
+    </AnabolicsStack.Navigator>
+  );
 }
+  
 
 const styles = StyleSheet.create({
   text: {

@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import React, {useEffect, useState, useCallback} from 'react';
 import {styles} from './styles';
 import {FlashList} from '@shopify/flash-list';
@@ -28,21 +28,17 @@ const ProductScreen = () => {
     }
   }, []);
 
-  const renderItems = ({ item }) => { 
+  const renderItems = ({ item }) => {
     return (
       <Anabolic key={item.id} anabolics={item} />
     )
-  }
-
-  // const renderItems = () => {
-  //   return anabolics.map(anabolic => (
-        
-  //     <Anabolic key={anabolic.id} anabolics={anabolic} />
-  //   ));
-  // };
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{paddingBottom: 200}}
+      style={styles.container}>
       {/* <Animatable.View
         
         duration={500} 
@@ -52,14 +48,20 @@ const ProductScreen = () => {
       <Search />
 
       <FlashList
-        // add paddingBottom
-        contentContainerStyle={{paddingBottom: 100}}
+        contentContainerStyle={{paddingBottom: 20}}
         data={anabolics}
         estimatedItemSize={100}
         renderItem={renderItems}
       />
       {/* </Animatable.View> */}
-    </View>
+      <View style={styles.disclaimerContainer}>
+        <Text style={styles.disclaimer}>*Disclaimer*</Text>
+        <Text style={styles.disclaimerText}>
+          Pinit does not condone the use of anabolic substances. These items are as listed for educational purposes ONLY. Pinit is not responsible for the misuse of these products. Please consult a physician before using any of these products.
+        </Text>
+      </View>
+   
+    </ScrollView>
   );
 };
 

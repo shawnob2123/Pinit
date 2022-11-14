@@ -5,8 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    height: '100%',
-    paddingTop: 80, 
+    height: '100%', 
 
   },
   contentContainer: {
@@ -20,13 +19,22 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   disclaimer: {
-    fontSize: sizes.sm,
+    fontSize: sizes.lg,
+    color: colors.primary,
+    fontFamily: fonts.primary,
+    fontWeight: weights.bold,
+    alignSelf: 'flex-start',
+    paddingBottom: 10,
+  },
+  disclaimerText: {
+    fontSize: 12,
     color: colors.white,
     fontFamily: fonts.primary,
-    alignSelf: 'center',
     lineHeight: 25,
-    marginTop: 10,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+  },
+  disclaimerContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
   }
 })
