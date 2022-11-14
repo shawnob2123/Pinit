@@ -37,7 +37,7 @@ const ProductScreen = () => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingBottom: 200}}
+      contentContainerStyle={{paddingBottom: 100}}
       style={styles.container}>
       {/* <Animatable.View
         

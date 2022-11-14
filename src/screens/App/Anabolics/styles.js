@@ -9,14 +9,25 @@ export const styles = StyleSheet.create({
 
   },
   contentContainer: {
-    height: 200,
-    width: Dimensions.get('screen').width,
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20
   },
   title: {
     fontSize: sizes.xxl,
     color: colors.primary,
     fontFamily: fonts.bold,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+  },
+  text: {
+    fontSize: sizes.md,
+    color: colors.white,
+    fontFamily: fonts.primary,
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+    paddingTop: 10,
+    lineHeight: 25
   },
   disclaimer: {
     fontSize: sizes.lg,
@@ -36,5 +47,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     alignItems: 'center',
+  },
+  anabolicsContent: {
+    paddingTop: 50
   }
 })
