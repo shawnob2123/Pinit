@@ -1,7 +1,8 @@
 import { View, Text } from 'react-native'
 import React from 'react';
 import { styles } from './styles';
-import DraggableFlatList from 'react-native-draggable-flatlist'
+// import DraggableFlatList from 'react-native-draggable-flatlist'
+// import SwipeableItem from 'react-native-swipeable-item';
 
 const Pending = ({title}) => {
   const data = [
@@ -19,11 +20,11 @@ const Pending = ({title}) => {
   }
   return (
     <View style={styles.card}>
-      <DraggableFlatList
+      {/* <DraggableFlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `draggable-item-${item.key}`}
-      />
+
+      /> */}
     </View>
   )
 }
