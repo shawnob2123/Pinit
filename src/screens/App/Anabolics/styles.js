@@ -20,6 +20,14 @@ export const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingLeft: 10,
   },
+  anabolicTitle: {
+    fontSize: sizes.md,
+    color: colors.primary,
+    fontFamily: fonts.bold,
+    alignSelf: 'flex-start',
+    paddingLeft: 10,
+    paddingTop: 10
+  },
   text: {
     fontSize: sizes.md,
     color: colors.white,

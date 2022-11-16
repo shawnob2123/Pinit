@@ -2,7 +2,7 @@ import {View, Text, ScrollView, Pressable} from 'react-native';
 import React, {useState} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {styles} from './styles';
-import {Input} from '@rneui/themed';
+import {Input, Tooltip} from '@rneui/themed';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {supabase} from '../../../server/server';
@@ -27,7 +27,10 @@ const Modal = ({refRBSheet}) => {
   const [show, setShow] = useState(false);
 
   const addAnabolic = () => {
-    setFormData({...formData, anabolicUsed: [...formData.anabolicUsed, '']});
+    setFormData({
+      ...formData,
+      anabolicUsed: [...formData.anabolicUsed, formData.anabolicUsed],
+    });
   };
 
   const removeAnabolic = (index) => { 
@@ -111,16 +114,17 @@ const Modal = ({refRBSheet}) => {
             />
             <View
               style={{
-                flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'space-around',
               }}>
               {
-                formData.anabolicUsed.map((anabolic, index) => { 
+                formData.anabolicUsed.map((anabolic, index) => {
                   return (
+                     <View style={styles.swipeableContainer}>
                     <Swipeable
                       containerStyle={styles.swipeable}
                       renderRightActions={() => <Button onPress={() => removeAnabolic(index)} title="Delete" />}>
+                     
                       <Input
                         style={styles.input}
                         value={
@@ -130,10 +134,11 @@ const Modal = ({refRBSheet}) => {
                           formData.anabolicUsed[index] = text;
                           setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]})
                         }}
-                        placeholder="Ex. Testosterone Cypionat 250mg"
+                        placeholder="Ex. Winstrol 50mg"
                         inputContainerStyle={{borderBottomWidth: 0}}
                       />
                     </Swipeable>
+                         </View>
                   )
                 }
                 )

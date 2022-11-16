@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const DisplayCycleScreen = () => {
+const ViewCycleScreen = () => {
   return (
     <View>
       <Text>DisplaycycleScreen</Text>
@@ -9,4 +9,4 @@ const DisplayCycleScreen = () => {
   )
 }
 
-export default DisplayCycleScreen;
+export default ViewCycleScreen;

@@ -39,11 +39,11 @@ const ProductScreen = () => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 100}}
       style={styles.container}>
-      {/* <Animatable.View
+      <Animatable.View
         
         duration={500} 
         useNativeDriver={true}
-        animation="fadeInLeft"> */}
+        animation="fadeInLeft">
 
       <Search />
 
@@ -53,7 +53,7 @@ const ProductScreen = () => {
         estimatedItemSize={100}
         renderItem={renderItems}
       />
-      {/* </Animatable.View> */}
+      </Animatable.View>
       <View style={styles.disclaimerContainer}>
         <Text style={styles.disclaimer}>*Disclaimer*</Text>
         <Text style={styles.disclaimerText}>

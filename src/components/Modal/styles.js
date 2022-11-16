@@ -45,7 +45,11 @@ export const styles = StyleSheet.create({
   },
   swipeable: {
     width: '100%',
-    marginBottom: 10
-    
- }
+    height: 50, 
+    borderRadius: 10,
+  },
+  swipeableContainer: {
+    width: '100%',
+    paddingBottom: 20,
+  }
 })

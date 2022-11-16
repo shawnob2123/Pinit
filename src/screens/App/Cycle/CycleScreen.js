@@ -20,7 +20,6 @@ const CycleScreen = () => {
 
   const getCurrentDate = () => {
     const date = new Date();
-    // display the weekday, day and month
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'long',
@@ -75,7 +74,9 @@ const CycleScreen = () => {
             <View style={styles.contentContainer}>
               <Text style={styles.title}>Cycles</Text>
               <View style={styles.cyclesContainer}>
-                <CycleCard />
+                  {
+                    
+                }
               </View>
             </View>
           </Animatable.View>

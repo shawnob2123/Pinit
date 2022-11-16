@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native'
-import React from 'react';
+import React, {memo} from 'react';
 import { Divider } from "@rneui/themed";
 import { styles } from './styles'
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -32,4 +32,4 @@ const Anabolic = ({ anabolics }) => {
   )
 }
 
-export default Anabolic;
+export default memo(Anabolic);
