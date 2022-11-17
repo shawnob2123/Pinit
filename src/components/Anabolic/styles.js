@@ -5,8 +5,6 @@ export const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     paddingVertical: 10,
-    
-
   },
   name: {
     fontSize: sizes.md,
@@ -26,5 +24,29 @@ export const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: 10,
+  },
+  toggle: {
+    width: '100%',
+   
+    padding: 2,
+    paddingVertical: 10,
+  },
+  row: {
+     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+  },
+  title: {
+    fontSize: sizes.xl,
+    color: colors.white,
+    fontFamily: fonts.primary,
+    fontWeight: weights.bold,
+  },
+  text: {
+    fontSize: sizes.md,
+    color: colors.white,
+    fontFamily: fonts.primary,
+    fontWeight: weights.regular,
   }
 })

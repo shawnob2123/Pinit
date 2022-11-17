@@ -33,10 +33,10 @@ const Modal = ({refRBSheet}) => {
     });
   };
 
-  const removeAnabolic = (index) => { 
+  const removeAnabolic = index => {
     formData.anabolicUsed.splice(index, 1);
     setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]});
-  }
+  };
 
   const handleAddCycle = async () => {
     const {data, error} = await supabase.from('cycles').insert([
@@ -117,33 +117,35 @@ const Modal = ({refRBSheet}) => {
                 alignItems: 'center',
                 justifyContent: 'space-around',
               }}>
-              {
-                formData.anabolicUsed.map((anabolic, index) => {
-                  return (
-                     <View style={styles.swipeableContainer}>
+              {formData.anabolicUsed.map((anabolic, index) => {
+                return (
+                  <View style={styles.swipeableContainer}>
                     <Swipeable
                       containerStyle={styles.swipeable}
-                      renderRightActions={() => <Button onPress={() => removeAnabolic(index)} title="Delete" />}>
-                     
+                      renderRightActions={() => (
+                        <Button
+                          onPress={() => removeAnabolic(index)}
+                          title="Delete"
+                        />
+                      )}>
                       <Input
                         style={styles.input}
-                        value={
-                          formData.anabolicUsed[index]
-                        }
+                        value={formData.anabolicUsed[index]}
                         onChangeText={text => {
                           formData.anabolicUsed[index] = text;
-                          setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]})
+                          setFormData({
+                            ...formData,
+                            anabolicUsed: [...formData.anabolicUsed],
+                          });
                         }}
                         placeholder="Ex. Winstrol 50mg"
                         inputContainerStyle={{borderBottomWidth: 0}}
                       />
                     </Swipeable>
-                         </View>
-                  )
-                }
-                )
-              }
-              </View>
+                  </View>
+                );
+              })}
+            </View>
             {/* CALENDAR START */}
             <View style={styles.headingContainer}>
               <Ionicons name="calendar" size={24} color="black" />
@@ -151,24 +153,22 @@ const Modal = ({refRBSheet}) => {
                 Start-End Date
               </Text>
             </View>
-            {
-              show && (
-                <DatePicker
-                   modal
-              mode="date"
-              open={open}
-              onDateChange={setDate}
-              date={date}
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-                />
-              )
-            }
+            {show && (
+              <DatePicker
+                modal
+                mode="date"
+                open={open}
+                onDateChange={setDate}
+                date={date}
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+            )}
             <Input
               style={styles.input}
               value={formData.startDate}
@@ -181,7 +181,6 @@ const Modal = ({refRBSheet}) => {
                 setDate(date);
               }}
             />
-            
           </View>
 
           <View style={styles.headingContainer}>
