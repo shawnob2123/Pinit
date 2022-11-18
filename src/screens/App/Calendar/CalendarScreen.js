@@ -1,23 +1,34 @@
 import { View, Text, ScrollView } from 'react-native'
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { styles } from './styles';
-import {Calendar} from 'react-native-calendars';
+import {Agenda} from 'react-native-calendars';
 
 const CalendarScreen = () => {
+
+  const [events, setEvents] = useState({});
+  const [markedDates, setMarkedDates] = useState({});
+  const [refreshCalendar, setRefreshCalendar] = useState(false);
+
+  // ADD EVENT
+  const addEvent = () => {
+    setRefreshCalendar(true);
+    let items = events;
+    let mark = {};
+    let eventDetails = {
+      name: 'Test Event',
+      height: 80,
+      date: '2020-10-10'
+    }
+  }
   return (
     <ScrollView
     contentContainerStyle={styles.container}
     >
-      <Calendar
-        // Collection of dates that have to be marked. Default = {}
-        markedDates={{
-          '2020-09-16': { selected: true, marked: true, selectedColor: 'blue' },
-          '2020-09-17': { marked: true },
+      <View style={styles.contentContainer}>
+        {/* <Agenda
 
-        }}
-        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-        markingType={'period'}
-      />
+      /> */}
+        </View>
     </ScrollView>
   )
 }

@@ -1,5 +1,5 @@
-import {View, Text, ScrollView, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, ScrollView, Pressable, Platform, LayoutAnimation, UIManager, Animated} from 'react-native';
+import React, {useState, useRef} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {styles} from './styles';
 import {Input, Tooltip} from '@rneui/themed';
@@ -12,10 +12,10 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Modal = ({refRBSheet}) => {
   const [formData, setFormData] = useState({
-    cycleName: '',
-    anabolicUsed: [],
-    startDate: new Date(),
-    endDate: new Date(),
+    name: '',
+    anabolic_used: [],
+    start_date: new Date(),
+    end_date: new Date(),
     duration: 0,
     frequency: 0,
     pct: '',
@@ -26,25 +26,29 @@ const Modal = ({refRBSheet}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
 
+  if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
   const addAnabolic = () => {
-    setFormData({
-      ...formData,
-      anabolicUsed: [...formData.anabolicUsed, formData.anabolicUsed],
-    });
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setFormData({...formData, anabolic_used: [...formData.anabolic_used, '']});
   };
 
   const removeAnabolic = index => {
-    formData.anabolicUsed.splice(index, 1);
-    setFormData({...formData, anabolicUsed: [...formData.anabolicUsed]});
+    formData.anabolic_used.splice(index, 1);
+    setFormData({...formData, anabolic_used: [...formData.anabolic_used]});
   };
 
   const handleAddCycle = async () => {
     const {data, error} = await supabase.from('cycles').insert([
       {
-        name: formData.cycleName,
-        anabolic: formData.anabolicUsed,
-        start_date: formData.startDate,
-        end_date: formData.endDate,
+        name: formData.name,
+        anabolic: formData.anabolic_used,
+        start_date: formData.start_date,
+        end_date: formData.end_date,
         frequency: formData.frequency,
         pct: formData.pct,
         notes: formData.notes,
@@ -90,7 +94,7 @@ const Modal = ({refRBSheet}) => {
             <Input
               style={styles.input}
               value={formData.cycleName}
-              onChangeText={text => setFormData({...formData, cycleName: text})}
+              onChangeText={text => setFormData({...formData, name: text})}
               placeholder="Cycle Name"
               inputContainerStyle={{borderBottomWidth: 0}}
             />
@@ -117,9 +121,14 @@ const Modal = ({refRBSheet}) => {
                 alignItems: 'center',
                 justifyContent: 'space-around',
               }}>
-              {formData.anabolicUsed.map((anabolic, index) => {
+              {
+                formData.anabolic_used.map((anabolic, index) => {
                 return (
-                  <View style={styles.swipeableContainer}>
+                  <Animated.View style={{
+                    width: '100%',
+                    paddingBottom: 10,
+                   
+                  }}>
                     <Swipeable
                       containerStyle={styles.swipeable}
                       renderRightActions={() => (
@@ -130,19 +139,19 @@ const Modal = ({refRBSheet}) => {
                       )}>
                       <Input
                         style={styles.input}
-                        value={formData.anabolicUsed[index]}
+                        value={formData.anabolic_used[index]}
                         onChangeText={text => {
-                          formData.anabolicUsed[index] = text;
+                          formData.anabolic_used[index] = text;
                           setFormData({
                             ...formData,
-                            anabolicUsed: [...formData.anabolicUsed],
+                            anabolicUsed: [...formData.anabolic_used],
                           });
                         }}
                         placeholder="Ex. Winstrol 50mg"
                         inputContainerStyle={{borderBottomWidth: 0}}
                       />
                     </Swipeable>
-                  </View>
+                  </Animated.View>
                 );
               })}
             </View>

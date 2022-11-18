@@ -16,8 +16,6 @@ const ViewAnabolicsScreen = ({route}) => {
       }</Text>
     )
   });
-  // use the toggle anabolic to display and hide data passed from the anabolic screen 
-  // and then use the flash list to display the data
 
 
   return (
@@ -30,8 +28,10 @@ const ViewAnabolicsScreen = ({route}) => {
           <Text style={styles.title}>{anabolics.name}</Text>
           <Text style={styles.text}>{anabolics.pharma_name}</Text>
           <View style={{ paddingTop: 50 }}>
-              <ToggleAnabolic title='Description' description={anabolics.description ? anabolics.description : 'No description available'} />
-              <ToggleAnabolic title="Side Effects" description={mappedSideEffects} />
+            <ToggleAnabolic title='Description' description={anabolics.description ? anabolics.description : 'No description available'} />
+            <ToggleAnabolic title="Side Effects" description={mappedSideEffects} />
+            <ToggleAnabolic title="PCT Required" description={anabolics.pct === true ? 'Yes' : 'No'} />
+            <ToggleAnabolic title="Recommended Cycle (weeks)" description={anabolics.estimated_length} />
            </View>
          </View>
       </View>
