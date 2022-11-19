@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     fontSize: sizes.md,
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
+    paddingLeft: 10,
   },
   input: {
     backgroundColor: '#eeeeee',

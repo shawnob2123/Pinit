@@ -9,7 +9,7 @@ import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DatePicker from 'react-native-date-picker';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-
+import Heading from './Heading';
 const Modal = ({refRBSheet}) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -87,10 +87,10 @@ const Modal = ({refRBSheet}) => {
           <Text style={styles.modalTitle}>Add Cycle</Text>
           <View style={styles.createCycleContent}>
             {/* NAME */}
-            <View style={styles.headingContainer}>
-              <Ionicons name="pencil" size={24} color="black" />
-              <Text style={[styles.text, {paddingLeft: 10}]}>Cycle Name</Text>
-            </View>
+            <Heading
+              title="Name"
+              icon="ios-document-text-outline"
+            />
             <Input
               style={styles.input}
               value={formData.cycleName}
@@ -109,9 +109,9 @@ const Modal = ({refRBSheet}) => {
 
             <Input
               style={styles.input}
-              value={formData.anabolicUsed}
+              value={formData.anabolic_used}
               onChangeText={text =>
-                setFormData({...formData, anabolicUsed: text})
+                setFormData({...formData, anabolic_used: text})
               }
               placeholder="Ex. Testosterone Cypionat 250mg"
               inputContainerStyle={{borderBottomWidth: 0}}
@@ -124,11 +124,7 @@ const Modal = ({refRBSheet}) => {
               {
                 formData.anabolic_used.map((anabolic, index) => {
                 return (
-                  <Animated.View style={{
-                    width: '100%',
-                    paddingBottom: 10,
-                   
-                  }}>
+                  <View style={{ width: '100%', paddingBottom: 10 }}>
                     <Swipeable
                       containerStyle={styles.swipeable}
                       renderRightActions={() => (
@@ -144,24 +140,22 @@ const Modal = ({refRBSheet}) => {
                           formData.anabolic_used[index] = text;
                           setFormData({
                             ...formData,
-                            anabolicUsed: [...formData.anabolic_used],
+                            anabolic_used: [...formData.anabolic_used],
                           });
                         }}
-                        placeholder="Ex. Winstrol 50mg"
+                        placeholder="Add Anabolic"
                         inputContainerStyle={{borderBottomWidth: 0}}
                       />
                     </Swipeable>
-                  </Animated.View>
+                  </View>
                 );
               })}
             </View>
             {/* CALENDAR START */}
-            <View style={styles.headingContainer}>
-              <Ionicons name="calendar" size={24} color="black" />
-              <Text style={[styles.text, {paddingLeft: 10}]}>
-                Start-End Date
-              </Text>
-            </View>
+            <Heading
+              title="Start-End Date"
+              icon="calendar"
+            />
             {show && (
               <DatePicker
                 modal
@@ -180,8 +174,8 @@ const Modal = ({refRBSheet}) => {
             )}
             <Input
               style={styles.input}
-              value={formData.startDate}
-              onChangeText={text => setFormData({...formData, startDate: text})}
+              value={formData.start_date}
+              onChangeText={text => setFormData({...formData, start_date: text})}
               placeholder="Start"
               inputContainerStyle={{borderBottomWidth: 0, width: '50%'}}
               onFocus={() => setOpen(true)}
@@ -190,14 +184,25 @@ const Modal = ({refRBSheet}) => {
                 setDate(date);
               }}
             />
+            <Input
+              style={styles.input}
+              value={formData.end_date}
+              onChangeText={text => setFormData({ ...formData, end_date: text })}
+              placeholder="End"
+              inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
+              onFocus={() => setOpen(true)}
+              onConfirm={date => {
+                setOpen(false);
+                setDate(date);
+              }}
+            />
           </View>
 
-          <View style={styles.headingContainer}>
-            <Ionicons name="repeat" size={24} color="black" />
-            <Text style={[styles.text, {paddingLeft: 10}]}>
-              Please choose your frequency
-            </Text>
-          </View>
+          {/* FREQUENCY */}
+          <Heading
+            title="Frequency"
+            icon="repeat"
+          />
           <Button title="Add" onPress={handleAddCycle} />
         </ScrollView>
       </RBSheet>

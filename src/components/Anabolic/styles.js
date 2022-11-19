@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
 
   },
   title: {
-    fontSize: sizes.xl,
+    fontSize: sizes.lg,
     color: colors.white,
     fontFamily: fonts.primary,
     fontWeight: weights.bold,
