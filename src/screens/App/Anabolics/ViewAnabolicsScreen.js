@@ -12,7 +12,7 @@ const ViewAnabolicsScreen = ({route}) => {
   const mappedSideEffects = anabolics.side_effects.map((sideEffect, index) => { 
     return (
       <Text key={index} style={styles.text}>{
-        sideEffect.split('_').join(' ') + '\n'
+        '\u2022 ' + sideEffect.split('_').join(' ') + '\n'
       }</Text>
     )
   });

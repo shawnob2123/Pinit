@@ -67,7 +67,9 @@ const Modal = ({refRBSheet}) => {
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        closeOnPressMask={false}
+        // clear fields if close is enabled
+        closeOnPressMask={true}
+       
         animationType="slide"
         height={700}
         customStyles={{
@@ -101,10 +103,12 @@ const Modal = ({refRBSheet}) => {
             {/* ANABOLIC USED */}
             <View style={styles.headingContainer}>
               <Fontisto name="injection-syringe" size={24} color="black" />
-              <Text style={[styles.text, {paddingLeft: 10}]}>Anabolic(s)</Text>
-              <Pressable style={{left: 200}} onPress={addAnabolic}>
+              <Text style={[styles.text, { paddingLeft: 10 }]}>Anabolic(s)</Text>
+          
+              <Pressable style={{paddingLeft: 20}} onPress={addAnabolic}>
                 <Ionicons name="add-circle" size={24} color="black" />
-              </Pressable>
+                </Pressable>
+             
             </View>
 
             <Input
@@ -202,6 +206,37 @@ const Modal = ({refRBSheet}) => {
           <Heading
             title="Frequency"
             icon="repeat"
+          />
+          <Input
+            style={styles.input}
+            value={formData.frequency}
+            onChangeText={text => setFormData({ ...formData, frequency: text })}
+            placeholder="Ex. 2x a week"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+
+          />
+          <Heading
+            title="PCT"
+            icon="ios-medkit-outline"
+          />
+          <Input 
+            style={styles.input}
+            value={formData.pct}
+            onChangeText={text => setFormData({ ...formData, pct: text })}
+            placeholder="Ex. Clomid 50mg"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+          />
+          <Heading
+            title="Notes"
+            icon="ios-document-text-outline"
+          />
+          <Input
+            style={[styles.input, { height: 110, flexWrap: 'wrap', alignSelf:'stretch', alignItems:'center' }]}
+            value={formData.notes}
+            onChangeText={text => setFormData({ ...formData, notes: text })}
+            placeholder="Notes"
+            inputContainerStyle={{ borderBottomWidth: 0, padding: 3}}
+            multiline={true}
           />
           <Button title="Add" onPress={handleAddCycle} />
         </ScrollView>

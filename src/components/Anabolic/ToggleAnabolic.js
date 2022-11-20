@@ -1,5 +1,5 @@
 import {Text, Pressable, View, Animated, UIManager, LayoutAnimation, Platform} from 'react-native';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {styles} from './styles';
 
