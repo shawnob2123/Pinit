@@ -4,22 +4,22 @@ import { SearchBar } from '@rneui/themed';
 import {styles} from './styles';
 
 
-const Search = () => {
-
-  const [search, setSearch] = useState('');
+const Search = ({onChangeText, onClear, value, searchFilterFunction, showLoading}) => {
 
   return (
     <>
-      <SearchBar 
+      <SearchBar
         placeholder="Search"
-        onChangeText={setSearch}
-        value={search}
+        onChangeText={onChangeText}
+        value={value}
         containerStyle={styles.container}
         inputContainerStyle={styles.inputContainer}
         inputStyle={styles.input}
         autoCorrect={false}
         searchIcon={{ size: 22, color: '#00a6fb' }}
-
+        onClear={onClear}
+        searchFilterFunction={searchFilterFunction}
+        
       />
     </>
   )

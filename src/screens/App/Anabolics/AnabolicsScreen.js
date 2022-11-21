@@ -9,8 +9,11 @@ import * as Animatable from 'react-native-animatable';
 
 const ProductScreen = () => {
   const [fetchError, setFetchError] = useState(null);
-  const [anabolics, setAnabolics] = useState(null);
-
+  // const [anabolics, setAnabolics] = useState(null);
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProducts();
@@ -24,7 +27,11 @@ const ProductScreen = () => {
     if (error) {
       setFetchError(error);
     } else {
-      setAnabolics(data);
+      // setAnabolics(data);
+      setFilteredDataSource(data);
+      setMasterDataSource(data);
+      setLoading(false);
+
     }
   }, []);
 
@@ -34,24 +41,49 @@ const ProductScreen = () => {
     )
   };
 
+ const searchFilterFunction = (text) => {
+    if (text) {
+      const newData = masterDataSource.filter(function (item) {
+        const itemData = item.name
+          ? item.name.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      setFilteredDataSource(masterDataSource);
+      setSearch(text);
+    }
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 100}}
       style={styles.container}>
       <Animatable.View
-        
-        duration={500} 
-        useNativeDriver={true}
-        animation="fadeInLeft">
+        animation="fadeInLeft"
+        duration={300} 
+        useNativeDriver={true}>
 
-      <Search />
+        <Search 
+          value={search}
+          searchFilterFunction={searchFilterFunction}
+          onChangeText={text => searchFilterFunction(text)}
+          onClear={() => searchFilterFunction('')}
+          
 
-      <FlashList
-        contentContainerStyle={{paddingBottom: 20}}
-        data={anabolics}
-        estimatedItemSize={100}
-        renderItem={renderItems}
+      />
+
+        <FlashList
+          data={filteredDataSource}
+          renderItem={renderItems}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+          estimatedItemSize={100}
       />
       </Animatable.View>
       <View style={styles.disclaimerContainer}>

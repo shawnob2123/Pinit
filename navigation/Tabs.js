@@ -50,7 +50,7 @@ export default Tabs = ({children}) => {
             iconName = focused ? 'layers' : 'layers-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === 'Anabolics') {
+          } else if (route.name === 'AnabolicsTab') {
             iconName = focused ? 'barbell' : 'barbell-outline';
           }
           return <Ionicons name={iconName} size={24} color={colors.white} />;
@@ -71,7 +71,7 @@ export default Tabs = ({children}) => {
         component={CalendarScreen}
       />
       <Tab.Screen
-        name="Anabolics"
+        name="AnabolicsTab"
         options={{
           tabBarLabel: <Text style={styles.text}>Anabolics</Text>,
         }}
