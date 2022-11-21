@@ -53,7 +53,7 @@ const SettingScreen = ({ navigation }) => {
       <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
         {loading ? (
           <Loader
-            source={require('../../../assets/lottie/loader.json')}
+            
           />
         ) : (
             <Button

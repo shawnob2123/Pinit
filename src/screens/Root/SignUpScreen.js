@@ -114,7 +114,7 @@ const SignUpScreen = ({navigation}) => {
         <View style={{ paddingHorizontal: 20 }}>
           {loading ? (
           <Loader
-              source={require('../../../assets/lottie/loader.json')}
+              
               onAnimationFinish={() => setLoading(false)}
             />
             

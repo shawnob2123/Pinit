@@ -76,7 +76,7 @@ const SignInScreen = ({navigation}) => {
         <View style={{paddingHorizontal: 20, marginTop: 60}}>
           {loading ? (
             <Loader
-              source={require('../../../assets/lottie/loader.json')}
+              
               onAnimationFinish={() => setLoading(false)}
             />
           ) : (

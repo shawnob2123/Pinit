@@ -2,11 +2,11 @@ import { View, Text } from 'react-native'
 import React from 'react';
 import Lottie from 'lottie-react-native';
 
-const Loader = ({source, onAnimationFinish, error}) => {
+const Loader = ({ onAnimationFinish}) => {
   return (
     <>
       <Lottie
-        source={source}
+        source={require('../../../assets/lottie/loader.json')}
         autoPlay
         loop={false}
         onAnimationFinish={onAnimationFinish}

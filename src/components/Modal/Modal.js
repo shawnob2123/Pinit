@@ -8,18 +8,22 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DatePicker from 'react-native-date-picker';
+
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Heading from './Heading';
-const Modal = ({refRBSheet}) => {
+import Loader from '../Loader/Loader';
+
+const Modal = ({ refRBSheet }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     anabolic_used: [],
     start_date: new Date(),
     end_date: new Date(),
-    duration: 0,
     frequency: 0,
     pct: '',
     notes: '',
+   
   });
 
   const [date, setDate] = useState(new Date());
@@ -45,6 +49,8 @@ const Modal = ({refRBSheet}) => {
   const handleAddCycle = async () => {
     const {data, error} = await supabase.from('cycles').insert([
       {
+        user_id: supabase.auth.user().id,
+        created_at: new Date(),
         name: formData.name,
         anabolic: formData.anabolic_used,
         start_date: formData.start_date,
@@ -52,6 +58,7 @@ const Modal = ({refRBSheet}) => {
         frequency: formData.frequency,
         pct: formData.pct,
         notes: formData.notes,
+        
       },
     ]);
     if (error) {
@@ -179,14 +186,14 @@ const Modal = ({refRBSheet}) => {
             <Input
               style={styles.input}
               value={formData.start_date}
-              onChangeText={text => setFormData({...formData, start_date: text})}
+              onChangeText={text => setFormData({ ...formData, start_date: text })}
               placeholder="Start"
-              inputContainerStyle={{borderBottomWidth: 0, width: '50%'}}
-              onFocus={() => setOpen(true)}
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
+              inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
+              onFocus={() => {
+                setShow(true);
+                setOpen(true);
               }}
+              
             />
             <Input
               style={styles.input}
@@ -194,11 +201,11 @@ const Modal = ({refRBSheet}) => {
               onChangeText={text => setFormData({ ...formData, end_date: text })}
               placeholder="End"
               inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
-              onFocus={() => setOpen(true)}
-              onConfirm={date => {
-                setOpen(false);
-                setDate(date);
+              onFocus={() => {
+                setShow(true);
+                setOpen(true);
               }}
+             
             />
           </View>
 
@@ -231,14 +238,19 @@ const Modal = ({refRBSheet}) => {
             icon="ios-document-text-outline"
           />
           <Input
-            style={[styles.input, { height: 110, flexWrap: 'wrap', alignSelf:'stretch', alignItems:'center' }]}
+            style={[styles.input, { height: 110 }]}
             value={formData.notes}
             onChangeText={text => setFormData({ ...formData, notes: text })}
             placeholder="Notes"
             inputContainerStyle={{ borderBottomWidth: 0, padding: 3}}
             multiline={true}
           />
-          <Button title="Add" onPress={handleAddCycle} />
+          {loading ? (
+            <Loader source={require('../../../assets/lottie/loader.json')}
+              onAnimationFinish={() => setLoading(false)} /> 
+          ) : (
+              <Button title="Add" onPress={() => handleAddCycle()} />
+            )}
         </ScrollView>
       </RBSheet>
     </>
