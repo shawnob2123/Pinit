@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 10,
-    paddingTop: 60,
+    paddingTop: 80,
   },
   composeButton: {
     alignSelf: 'flex-end',
@@ -45,7 +45,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cyclesContainer: {
-    paddingTop: 20,
+  calendarView: {
+    flex: 1,
+    marginTop: 20,
+
   }
 })

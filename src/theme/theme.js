@@ -7,6 +7,7 @@ export const colors = {
   white: '#ffffff',
   black: '#000000',
   gray: '#F4FCFF',
+  orange: '#FFA500',
 }
 
 export const fonts = {

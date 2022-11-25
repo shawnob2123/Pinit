@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   settingsTab: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 10,
     
   },
   icon: {

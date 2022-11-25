@@ -1,19 +1,13 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, ScrollView, Pressable} from 'react-native';
 import React, {useRef, useState} from 'react';
-import {colors} from '../../../theme/theme';
 import {styles} from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Modal from '../../../components/Modal/Modal';
+import AgendaList from '../../../components/Agenda/AgendaList';
 import HomeCalendarStrip from '../../../components/CalendarStrip/CalendarStrip';
-import CycleCard from '../../../components/Cycle/Cycle';
+import Loader from '../../../components/Loader/Loader';
 import * as Animatable from 'react-native-animatable';
-import Pending from '../../../components/Pending/Pending';
+
 const CycleScreen = () => {
   const [loading, setLoading] = useState(false);
   const refRBSheet = useRef();
@@ -28,61 +22,46 @@ const CycleScreen = () => {
   };
 
   return (
-    <>
-      <ScrollView
+    
+    <ScrollView
+      showVerticalScrollIndicator={false}
         style={styles.container}
-        contentContainerStyle={{paddingBottom: 200}}>
+        contentContainerStyle={{paddingBottom: 100}}>
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <Loader />
         ) : (
           <Animatable.View
-              style={styles.contentContainer}
-              animation="fadeInUpBig"
-              duration={600}
-              useNativeDriver={true}
-              delay={500}
-            >
+            style={styles.contentContainer}
+            animation="fadeInUpBig"
+            duration={600}
+            useNativeDriver={true}
+            delay={500}>
             <View style={styles.todayContainer}>
               <Text style={styles.title}>Today</Text>
               <Pressable
                 style={styles.addButton}
                 onPress={() => refRBSheet.current.open()}>
-                <FontAwesome name="plus" size={18} color={colors.white} />
+                <FontAwesome name="plus" size={18} color="#fff" />
               </Pressable>
               <Modal refRBSheet={refRBSheet} />
             </View>
-            <Text style={[styles.text, {color: '#ffff', paddingLeft: 10}]}>
+            <Text style={[styles.text, {color: '#fff', paddingLeft: 10}]}>
               {getCurrentDate()}
             </Text>
-              <Animatable.View
-                useNativeDriver={true}
-                duration={600}
-                animation="fadeInUpBig" style={{ flex: 1 }}>
-              <HomeCalendarStrip />
-              </Animatable.View>
-
-            {/* PENDING START */}
-              <View style={styles.contentContainer}>
-                <Text style={styles.title}>Pending</Text>
-                <View>
-                  <Pending 
-                    
-                  />
-                </View>
-              </View>
-            {/* PENDING END */}
-            <View style={styles.contentContainer}>
-              <Text style={styles.title}>Cycles</Text>
-              <View style={styles.cyclesContainer}>
-                  {
-                    
-                }
-              </View>
-            </View>
+            <Animatable.View
+              style={styles.calendarView}
+              useNativeDriver={true}
+              duration={600}
+              animation="fadeInUpBig"
+              >
+              <AgendaList />
+            
+              
+            </Animatable.View>
           </Animatable.View>
         )}
       </ScrollView>
-    </>
+ 
   );
 };
 
