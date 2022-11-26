@@ -4,6 +4,8 @@ import {Agenda} from 'react-native-calendars';
 import {styles} from './styles';
 import { colors } from '../../theme/theme';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import { supabase } from '../../../server/server';
+
 
 const timeToString = time => {
   const date = new Date(time);

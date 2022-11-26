@@ -114,8 +114,8 @@ const SignUpScreen = ({navigation}) => {
         <View style={{ paddingHorizontal: 20 }}>
           {loading ? (
           <Loader
-              
               onAnimationFinish={() => setLoading(false)}
+              
             />
             
           ) : (

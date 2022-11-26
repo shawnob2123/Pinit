@@ -26,6 +26,10 @@ const SettingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Loader /> 
+      ) : (
+        <>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Manage Your Settings</Text>
           <Settings 
@@ -65,7 +69,9 @@ const SettingScreen = ({ navigation }) => {
             />
           )}
           <Text style={[styles.title, {color: '#fff', paddingTop: 20, fontSize: 12}]}>Pinit version 1.0</Text>
-      </View>
+            </View>
+          </>
+      )}
     </View>
   )
 }

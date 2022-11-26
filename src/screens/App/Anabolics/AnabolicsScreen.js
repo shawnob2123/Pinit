@@ -6,6 +6,7 @@ import {supabase} from '../../../../server/server';
 import Anabolic from '../../../components/Anabolic/Anabolic';
 import Search from '../../../components/Search/Search';
 import * as Animatable from 'react-native-animatable';
+import Loader from '../../../components/Loader/Loader';
 
 const ProductScreen = () => {
   const [fetchError, setFetchError] = useState(null);
@@ -31,22 +32,17 @@ const ProductScreen = () => {
       setFilteredDataSource(data);
       setMasterDataSource(data);
       setLoading(false);
-
     }
   }, []);
 
-  const renderItems = ({ item }) => {
-    return (
-      <Anabolic key={item.id} anabolics={item} />
-    )
+  const renderItems = ({item}) => {
+    return <Anabolic key={item.id} anabolics={item} />;
   };
 
- const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     if (text) {
       const newData = masterDataSource.filter(function (item) {
-        const itemData = item.name
-          ? item.name.toUpperCase()
-          : ''.toUpperCase();
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -59,40 +55,46 @@ const ProductScreen = () => {
   };
 
   return (
+
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 100}}
       style={styles.container}>
-      <Animatable.View
-        animation="fadeInLeft"
-        duration={300} 
-        useNativeDriver={true}>
-
-        <Search 
-          value={search}
-          searchFilterFunction={searchFilterFunction}
-          onChangeText={text => searchFilterFunction(text)}
-          onClear={() => searchFilterFunction('')}
-          
-
+      {loading ? (
+        <Loader />
+      ) : (
+          <Animatable.View
+            animation="fadeInUpBig"
+            duration={600}
+            useNativeDriver={true}
+          >
+      <Search
+        value={search}
+        searchFilterFunction={searchFilterFunction}
+        onChangeText={text => searchFilterFunction(text)}
+        onClear={() => searchFilterFunction('')}
       />
 
-        <FlashList
-          data={filteredDataSource}
-          renderItem={renderItems}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          estimatedItemSize={100}
+      <FlashList
+        data={filteredDataSource}
+        renderItem={renderItems}
+        keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom: 20}}
+        estimatedItemSize={100}
       />
-      </Animatable.View>
+
       <View style={styles.disclaimerContainer}>
         <Text style={styles.disclaimer}>*Disclaimer*</Text>
         <Text style={styles.disclaimerText}>
-          Pinit does not condone the use of anabolic substances. These items are as listed for educational purposes ONLY. Pinit is not responsible for the misuse of these products. Please consult a physician before using any of these products.
+          Pinit does not condone the use of anabolic substances. These items are
+          as listed for educational purposes ONLY. Pinit is not responsible for
+          the misuse of these products. Please consult a physician before using
+          any of these products.
         </Text>
-      </View>
-   
+            </View>
+            </Animatable.View>
+      )}
     </ScrollView>
   );
 };

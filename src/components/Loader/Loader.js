@@ -10,7 +10,7 @@ const Loader = ({ onAnimationFinish}) => {
         autoPlay
         loop={false}
         onAnimationFinish={onAnimationFinish}
-        duration={4000}
+        duration={5000}
         style={{width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center'}}
       
       />
