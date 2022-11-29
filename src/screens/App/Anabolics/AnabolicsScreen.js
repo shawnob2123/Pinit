@@ -88,7 +88,7 @@ const ProductScreen = () => {
         <Text style={styles.disclaimer}>*Disclaimer*</Text>
         <Text style={styles.disclaimerText}>
           Pinit does not condone the use of anabolic substances. These items are
-          as listed for educational purposes ONLY. Pinit is not responsible for
+          listed only for educational purposes. Pinit is not responsible for
           the misuse of these products. Please consult a physician before using
           any of these products.
         </Text>

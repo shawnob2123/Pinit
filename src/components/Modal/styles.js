@@ -52,5 +52,12 @@ export const styles = StyleSheet.create({
   swipeableContainer: {
     width: '100%',
     paddingBottom: 20,
+  },
+  datePicker: {
+    width: 100,
+    height: 50,
+    backgroundColor: '#eeeeee',
+    borderRadius: 10,
+    padding: 15,
   }
 })

@@ -1,4 +1,13 @@
-import {View, Text, ScrollView, Pressable, Platform, LayoutAnimation, UIManager, Animated} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  Platform,
+  LayoutAnimation,
+  UIManager,
+  Animated,
+} from 'react-native';
 import React, {useState, useRef} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {styles} from './styles';
@@ -7,35 +16,32 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
-import DatePicker from 'react-native-date-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
 
-const Modal = ({ refRBSheet }) => {
+const Modal = ({refRBSheet}) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     anabolic_used: [],
-    start_date: new Date(),
-    end_date: new Date(),
-    frequency: 0,
+    start_date: new Date().toLocaleString().split(',')[0],
+    end_date: new Date().toLocaleString().split(',')[0],
     pct: '',
     notes: '',
-   
   });
-
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
 
   if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+    Platform.OS === 'android' &&
+    UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
   const addAnabolic = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setFormData({...formData, anabolic_used: [...formData.anabolic_used, '']});
@@ -58,7 +64,6 @@ const Modal = ({ refRBSheet }) => {
         frequency: formData.frequency,
         pct: formData.pct,
         notes: formData.notes,
-        
       },
     ]);
     if (error) {
@@ -69,6 +74,21 @@ const Modal = ({ refRBSheet }) => {
     }
   };
 
+  const showMode = currentMode => {
+    if (Platform.OS === 'android') {
+      setShow(false);
+    }
+    setShow(true);
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  
+
   return (
     <>
       <RBSheet
@@ -76,7 +96,6 @@ const Modal = ({ refRBSheet }) => {
         closeOnDragDown={true}
         // clear fields if close is enabled
         closeOnPressMask={true}
-       
         animationType="slide"
         height={700}
         customStyles={{
@@ -96,10 +115,7 @@ const Modal = ({ refRBSheet }) => {
           <Text style={styles.modalTitle}>Add Cycle</Text>
           <View style={styles.createCycleContent}>
             {/* NAME */}
-            <Heading
-              title="Name"
-              icon="ios-document-text-outline"
-            />
+            <Heading title="Name" icon="ios-document-text-outline" />
             <Input
               style={styles.input}
               value={formData.cycleName}
@@ -110,12 +126,11 @@ const Modal = ({ refRBSheet }) => {
             {/* ANABOLIC USED */}
             <View style={styles.headingContainer}>
               <Fontisto name="injection-syringe" size={24} color="black" />
-              <Text style={[styles.text, { paddingLeft: 10 }]}>Anabolic(s)</Text>
-          
+              <Text style={[styles.text, {paddingLeft: 10}]}>Anabolic(s)</Text>
+
               <Pressable style={{paddingLeft: 20}} onPress={addAnabolic}>
                 <Ionicons name="add-circle" size={24} color="black" />
-                </Pressable>
-             
+              </Pressable>
             </View>
 
             <Input
@@ -132,10 +147,9 @@ const Modal = ({ refRBSheet }) => {
                 alignItems: 'center',
                 justifyContent: 'space-around',
               }}>
-              {
-                formData.anabolic_used.map((anabolic, index) => {
+              {formData.anabolic_used.map((anabolic, index) => {
                 return (
-                  <View style={{ width: '100%', paddingBottom: 10 }}>
+                  <View style={{width: '100%', paddingBottom: 10}}>
                     <Swipeable
                       containerStyle={styles.swipeable}
                       renderRightActions={() => (
@@ -163,94 +177,69 @@ const Modal = ({ refRBSheet }) => {
               })}
             </View>
             {/* CALENDAR START */}
-            <Heading
-              title="Start-End Date"
-              icon="calendar"
-            />
-            {show && (
-              <DatePicker
-                modal
-                mode="date"
-                open={open}
-                onDateChange={setDate}
-                date={date}
-                onConfirm={date => {
-                  setOpen(false);
-                  setDate(date);
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
-              />
-            )}
+            <Heading title="Start-End Date" icon="calendar" />
             <Input
               style={styles.input}
               value={formData.start_date}
-              onChangeText={text => setFormData({ ...formData, start_date: text })}
+              onChangeText={onChange}
               placeholder="Start"
               inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
               onFocus={() => {
-                setShow(true);
-                setOpen(true);
+                showMode('date');
+
               }}
               
             />
+            
             <Input
               style={styles.input}
               value={formData.end_date}
-              onChangeText={text => setFormData({ ...formData, end_date: text })}
+              onChangeText={onChange}
               placeholder="End"
               inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
               onFocus={() => {
-                setShow(true);
-                setOpen(true);
+                showMode('date');
+
               }}
              
             />
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
           </View>
-
-          {/* FREQUENCY */}
-          <Heading
-            title="Frequency"
-            icon="repeat"
-          />
+        
+          <Heading title="PCT" icon="ios-medkit-outline" />
           <Input
-            style={styles.input}
-            value={formData.frequency}
-            onChangeText={text => setFormData({ ...formData, frequency: text })}
-            placeholder="Ex. 2x a week"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-
-          />
-          <Heading
-            title="PCT"
-            icon="ios-medkit-outline"
-          />
-          <Input 
             style={styles.input}
             value={formData.pct}
-            onChangeText={text => setFormData({ ...formData, pct: text })}
+            onChangeText={text => setFormData({...formData, pct: text})}
             placeholder="Ex. Clomid 50mg"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputContainerStyle={{borderBottomWidth: 0}}
           />
-          <Heading
-            title="Notes"
-            icon="ios-document-text-outline"
-          />
+          <Heading title="Notes" icon="ios-document-text-outline" />
           <Input
-            style={[styles.input, { height: 110 }]}
+            style={[styles.input, {height: 110}]}
             value={formData.notes}
-            onChangeText={text => setFormData({ ...formData, notes: text })}
+            onChangeText={text => setFormData({...formData, notes: text})}
             placeholder="Notes"
-            inputContainerStyle={{ borderBottomWidth: 0, padding: 3}}
+            inputContainerStyle={{borderBottomWidth: 0, padding: 3}}
             multiline={true}
           />
           {loading ? (
-            <Loader source={require('../../../assets/lottie/loader.json')}
-              onAnimationFinish={() => setLoading(false)} /> 
+            <Loader
+              source={require('../../../assets/lottie/loader.json')}
+              onAnimationFinish={() => setLoading(false)}
+            />
           ) : (
-              <Button title="Add" onPress={() => handleAddCycle()} />
-            )}
+            <Button title="Add" onPress={() => handleAddCycle()} />
+          )}
         </ScrollView>
       </RBSheet>
     </>

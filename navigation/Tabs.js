@@ -44,8 +44,8 @@ export default Tabs = ({children}) => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
-          if (route.name === 'Calendar') {
-            iconName = focused ? 'calendar' : 'calendar-outline';
+          if (route.name === 'Forum') {
+            iconName = focused ? 'chatbox' : 'chatbox-outline';
           } else if (route.name === 'Cycles') {
             iconName = focused ? 'layers' : 'layers-outline';
           } else if (route.name === 'Settings') {
@@ -64,9 +64,9 @@ export default Tabs = ({children}) => {
         component={CycleScreen}
       />
       <Tab.Screen
-        name="Calendar"
+        name="Forum"
         options={{
-          tabBarLabel: <Text style={styles.text}>Calendar</Text>,
+          tabBarLabel: <Text style={styles.text}>Forum</Text>,
         }}
         component={CalendarScreen}
       />

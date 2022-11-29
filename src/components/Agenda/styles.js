@@ -1,14 +1,24 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import { colors, fonts, sizes, weights } from '../../theme/theme';
 
 export const styles = StyleSheet.create({
   calendar: {
-    borderRadius: 10, 
+    borderRadius: 25, 
     overflow: 'hidden',
-    height: 800
+    backgroundColor: colors.primary,
+    height: 600
   },  
   item: {
-    backgroundColor: '#F0FAFF',
+    shadowColor: colors.white,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    backgroundColor: colors.white,
+
     flex: 1,
     borderRadius: 10,
     padding: 10,
@@ -16,9 +26,13 @@ export const styles = StyleSheet.create({
     marginTop: 17,
 
   },
+  itemsContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   text: {
     color: colors.black,
     fontFamily: fonts.primary,
-    fontSize: sizes.sm
+    fontSize: sizes.md,
   }
 })

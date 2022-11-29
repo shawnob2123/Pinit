@@ -4,7 +4,6 @@ import {styles} from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Modal from '../../../components/Modal/Modal';
 import AgendaList from '../../../components/Agenda/AgendaList';
-import HomeCalendarStrip from '../../../components/CalendarStrip/CalendarStrip';
 import Loader from '../../../components/Loader/Loader';
 import * as Animatable from 'react-native-animatable';
 
@@ -39,9 +38,9 @@ const CycleScreen = () => {
             <View style={styles.todayContainer}>
               <Text style={styles.title}>Today</Text>
               <Pressable
-                style={styles.addButton}
+                
                 onPress={() => refRBSheet.current.open()}>
-                <FontAwesome name="plus" size={18} color="#fff" />
+                <Text style={[styles.text, {color: '#00a6fb'}]}>Add Cycle</Text>
               </Pressable>
               <Modal refRBSheet={refRBSheet} />
             </View>
