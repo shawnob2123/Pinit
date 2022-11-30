@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     borderRadius: 25, 
     overflow: 'hidden',
     backgroundColor: colors.primary,
-    height: 600
+    height: Dimensions.get('window').height - 200,
   },  
   item: {
     shadowColor: colors.white,
@@ -27,8 +27,10 @@ export const styles = StyleSheet.create({
 
   },
   itemsContent: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
+    paddingLeft: 30,
+
   },
   text: {
     color: colors.black,

@@ -43,11 +43,13 @@ const AgendaList = () => {
   //   if (data) {
   //     const markedDates = data.reduce((acc, cycle) => {
   //       acc[cycle.start_date] = {marked: true, dotColor: colors.primary};
-  //       return acc; 
+  //       return acc;
   //     }, {});
   //     return markedDates;
   //   }
   // }, []);
+  
+  
 
 
  
@@ -89,7 +91,6 @@ const AgendaList = () => {
 
         }}
         showOnlySelectedDayItems={true}
-        onLongPress={(day) => console.log(day)}
         items={items}
         showClosingKnob={true}
         selected={new Date()}
@@ -98,7 +99,7 @@ const AgendaList = () => {
         renderEmptyData={() => {
           return (
             <View style={{alignItems: 'center', paddingTop: 20}}>
-              <Text style={styles.text}>No medications scheduled for today</Text>
+              <Text style={styles.text}>No medications scheduled for this day</Text>
             </View>
           )
         }}

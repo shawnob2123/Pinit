@@ -17,7 +17,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import Counter from '../Counter/Counter';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
@@ -25,8 +25,8 @@ import Loader from '../Loader/Loader';
 const Modal = ({refRBSheet}) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
     anabolic_used: [],
+    dosage: 0,
     start_date: new Date().toLocaleString().split(',')[0],
     end_date: new Date().toLocaleString().split(',')[0],
     pct: '',
@@ -57,10 +57,9 @@ const Modal = ({refRBSheet}) => {
       {
         user_id: supabase.auth.user().id,
         created_at: new Date(),
-        name: formData.name,
         anabolic: formData.anabolic_used,
+        dosage: formData.dosage,
         start_date: formData.start_date,
-        end_date: formData.end_date,
         frequency: formData.frequency,
         pct: formData.pct,
         notes: formData.notes,
@@ -114,15 +113,7 @@ const Modal = ({refRBSheet}) => {
           contentContainerStyle={{paddingBottom: 100}}>
           <Text style={styles.modalTitle}>Add Cycle</Text>
           <View style={styles.createCycleContent}>
-            {/* NAME */}
-            <Heading title="Name" icon="ios-document-text-outline" />
-            <Input
-              style={styles.input}
-              value={formData.cycleName}
-              onChangeText={text => setFormData({...formData, name: text})}
-              placeholder="Cycle Name"
-              inputContainerStyle={{borderBottomWidth: 0}}
-            />
+           
             {/* ANABOLIC USED */}
             <View style={styles.headingContainer}>
               <Fontisto name="injection-syringe" size={24} color="black" />
@@ -142,6 +133,7 @@ const Modal = ({refRBSheet}) => {
               placeholder="Ex. Testosterone Cypionat 250mg"
               inputContainerStyle={{borderBottomWidth: 0}}
             />
+           
             <View
               style={{
                 alignItems: 'center',
@@ -176,8 +168,15 @@ const Modal = ({refRBSheet}) => {
                 );
               })}
             </View>
+             <Heading
+              title="Dosage"
+              icon="md-medical"
+            />
+            <Counter/>
+            
             {/* CALENDAR START */}
-            <Heading title="Start-End Date" icon="calendar" />
+            <Heading title="Start Date" icon="calendar" />
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'center'}}>
             <Input
               style={styles.input}
               value={formData.start_date}
@@ -188,41 +187,23 @@ const Modal = ({refRBSheet}) => {
                 showMode('date');
 
               }}
-              
-            />
-            
-            <Input
-              style={styles.input}
-              value={formData.end_date}
-              onChangeText={onChange}
-              placeholder="End"
-              inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
-              onFocus={() => {
-                showMode('date');
 
-              }}
+              />  
+
+            
              
-            />
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
-            )}
+            
+            </View>
           </View>
         
-          <Heading title="PCT" icon="ios-medkit-outline" />
+          {/* <Heading title="PCT" icon="ios-medkit-outline" />
           <Input
             style={styles.input}
             value={formData.pct}
             onChangeText={text => setFormData({...formData, pct: text})}
             placeholder="Ex. Clomid 50mg"
             inputContainerStyle={{borderBottomWidth: 0}}
-          />
+          /> */}
           <Heading title="Notes" icon="ios-document-text-outline" />
           <Input
             style={[styles.input, {height: 110}]}

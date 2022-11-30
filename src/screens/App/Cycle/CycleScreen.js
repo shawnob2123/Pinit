@@ -23,7 +23,7 @@ const CycleScreen = () => {
   return (
     
     <ScrollView
-      showVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={styles.container}
         contentContainerStyle={{paddingBottom: 100}}>
         {loading ? (
@@ -38,9 +38,9 @@ const CycleScreen = () => {
             <View style={styles.todayContainer}>
               <Text style={styles.title}>Today</Text>
               <Pressable
-                
+                style={styles.addButton}
                 onPress={() => refRBSheet.current.open()}>
-                <Text style={[styles.text, {color: '#00a6fb'}]}>Add Cycle</Text>
+                <FontAwesome name="plus" size={20} color='#fff' />
               </Pressable>
               <Modal refRBSheet={refRBSheet} />
             </View>

@@ -5,7 +5,8 @@ import {Input} from '@rneui/themed';
 import Button from '../../components/Button/Button';
 import { Freshchat, FreshchatConfig, FreshchatUser, FreshchatMessage } from 'react-native-freshchat-sdk';
 import { FRESHCHAT_APP_ID, FRESHCHAT_APP_KEY } from '@env';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
+import Loader from '../../components/Loader/Loader';
 
 const SupportScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -24,9 +25,9 @@ const SupportScreen = () => {
 
   Freshchat.setUser(freshchatUser, (error) => {
     if (error) {
-      console.log(error);
+      null
     } else {
-      console.log('User set successfully');
+      null;
     }
   });
 
@@ -34,13 +35,14 @@ const SupportScreen = () => {
     setLoading(true);
     Freshchat.showConversations();
     Freshchat.sendMessage(freshchatMessage, (error) => {
-      if (!name || !email || !subject) {
+      if (!name || !email ) {
         showMessage({
           message: 'Please fill out all fields',
           type: 'danger',
           icon: 'danger',
         });
         setLoading(false);
+       
       } else {
         console.log('Message sent successfully');
         setLoading(false);
@@ -82,11 +84,10 @@ const SupportScreen = () => {
           />
         </View>
         {loading ? (
-          <ActivityIndicator size="large" color="#00a6fb"
-            animating={
-              setTimeout(() => {
-                setLoading(false);
-              }, 2000)}
+          <Loader
+            onAnimationFinish={() => {
+              setLoading(false);
+            }}
           />
         ) : (
             <Button title="Start Chat" onPress={() => handleSend()} 
