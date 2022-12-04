@@ -42,16 +42,18 @@ export const styles = StyleSheet.create({
   headingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 20
-  },
-  swipeable: {
-    width: '100%',
-    height: 50, 
-    borderRadius: 10,
-  },
-  swipeableContainer: {
-    width: '100%',
     paddingBottom: 20,
+    paddingVertical: 10,
+  },
+  dropdown: {
+    height: 50,
+    width: '100%',
+    borderWidth: 0,
+  },
+  label: {
+    fontSize: sizes.md,
+    fontFamily: fonts.primary,
+    fontWeight: weights.regular,
   },
   datePicker: {
     width: 100,
@@ -59,5 +61,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
     borderRadius: 10,
     padding: 15,
+  },
+  calendarContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingVertical: 10,
   }
 })

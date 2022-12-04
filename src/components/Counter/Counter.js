@@ -2,20 +2,8 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, {useState} from 'react';
 import {colors, fonts, sizes, weights} from '../../theme/theme';
 
-const Counter = () => {
-  const [value, setValue] = useState(0);
-
-  const increment = () => {
-    setValue(value + 1);
-  };
-  const decrement = () => {
-    setValue(value - 1);
-    if (value < 1) {
-      setValue(0);
-    }
-  };
-
-
+const Counter = ({decrement, increment, count}) => {
+ 
   return (
     <View style={styles.counter}>
       <Pressable
@@ -24,7 +12,7 @@ const Counter = () => {
       >
         <Text style={styles.counterText}>-</Text>
       </Pressable>
-      <Text style={[styles.counterText, {padding: 10}]}>{value}</Text>
+      <Text style={[styles.counterText, {paddingHorizontal: 15}]}>{count}</Text>
       <Pressable
         style={[styles.button, {borderColor: colors.primary}]}
         onPress={increment}>

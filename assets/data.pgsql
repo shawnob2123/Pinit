@@ -18,3 +18,15 @@ create table cycles (
 
 );
 )
+
+create table cycles (
+    id serial primary key,
+    anabolic text,
+    dosage int,
+    start_date timestamp,
+    end_date timestamp,
+    type text,
+    notes text,
+    user_id int references users(id),
+    created_at timestamp default now(),
+);

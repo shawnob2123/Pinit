@@ -28,9 +28,9 @@ export default Tabs = ({children}) => {
   return (
     <Tab.Navigator
       barStyle={{
-        backgroundColor: colors.primary,
+        backgroundColor: colors.tab,
         position: 'absolute',
-        borderRadius: 25,
+        borderRadius: 10,
         paddingHorizontal: 25,
         height: 80,
       }}
@@ -53,7 +53,7 @@ export default Tabs = ({children}) => {
           } else if (route.name === 'AnabolicsTab') {
             iconName = focused ? 'barbell' : 'barbell-outline';
           }
-          return <Ionicons name={iconName} size={24} color={colors.white} />;
+          return <Ionicons name={iconName} size={24} color={colors.primary} />;
         },
       })}>
       <Tab.Screen
@@ -149,6 +149,6 @@ const styles = StyleSheet.create({
     fontSize: sizes.sm,
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
-    color: colors.white,
+    color: colors.primary,
   },
 });

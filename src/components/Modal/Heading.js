@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { styles } from './styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const Heading = ({title, icon}) => {
   return (
     <View style={styles.headingContainer}>
-      <Ionicons name={icon} size={24} color="black" />
+      <Fontisto name={icon} size={20} color="black" />
       <Text style={styles.text}>{title}</Text>
     </View>
   )

@@ -2,91 +2,98 @@ import {
   View,
   Text,
   ScrollView,
-  Pressable,
+  Alert,
   Platform,
   LayoutAnimation,
-  UIManager,
-  Animated,
 } from 'react-native';
 import React, {useState, useRef} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {styles} from './styles';
-import {Input, Tooltip} from '@rneui/themed';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import {Input} from '@rneui/themed';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Counter from '../Counter/Counter';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
+import { showMessage, hideMessage } from 'react-native-flash-message';
+
 
 const Modal = ({refRBSheet}) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    anabolic_used: [],
+    anabolic_used: '',
     dosage: 0,
-    start_date: new Date().toLocaleString().split(',')[0],
-    end_date: new Date().toLocaleString().split(',')[0],
-    pct: '',
     notes: '',
   });
-  const [date, setDate] = useState(new Date());
+
+  // DATE/TIME PICKER STATES
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
 
-  if (
-    Platform.OS === 'android' &&
-    UIManager.setLayoutAnimationEnabledExperimental
-  ) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-  }
-  const addAnabolic = () => {
+  // DROPDOWN STATES
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Oral', value: 'Oral'},
+    {label: 'Injectable', value: 'Injectable'},
+  ]);
+
+  // DROPDOWN PICKER
+  const onPickerOpen = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setFormData({...formData, anabolic_used: [...formData.anabolic_used, '']});
+    setOpen(true);
   };
 
-  const removeAnabolic = index => {
-    formData.anabolic_used.splice(index, 1);
-    setFormData({...formData, anabolic_used: [...formData.anabolic_used]});
-  };
-
-  const handleAddCycle = async () => {
+  // ADD TO DB
+  const addAnabolic = async () => {
+    setLoading(true);
     const {data, error} = await supabase.from('cycles').insert([
       {
-        user_id: supabase.auth.user().id,
         created_at: new Date(),
         anabolic: formData.anabolic_used,
-        dosage: formData.dosage,
-        start_date: formData.start_date,
-        frequency: formData.frequency,
-        pct: formData.pct,
+        dosage: count,
+        type: value,
         notes: formData.notes,
+        start_date: startDate,
+        end_date: endDate,
       },
     ]);
     if (error) {
-      console.log(error);
-    }
-    if (data) {
-      console.log(data);
+      Alert.alert('Error', error.message);
+    } else {
+      setLoading(false);
+      setFormData({
+        anabolic_used: '',
+        dosage: 0,
+        notes: '',
+      });
+      setValue(null);
+      setCount(0);
+      setStartDate(new Date());
+      setEndDate(new Date());
+      refRBSheet.current.close();
+      showMessage({
+        message: 'Anabolic successfully added.',
+        type: 'success',
+        duration: 3000,
+        icon: 'success',
+      });
     }
   };
 
-  const showMode = currentMode => {
-    if (Platform.OS === 'android') {
-      setShow(false);
-    }
-    setShow(true);
-  };
+  const [count, setCount] = useState(0);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
+  const increment = () => {
+    setCount(count + 1);
   };
-
-  
+  const decrement = () => {
+    setCount(count - 1);
+    count ? setCount(count - 1) : setCount(0);
+  };
 
   return (
     <>
@@ -113,18 +120,11 @@ const Modal = ({refRBSheet}) => {
           contentContainerStyle={{paddingBottom: 100}}>
           <Text style={styles.modalTitle}>Add Cycle</Text>
           <View style={styles.createCycleContent}>
-           
             {/* ANABOLIC USED */}
-            <View style={styles.headingContainer}>
-              <Fontisto name="injection-syringe" size={24} color="black" />
-              <Text style={[styles.text, {paddingLeft: 10}]}>Anabolic(s)</Text>
-
-              <Pressable style={{paddingLeft: 20}} onPress={addAnabolic}>
-                <Ionicons name="add-circle" size={24} color="black" />
-              </Pressable>
-            </View>
+            <Heading title="Anabolic" icon="injection-syringe" />
 
             <Input
+              autoCorrect={false}
               style={styles.input}
               value={formData.anabolic_used}
               onChangeText={text =>
@@ -133,84 +133,77 @@ const Modal = ({refRBSheet}) => {
               placeholder="Ex. Testosterone Cypionat 250mg"
               inputContainerStyle={{borderBottomWidth: 0}}
             />
-           
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'space-around',
-              }}>
-              {formData.anabolic_used.map((anabolic, index) => {
-                return (
-                  <View style={{width: '100%', paddingBottom: 10}}>
-                    <Swipeable
-                      containerStyle={styles.swipeable}
-                      renderRightActions={() => (
-                        <Button
-                          onPress={() => removeAnabolic(index)}
-                          title="Delete"
-                        />
-                      )}>
-                      <Input
-                        style={styles.input}
-                        value={formData.anabolic_used[index]}
-                        onChangeText={text => {
-                          formData.anabolic_used[index] = text;
-                          setFormData({
-                            ...formData,
-                            anabolic_used: [...formData.anabolic_used],
-                          });
-                        }}
-                        placeholder="Add Anabolic"
-                        inputContainerStyle={{borderBottomWidth: 0}}
-                      />
-                    </Swipeable>
-                  </View>
-                );
-              })}
-            </View>
-             <Heading
-              title="Dosage"
-              icon="md-medical"
+
+            <Heading title="Dosage" icon="jekyll" />
+            <Counter
+              count={count}
+              increment={increment}
+              decrement={decrement}
             />
-            <Counter/>
-            
-            {/* CALENDAR START */}
-            <Heading title="Start Date" icon="calendar" />
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems:'center'}}>
-            <Input
-              style={styles.input}
-              value={formData.start_date}
-              onChangeText={onChange}
-              placeholder="Start"
-              inputContainerStyle={{ borderBottomWidth: 0, width: '50%' }}
-              onFocus={() => {
-                showMode('date');
-
+            <Heading title="Anabolic Type" icon="pills" />
+            <DropDownPicker
+              placeholder="Select Type"
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={{
+                backgroundColor: '#eeeeee',
+                borderRadius: 10,
+                borderWidth: 0,
               }}
+              containerStyle={styles.dropdown}
+              labelStyle={styles.label}
+              textStyle={styles.text}
+              onOpen={onPickerOpen}
+              zIndex={1000}
+              dropDownContainerStyle={{zIndex: 1000, backgroundColor: '#fff'}}
+              itemSeparator={true}
+              itemSeparatorStyle={{backgroundColor: '#f2f2f2'}}
+            />
+            {/* CALENDAR START */}
+            <Heading title="Start-End Date" icon="date" />
 
-              />  
-
-            
-             
-            
+            <View style={styles.calendarContainer}>
+              <Text style={styles.text}>Start</Text>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={startDate}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={(event, selectedDate) => {
+                  const currentDate = selectedDate || startDate;
+                  setShow(Platform.OS === 'ios');
+                  setStartDate(currentDate);
+                }}
+              />
+            </View>
+            <View style={styles.calendarContainer}>
+              <Text style={styles.text}>End</Text>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={endDate}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={(event, selectedDate) => {
+                  const currentDate = selectedDate || endDate;
+                  setShow(Platform.OS === 'ios');
+                  setEndDate(currentDate);
+                }}
+              />
             </View>
           </View>
-        
-          {/* <Heading title="PCT" icon="ios-medkit-outline" />
-          <Input
-            style={styles.input}
-            value={formData.pct}
-            onChangeText={text => setFormData({...formData, pct: text})}
-            placeholder="Ex. Clomid 50mg"
-            inputContainerStyle={{borderBottomWidth: 0}}
-          /> */}
-          <Heading title="Notes" icon="ios-document-text-outline" />
+          <Heading title="Notes" icon="file-1" />
           <Input
             style={[styles.input, {height: 110}]}
             value={formData.notes}
             onChangeText={text => setFormData({...formData, notes: text})}
             placeholder="Notes"
-            inputContainerStyle={{borderBottomWidth: 0, padding: 3}}
+            inputContainerStyle={{borderBottomWidth: 0, padding: 5}}
             multiline={true}
           />
           {loading ? (
@@ -219,7 +212,7 @@ const Modal = ({refRBSheet}) => {
               onAnimationFinish={() => setLoading(false)}
             />
           ) : (
-            <Button title="Add" onPress={() => handleAddCycle()} />
+            <Button title="Add" onPress={() => addAnabolic()} />
           )}
         </ScrollView>
       </RBSheet>

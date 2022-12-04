@@ -1,5 +1,6 @@
 export const colors = {
   background: '#191919',
+  tab: '#1e1e1e',
   primary: '#00a6fb',
   secondary: '#0582ca',
   white: '#ffffff',
