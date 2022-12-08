@@ -39,6 +39,9 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+babel.config.js
+.watchmanconfig
+.prettierrc.js
 
 # BUCK
 buck-out/
