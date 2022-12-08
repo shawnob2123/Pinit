@@ -2,7 +2,9 @@ import { StyleSheet, Text, View, Pressable } from 'react-native'
 import React, {useState} from 'react';
 import {colors, fonts, sizes, weights} from '../../theme/theme';
 
-const Counter = ({decrement, increment, count}) => {
+const Counter = ({ increment, decrement, count}) => {
+  
+ 
  
   return (
     <View style={styles.counter}>

@@ -9,7 +9,7 @@ import {
 import React, {useState, useRef} from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {styles} from './styles';
-import {Input} from '@rneui/themed';
+import {Input, Tooltip} from '@rneui/themed';
 import {supabase} from '../../../server/server';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,8 +17,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Counter from '../Counter/Counter';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
-import { showMessage, hideMessage } from 'react-native-flash-message';
-
+import WeekdayStrip from '../Weekday/WeekdayStrip';
+import {showMessage, hideMessage} from 'react-native-flash-message';
 
 const Modal = ({refRBSheet}) => {
   const [loading, setLoading] = useState(false);
@@ -60,10 +60,16 @@ const Modal = ({refRBSheet}) => {
         notes: formData.notes,
         start_date: startDate,
         end_date: endDate,
+       
       },
     ]);
     if (error) {
-      Alert.alert('Error', error.message);
+      showMessage({
+        message: 'Error',
+        description: 'Error adding a new anabolic.',
+        type: 'danger',
+        icon: 'danger',
+      });
     } else {
       setLoading(false);
       setFormData({
@@ -71,10 +77,6 @@ const Modal = ({refRBSheet}) => {
         dosage: 0,
         notes: '',
       });
-      setValue(null);
-      setCount(0);
-      setStartDate(new Date());
-      setEndDate(new Date());
       refRBSheet.current.close();
       showMessage({
         message: 'Anabolic successfully added.',
@@ -118,7 +120,7 @@ const Modal = ({refRBSheet}) => {
         <ScrollView
           style={styles.modalContent}
           contentContainerStyle={{paddingBottom: 100}}>
-          <Text style={styles.modalTitle}>Add Cycle</Text>
+          <Text style={styles.modalTitle}>Add Anabolic</Text>
           <View style={styles.createCycleContent}>
             {/* ANABOLIC USED */}
             <Heading title="Anabolic" icon="injection-syringe" />
@@ -134,7 +136,8 @@ const Modal = ({refRBSheet}) => {
               inputContainerStyle={{borderBottomWidth: 0}}
             />
 
-            <Heading title="Dosage" icon="jekyll" />
+            <Heading title="Dosage (per week)" icon="jekyll" />
+
             <Counter
               count={count}
               increment={increment}
@@ -189,14 +192,23 @@ const Modal = ({refRBSheet}) => {
                 mode={mode}
                 is24Hour={true}
                 display="default"
+                placeholderTextColor="#000"
                 onChange={(event, selectedDate) => {
                   const currentDate = selectedDate || endDate;
                   setShow(Platform.OS === 'ios');
                   setEndDate(currentDate);
+                  // close picker
+                  setOpen(false);
+                  
                 }}
               />
             </View>
           </View>
+          <Heading
+            title='Select Days'
+            icon='gg'
+          />
+          <WeekdayStrip/>
           <Heading title="Notes" icon="file-1" />
           <Input
             style={[styles.input, {height: 110}]}

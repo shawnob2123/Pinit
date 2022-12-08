@@ -63,13 +63,13 @@ export default Tabs = ({children}) => {
         }}
         component={CycleScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Forum"
         options={{
           tabBarLabel: <Text style={styles.text}>Forum</Text>,
         }}
         component={CalendarScreen}
-      />
+      /> */}
       <Tab.Screen
         name="AnabolicsTab"
         options={{

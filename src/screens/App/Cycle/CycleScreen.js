@@ -1,7 +1,7 @@
 import {View, Text, ScrollView, Pressable} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import Modal from '../../../components/Modal/Modal';
 import AgendaList from '../../../components/Agenda/AgendaList';
 import Loader from '../../../components/Loader/Loader';
@@ -40,7 +40,7 @@ const CycleScreen = () => {
               <Pressable
                 style={styles.addButton}
                 onPress={() => refRBSheet.current.open()}>
-                <FontAwesome name="plus" size={20} color='#fff' />
+                <AntDesign name="plus" size={20} color='#fff' />
               </Pressable>
               <Modal refRBSheet={refRBSheet} />
             </View>
@@ -54,8 +54,6 @@ const CycleScreen = () => {
               animation="fadeInUpBig"
               >
               <AgendaList />
-            
-              
             </Animatable.View>
           </Animatable.View>
         )}

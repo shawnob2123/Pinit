@@ -17,8 +17,8 @@ export const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: sizes.lg,
-    fontFamily: fonts.bold,
-    color: colors.black,
+    fontFamily: fonts.primary,
+    fontWeight: weights.bold,
   },
   createCycleContent: {
     marginTop: 40,
@@ -42,8 +42,9 @@ export const styles = StyleSheet.create({
   headingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingTop: 20,
     paddingBottom: 20,
-    paddingVertical: 10,
+
   },
   dropdown: {
     height: 50,
