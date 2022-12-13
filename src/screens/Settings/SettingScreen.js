@@ -48,11 +48,11 @@ const SettingScreen = ({ navigation }) => {
             screenName='Support'
             onPress={() => navigation.navigate('Support')}
           />
-          <Settings
+          {/* <Settings
               icon='flash-outline'
             screenName='Upgrade'
             onPress={() => navigation.navigate('Upgrade')}
-          />
+          /> */}
         </View>
       <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
         {loading ? (

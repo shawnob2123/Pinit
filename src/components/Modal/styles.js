@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     fontWeight: weights.bold,
   },
   createCycleContent: {
-    marginTop: 40,
+    marginTop: 10,
     width: '100%',
   },
   text: {
@@ -68,5 +68,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     paddingVertical: 10,
-  }
+  },
+   weekdayContainer: {
+    width: '100%',
+    height: 50,
+    backgroundColor: colors.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 })

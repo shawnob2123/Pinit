@@ -2,31 +2,32 @@ import {
   View,
   Text,
   ScrollView,
-  Alert,
   Platform,
   LayoutAnimation,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, { useState } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {styles} from './styles';
-import {Input, Tooltip} from '@rneui/themed';
-import {supabase} from '../../../server/server';
+import { styles } from './styles';
+import { Input } from '@rneui/themed';
+import { supabase } from '../../../server/server';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Counter from '../Counter/Counter';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
-import WeekdayStrip from '../Weekday/WeekdayStrip';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import Weekday from '../Weekday/Weekday';
+import { showMessage, hideMessage } from 'react-native-flash-message';
+import  {useStore}  from '../../store/store';
 
-const Modal = ({refRBSheet}) => {
+const Modal = ({ refRBSheet }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     anabolic_used: '',
     dosage: 0,
     notes: '',
   });
+
 
   // DATE/TIME PICKER STATES
   const [startDate, setStartDate] = useState(new Date());
@@ -38,8 +39,8 @@ const Modal = ({refRBSheet}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Oral', value: 'Oral'},
-    {label: 'Injectable', value: 'Injectable'},
+    { label: 'Oral', value: 'Oral' },
+    { label: 'Injectable', value: 'Injectable' },
   ]);
 
   // DROPDOWN PICKER
@@ -48,10 +49,16 @@ const Modal = ({refRBSheet}) => {
     setOpen(true);
   };
 
+  // COUNT
+  const count = useStore(state => state.count);
+  
+ 
+  
+
   // ADD TO DB
   const addAnabolic = async () => {
     setLoading(true);
-    const {data, error} = await supabase.from('cycles').insert([
+    const { data, error } = await supabase.from('cycles').insert([
       {
         created_at: new Date(),
         anabolic: formData.anabolic_used,
@@ -60,7 +67,7 @@ const Modal = ({refRBSheet}) => {
         notes: formData.notes,
         start_date: startDate,
         end_date: endDate,
-       
+        selected_days: selectedDays,
       },
     ]);
     if (error) {
@@ -72,11 +79,6 @@ const Modal = ({refRBSheet}) => {
       });
     } else {
       setLoading(false);
-      setFormData({
-        anabolic_used: '',
-        dosage: 0,
-        notes: '',
-      });
       refRBSheet.current.close();
       showMessage({
         message: 'Anabolic successfully added.',
@@ -87,24 +89,17 @@ const Modal = ({refRBSheet}) => {
     }
   };
 
-  const [count, setCount] = useState(0);
 
-  const increment = () => {
-    setCount(count + 1);
-  };
-  const decrement = () => {
-    setCount(count - 1);
-    count ? setCount(count - 1) : setCount(0);
-  };
+  
+
 
   return (
     <>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        // clear fields if close is enabled
         closeOnPressMask={true}
-        animationType="slide"
+        animationType='slide'
         height={700}
         customStyles={{
           container: {
@@ -116,36 +111,37 @@ const Modal = ({refRBSheet}) => {
             backgroundColor: 'transparent',
             height: '100%',
           },
-        }}>
+        }}
+      >
         <ScrollView
           style={styles.modalContent}
-          contentContainerStyle={{paddingBottom: 100}}>
+          contentContainerStyle={{ paddingBottom: 100 }}
+        >
           <Text style={styles.modalTitle}>Add Anabolic</Text>
           <View style={styles.createCycleContent}>
             {/* ANABOLIC USED */}
-            <Heading title="Anabolic" icon="injection-syringe" />
+            <Heading title='Anabolic' icon='injection-syringe' />
 
             <Input
               autoCorrect={false}
               style={styles.input}
               value={formData.anabolic_used}
-              onChangeText={text =>
-                setFormData({...formData, anabolic_used: text})
+              onChangeText={(text) =>
+                setFormData({ ...formData, anabolic_used: text })
               }
-              placeholder="Ex. Testosterone Cypionat 250mg"
-              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder='Ex. Testosterone Cypionat 250mg'
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
 
-            <Heading title="Dosage (per week)" icon="jekyll" />
+            <Heading title='Dosage (per week)' icon='jekyll' />
 
             <Counter
               count={count}
-              increment={increment}
-              decrement={decrement}
+
             />
-            <Heading title="Anabolic Type" icon="pills" />
+            <Heading title='Anabolic Type' icon='pills' />
             <DropDownPicker
-              placeholder="Select Type"
+              placeholder='Select Type'
               open={open}
               value={value}
               items={items}
@@ -162,21 +158,21 @@ const Modal = ({refRBSheet}) => {
               textStyle={styles.text}
               onOpen={onPickerOpen}
               zIndex={1000}
-              dropDownContainerStyle={{zIndex: 1000, backgroundColor: '#fff'}}
+              dropDownContainerStyle={{ zIndex: 1000, backgroundColor: '#fff' }}
               itemSeparator={true}
-              itemSeparatorStyle={{backgroundColor: '#f2f2f2'}}
+              itemSeparatorStyle={{ backgroundColor: '#f2f2f2' }}
             />
             {/* CALENDAR START */}
-            <Heading title="Start-End Date" icon="date" />
+            <Heading title='Start-End Date' icon='date' />
 
             <View style={styles.calendarContainer}>
               <Text style={styles.text}>Start</Text>
               <DateTimePicker
-                testID="dateTimePicker"
+                testID='dateTimePicker'
                 value={startDate}
                 mode={mode}
                 is24Hour={true}
-                display="default"
+                display='default'
                 onChange={(event, selectedDate) => {
                   const currentDate = selectedDate || startDate;
                   setShow(Platform.OS === 'ios');
@@ -187,35 +183,33 @@ const Modal = ({refRBSheet}) => {
             <View style={styles.calendarContainer}>
               <Text style={styles.text}>End</Text>
               <DateTimePicker
-                testID="dateTimePicker"
+                testID='dateTimePicker'
                 value={endDate}
                 mode={mode}
                 is24Hour={true}
-                display="default"
-                placeholderTextColor="#000"
+                display='default'
                 onChange={(event, selectedDate) => {
                   const currentDate = selectedDate || endDate;
                   setShow(Platform.OS === 'ios');
                   setEndDate(currentDate);
-                  // close picker
-                  setOpen(false);
-                  
                 }}
               />
             </View>
           </View>
-          <Heading
-            title='Select Days'
-            icon='gg'
-          />
-          <WeekdayStrip/>
-          <Heading title="Notes" icon="file-1" />
+          <Heading title='Select Days' icon='gg' />
+          <View style={styles.weekdayContainer}>
+            <Weekday
+              
+
+            />
+          </View>
+          <Heading title='Notes' icon='file-1' />
           <Input
-            style={[styles.input, {height: 110}]}
+            style={[styles.input, { height: 110 }]}
             value={formData.notes}
-            onChangeText={text => setFormData({...formData, notes: text})}
-            placeholder="Notes"
-            inputContainerStyle={{borderBottomWidth: 0, padding: 5}}
+            onChangeText={(text) => setFormData({ ...formData, notes: text })}
+            placeholder='Notes'
+            inputContainerStyle={{ borderBottomWidth: 0, padding: 5 }}
             multiline={true}
           />
           {loading ? (
@@ -224,7 +218,7 @@ const Modal = ({refRBSheet}) => {
               onAnimationFinish={() => setLoading(false)}
             />
           ) : (
-            <Button title="Add" onPress={() => addAnabolic()} />
+            <Button title='Add' onPress={() => addAnabolic()} />
           )}
         </ScrollView>
       </RBSheet>

@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, {useState} from 'react';
+import React from 'react';
 import {colors, fonts, sizes, weights} from '../../theme/theme';
+import { useStore } from '../../store/store';
 
-const Counter = ({ increment, decrement, count}) => {
+const Counter = ({count}) => {
   
- 
+  const increment = useStore(state => state.increment);
+  const decrement = useStore(state => state.decrement);
+  const disable = useStore(state => state.disable);
  
   return (
     <View style={styles.counter}>
@@ -14,7 +17,9 @@ const Counter = ({ increment, decrement, count}) => {
       >
         <Text style={styles.counterText}>-</Text>
       </Pressable>
-      <Text style={[styles.counterText, {paddingHorizontal: 15}]}>{count}</Text>
+      <Text style={[styles.counterText, { paddingHorizontal: 15 }]}>{
+        count < 0 ? disable() : count
+      }</Text>
       <Pressable
         style={[styles.button, {borderColor: colors.primary}]}
         onPress={increment}>
