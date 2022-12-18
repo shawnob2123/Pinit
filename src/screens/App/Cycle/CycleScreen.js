@@ -6,6 +6,8 @@ import Modal from '../../../components/Modal/Modal';
 import AgendaList from '../../../components/Agenda/AgendaList';
 import Loader from '../../../components/Loader/Loader';
 import * as Animatable from 'react-native-animatable';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 const CycleScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ const CycleScreen = () => {
 
   return (
     
-    <ScrollView
+    <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={styles.container}
         contentContainerStyle={{paddingBottom: 100}}>
@@ -57,7 +59,7 @@ const CycleScreen = () => {
             </Animatable.View>
           </Animatable.View>
         )}
-      </ScrollView>
+      </KeyboardAwareScrollView>
  
   );
 };

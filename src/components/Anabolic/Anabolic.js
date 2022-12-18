@@ -5,7 +5,7 @@ import { styles } from './styles'
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
-
+import {colors} from '../../theme/theme';
 const Anabolic = ({ anabolics }) => {
   const navigation = useNavigation();
 
@@ -17,7 +17,7 @@ const Anabolic = ({ anabolics }) => {
         <Fontisto
           name={anabolics.type === 'injectable' ? 'injection-syringe' : 'pills'}
           size={20}
-          color="#00a6fb" />
+          color={anabolics.type === 'injectable' ? colors.primary : colors.orange} />
         <Text style={styles.name}>{anabolics.name}</Text>
         <FontAwesome name='angle-right' size={20} color="#00a6fb" style={styles.icon} />
         </View>

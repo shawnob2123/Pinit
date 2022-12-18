@@ -3,10 +3,9 @@ import { colors, fonts, sizes, weights } from '../../theme/theme';
 
 export const styles = StyleSheet.create({
   calendar: {
-    borderRadius: 25, 
+    borderRadius: 10, 
     overflow: 'hidden',
-    backgroundColor: colors.primary,
-    height: Dimensions.get('window').height - 200,
+    height: 500,
   },  
   item: {
     shadowColor: colors.white,

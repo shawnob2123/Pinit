@@ -1,24 +1,25 @@
 import {
   View,
   Text,
-  ScrollView,
   Platform,
   LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
-import { supabase } from '../../../server/server';
+import { supabase, writeItemData } from '../../../server/server';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Counter from '../Counter/Counter';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
-import Weekday from '../Weekday/Weekday';
-import { showMessage, hideMessage } from 'react-native-flash-message';
+import WeekdayStrip from '../Weekday/WeekdayStrip';
+// import { showMessage, hideMessage } from 'react-native-flash-message';
 import  {useStore}  from '../../store/store';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const Modal = ({ refRBSheet }) => {
   const [loading, setLoading] = useState(false);
@@ -51,48 +52,8 @@ const Modal = ({ refRBSheet }) => {
 
   // COUNT
   const count = useStore(state => state.count);
-  
- 
-  
 
   // ADD TO DB
-  const addAnabolic = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('cycles').insert([
-      {
-        created_at: new Date(),
-        anabolic: formData.anabolic_used,
-        dosage: count,
-        type: value,
-        notes: formData.notes,
-        start_date: startDate,
-        end_date: endDate,
-        selected_days: selectedDays,
-      },
-    ]);
-    if (error) {
-      showMessage({
-        message: 'Error',
-        description: 'Error adding a new anabolic.',
-        type: 'danger',
-        icon: 'danger',
-      });
-    } else {
-      setLoading(false);
-      refRBSheet.current.close();
-      showMessage({
-        message: 'Anabolic successfully added.',
-        type: 'success',
-        duration: 3000,
-        icon: 'success',
-      });
-    }
-  };
-
-
-  
-
-
   return (
     <>
       <RBSheet
@@ -113,7 +74,7 @@ const Modal = ({ refRBSheet }) => {
           },
         }}
       >
-        <ScrollView
+        <KeyboardAwareScrollView
           style={styles.modalContent}
           contentContainerStyle={{ paddingBottom: 100 }}
         >
@@ -197,12 +158,9 @@ const Modal = ({ refRBSheet }) => {
             </View>
           </View>
           <Heading title='Select Days' icon='gg' />
-          <View style={styles.weekdayContainer}>
-            <Weekday
-              
-
-            />
-          </View>
+             
+            <WeekdayStrip/>
+            
           <Heading title='Notes' icon='file-1' />
           <Input
             style={[styles.input, { height: 110 }]}
@@ -220,7 +178,7 @@ const Modal = ({ refRBSheet }) => {
           ) : (
             <Button title='Add' onPress={() => addAnabolic()} />
           )}
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </RBSheet>
     </>
   );

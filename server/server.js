@@ -14,26 +14,24 @@ import { SUPABASE_API_KEY, SUPABASE_URL } from '@env';
   },
  });
 
-export const writeCycleData = async ({ name, anabolics_used, start_date, end_date, duration, frequency, notes }) => {
-  const { data, error } = await supabase.from('cycles').insert([
+export const writeAnabolicData = async ({ anabolic, count, type, startDate, endDate, selectedDays, notes }) => {
+  return await supabase.from('cycles').insert([
     {
-      user_id: supabase.auth.user().id,
-      name,
-      anabolics_used,
-      start_date,
-      end_date,
-      duration,
-      frequency,
-      notes,
       created_at: new Date(),
-      updated_at: new Date(),
+      anabolic: anabolic,
+      dosage: count,
+      type: type,
+      start_date: startDate,
+      end_date: endDate,
+      days: selectedDays,
+      notes: notes,
+      user_id: supabase.auth.user()?.id,
     },
   ]);
-  if (error) {
-    console.log(error);
-  }
-  if (data) {
-    console.log(data);
-  }
- }
+};
+
+export const readAnabolicData = async () => { 
+  const { data, error } = await supabase.from('cycles').select('*, user_id (id)').eq('user_id', supabase.auth.user()?.id);
+  return data;
+}
 
