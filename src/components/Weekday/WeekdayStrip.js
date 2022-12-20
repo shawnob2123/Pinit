@@ -2,24 +2,63 @@ import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import React, { useState } from 'react';
 import { styles } from './styles';
 import { colors } from '../../theme/theme';
+import { useDaySelector } from '../../store/store';
+const WeekdayStrip = ({selectedDays}) => {
 
-const WeekdayStrip = ({ day }) => {
-
-
-  const [selectedDays, setSelectedDays] = useState([]);
-  const days = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'S'];
+  const addSelectedDay = useDaySelector(state => state.addSelectedDay);
+  const removeSelectedDay = useDaySelector(state => state.removeSelectedDay);
+  
+  const days = [
+    {
+      id: 1,
+      day: 'M',
+      value: 'Monday',
+    },
+    {
+      id: 2,
+      day: 'Tu',
+      value: 'Tuesday',
+    },
+    {
+      id: 3,
+      day: 'W',
+      value: 'Wednesday',
+    },
+    {
+      id: 4,
+      day: 'Th',
+      value: 'Thursday',
+    },
+    {
+      id: 5,
+      day: 'F',
+      value: 'Friday',
+    },
+    {
+      id: 6,
+      day: 'Sa',
+      value: 'Saturday',
+    },
+    {
+      id: 7,
+      day: 'Su',
+      value: 'Sunday',
+    },
+  ]
 
   const handleSelect = (day) => {
     if (selectedDays.includes(day)) {
-      setSelectedDays(selectedDays.filter((item) => item !== day));
+      removeSelectedDay(day)
     } else {
-      setSelectedDays([...selectedDays, day]);
+      addSelectedDay(day)
     }
+    console.log(selectedDays)
   }
+
   return (
     <View style={styles.weekdayStrip}>
       <FlatList
-        data={days}
+        data={days.map((item) => item.day)}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item}

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontSize: sizes.md,
-    fontFamily: fonts.bold,
+    fontFamily: fonts.primary,
     padding: 10
  
   },

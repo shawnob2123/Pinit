@@ -6,3 +6,9 @@ export const useStore = create((set) => ({
   decrement: () => set((state) => ({ count: state.count - 1 })),
   disable: () => set((state) => ({ count: state.count === 0 })),
 }));
+
+export const useDaySelector = create((set) => ({
+  selectedDays: [],
+  addSelectedDay: (day) => set((state) => ({ selectedDays: [...state.selectedDays, day] })),
+  removeSelectedDay: (day) => set((state) => ({ selectedDays: state.selectedDays.filter((item) => item !== day) })),
+}));

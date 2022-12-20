@@ -18,8 +18,9 @@ import Heading from './Heading';
 import Loader from '../Loader/Loader';
 import WeekdayStrip from '../Weekday/WeekdayStrip';
 // import { showMessage, hideMessage } from 'react-native-flash-message';
-import  {useStore}  from '../../store/store';
+import  {useStore, useDaySelector}  from '../../store/store';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { showMessage } from 'react-native-flash-message';
 
 const Modal = ({ refRBSheet }) => {
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,47 @@ const Modal = ({ refRBSheet }) => {
   // COUNT
   const count = useStore(state => state.count);
 
-  // ADD TO DB
+  // SELECTED DAYS
+  const selectedDays = useDaySelector(state => state.selectedDays);
+
+
+  // use supabase realtime to add to the database
+  const addAnabolic = async () => { 
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('cycles')
+      .insert([
+        {
+          anabolic_used: formData.anabolic_used,
+          dosage: count,
+          notes: formData.notes,
+          start_date: startDate,
+          end_date: endDate,
+          type: value,
+          selected_days: selectedDays,
+          created_at: new Date(),
+          
+        },
+      ])
+      .single();
+    if (error) {
+      showMessage({
+        message: 'Error',
+        description: error.message,
+        type: 'danger',
+        icon: 'danger',
+      })
+    } else {
+      showMessage({
+        message: 'Success',
+        description: 'Anabolic successfully added.',
+        type: 'success',
+        icon: 'success',
+      })
+      setLoading(false);
+      refRBSheet.current.close();
+    }
+  }
   return (
     <>
       <RBSheet
@@ -95,11 +136,8 @@ const Modal = ({ refRBSheet }) => {
             />
 
             <Heading title='Dosage (per week)' icon='jekyll' />
-
-            <Counter
-              count={count}
-
-            />
+            <Counter count={count} />
+            
             <Heading title='Anabolic Type' icon='pills' />
             <DropDownPicker
               placeholder='Select Type'
@@ -159,7 +197,9 @@ const Modal = ({ refRBSheet }) => {
           </View>
           <Heading title='Select Days' icon='gg' />
              
-            <WeekdayStrip/>
+          <WeekdayStrip
+            selectedDays={selectedDays}
+            />
             
           <Heading title='Notes' icon='file-1' />
           <Input
