@@ -30,7 +30,10 @@ const Modal = ({ refRBSheet }) => {
     notes: '',
   });
 
-
+  const { data: profile } =  supabase.auth.getUser();
+  
+  console.log(profile)
+  
   // DATE/TIME PICKER STATES
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -73,7 +76,7 @@ const Modal = ({ refRBSheet }) => {
           type: value,
           selected_days: selectedDays,
           created_at: new Date(),
-          
+          user_id: supabase.auth.user()?.id,
         },
       ])
       .single();
@@ -205,6 +208,7 @@ const Modal = ({ refRBSheet }) => {
           <Input
             style={[styles.input, { height: 110 }]}
             value={formData.notes}
+            autoCorrect={false}
             onChangeText={(text) => setFormData({ ...formData, notes: text })}
             placeholder='Notes'
             inputContainerStyle={{ borderBottomWidth: 0, padding: 5 }}

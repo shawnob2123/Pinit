@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   calendar: {
     borderRadius: 10, 
     overflow: 'hidden',
-    height: 500,
+    height: Dimensions.get('window').height / 2.5,
   },  
   item: {
     shadowColor: colors.white,

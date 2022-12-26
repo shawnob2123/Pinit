@@ -22,7 +22,7 @@ const ProductScreen = () => {
 
   const fetchProducts = useCallback(async () => {
     const {data, error} = await supabase
-      .from('anabolics')
+      .from('steroids')
       .select('*')
       .order('name', {ascending: true});
     if (error) {

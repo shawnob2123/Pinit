@@ -1,11 +1,11 @@
 
-import { StatusBar, View, StyleSheet } from 'react-native'
-import React, {useState, useEffect} from 'react';
+import { StatusBar, View, StyleSheet} from 'react-native'
+import React, {useState, useEffect, useContext} from 'react';
 import {colors} from './src/theme/theme';
 import Tabs from './navigation/Tabs';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { AuthStack } from './navigation/AuthStack';
-
+import { AuthProvider } from './navigation/AuthProvider';
 import { supabase } from './server/server';
 import FlashMessage from 'react-native-flash-message';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 
 const App = () => {
   const [session, setSession] = useState(null);
-
+  
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
@@ -33,7 +33,7 @@ const App = () => {
   }, [])
 
   return (
-
+    <AuthProvider>
     <View style={styles.app}>
       <NavigationContainer theme={DarkTheme}>
         <StatusBar barStyle="light-content" />
@@ -42,7 +42,8 @@ const App = () => {
         </QueryClientProvider>
         <FlashMessage position="top" />
         </NavigationContainer>
-    </View>
+      </View>
+    </AuthProvider>
 
   )
 };

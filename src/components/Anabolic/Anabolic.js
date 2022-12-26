@@ -5,7 +5,9 @@ import { styles } from './styles'
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
-import {colors} from '../../theme/theme';
+import { colors } from '../../theme/theme';
+
+
 const Anabolic = ({ anabolics }) => {
   const navigation = useNavigation();
 

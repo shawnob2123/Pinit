@@ -4,9 +4,9 @@ import {supabase} from '../../../server/server';
 import {styles} from './styles';
 import {Input} from '@rneui/themed';
 import Button from '../../components/Button/Button';
-import {showMessage, hideMessage} from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 
-const EditProfileScreen = ({session}) => {
+const EditProfileScreen = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [name, setName] = useState('');

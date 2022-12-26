@@ -52,8 +52,6 @@ const SignUpScreen = ({navigation}) => {
     }
   };
 
- 
-
 
   return (
     <View style={styles.container}>

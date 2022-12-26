@@ -1,10 +1,10 @@
-import {View, Text, Pressable, Image} from 'react-native';
-import React, {useState, useMemo, useEffect} from 'react';
-import {Agenda} from 'react-native-calendars';
-import {styles} from './styles';
-import {colors} from '../../theme/theme';
+import { View, Text, Pressable, Image } from 'react-native';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Agenda } from 'react-native-calendars';
+import { styles } from './styles';
+import { colors } from '../../theme/theme';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import {supabase} from '../../../server/server';
+import { supabase } from '../../../server/server';
 
 const timeToString = time => {
   const date = new Date(time);
@@ -12,38 +12,32 @@ const timeToString = time => {
 };
 
 const AgendaList = () => {
+
   const [items, setItems] = useState({});
-
-  // const markDate = useMemo(() => {
-  //   const {data, error} = supabase
-  //     .from('cycles')
-  //     .select('*')
-  //     .eq('user_id', supabase.auth.user().id);
-  //   if (data) {
-  //     const markedDates = data.reduce((acc, cycle) => {
-  //       acc[cycle.start_date] = {marked: true, dotColor: colors.primary};
-  //       return acc;
-  //     }, {});
-  //     return markedDates;
-  //   }
-  // }, []);
-
-  useEffect(() => { 
-    const {data, error} = supabase
-      .from('cycles')
-      .select('*')
-      .eq('user_id', supabase.auth.getUser().id);
-    if (data) {
-      console.log(data);
-      const markedDates = data.reduce((acc, cycle) => {
-        acc[cycle.start_date] = { marked: true, dotColor: colors.orange };
-        acc[cycle.end_date] = { marked: true, dotColor: colors.orange };
-        return acc;
-      }, {});
-      return markedDates;
+  const [loading, setLoading] = useState(true);
+  const [markedDates, setMarkedDates] = useState({});
+  
+  useEffect(() => {
+  const loadItems = async () => { 
+    const { data, error } = await supabase.from('cycles').select('*, user_id (id)').eq('user_id', supabase.auth.user()?.id);
+    if (error) {
+      console.log(error);
     }
+    const newItems = {};
+    data.map(item => {
+      const date = timeToString(new Date(item.start_date));
+      if (!newItems[date]) {
+        newItems[date] = [];
+        newItems[date].push(item);
+      } else {
+        newItems[date].push(item);
+      }
+    });
+    setItems(newItems);
+    setLoading(false);
+  }
+    loadItems();
   }, []);
-
   const renderItem = item => {
     return (
       <Pressable style={styles.item}>
@@ -51,17 +45,19 @@ const AgendaList = () => {
           name={item.name === 'injection' ? 'injection-syringe' : 'pills'}
           size={20}
           color={item.name === 'injection' ? colors.primary : colors.orange}
-          style={{top: 20}}
+          style={{ top: 20 }}
         />
         <View style={styles.itemsContent}>
-          <Text style={styles.text}>{item.anabolic}</Text>
-          <Text style={[styles.text, {color: 'gray', paddingTop: 5}]}>
-            {item.dosage}{' '}
+          <Text style={styles.text}>{item.anabolic_used}</Text>
+          <Text style={[styles.text, { color: 'gray', paddingTop: 5 }]}>
+            {item.count}{' '}
           </Text>
         </View>
       </Pressable>
     );
   };
+
+  
 
   return (
     <>
@@ -82,28 +78,30 @@ const AgendaList = () => {
           todayBackgroundColor: colors.primary,
           dotColor: colors.orange,
         }}
-        
+        loadItemsForMonth={month => { 
+          console.log('trigger items loading');
+        }}
+        markedDates={markedDates}
         showOnlySelectedDayItems={true}
-        items={items}
+        items={renderItem}
         showClosingKnob={true}
         rowHasChanged={(r1, r2) => {
-    return r1.text !== r2.text;
-  }}
+          return r1.text !== r2.text;
+        }}  
+       
         selected={new Date()}
-        renderItem={renderItem}
-        renderEmptyDate={() => {
+        
+        renderEmptyData={() => {
           return (
             <View style={styles.emptyDate}>
-              <Text style={styles.text}>No medications scheduled for this day.</Text>
+              <Text style={[styles.text, { alignSelf: 'center', paddingTop: 50 }]}>No medications scheduled for this day.</Text>
             </View>
           );
         }}
-        renderEmptyData={() => {
+        renderEmptyDate={() => {
           return (
-            <View style={{alignItems: 'center', paddingTop: 20}}>
-              <Text style={styles.text}>
-                No medications scheduled for this day
-              </Text>
+            <View style={styles.emptyDate}>
+              <Text style={[styles.text, {alignSelf: 'center', paddingTop: 50}]}>No medications scheduled for this day.</Text>
             </View>
           );
         }}
