@@ -1,10 +1,11 @@
-import {Pressable, Text, View, ActivityIndicator, Alert} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {supabase} from '../../../server/server';
-import {styles} from './styles';
-import {Input} from '@rneui/themed';
+import { Pressable, Text, View, ActivityIndicator, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../../server/server';
+import { styles } from './styles';
+import { Input } from '@rneui/themed';
 import Button from '../../components/Button/Button';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
+import Loader from '../../components/Loader/Loader';
 
 const EditProfileScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const EditProfileScreen = () => {
 
 
   // GET
-const getUserProfile = async () => {
+  const getUserProfile = async () => {
 
     try {
       const { data: profile } = await supabase.auth.getUser();
@@ -36,21 +37,12 @@ const getUserProfile = async () => {
     }
   };
   // UPDATE
-  
 
-  
-
-  // CLOSE LOADER
-  const closeLoader = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
 
   const resetPassword = async () => {
     try {
       setLoading(true);
-      const {error} = await supabase.auth.api.resetPasswordForEmail(email);
+      const { error } = await supabase.auth.api.resetPasswordForEmail(email);
       if (error) {
         setError(error.message);
       } else {
@@ -66,8 +58,12 @@ const getUserProfile = async () => {
   };
 
   return (
+
     <View style={styles.container}>
+
+
       <View style={styles.contentContainer}>
+
         <Text style={styles.title}>Edit Profile</Text>
         <Input
           leftIcon={{
@@ -77,10 +73,10 @@ const getUserProfile = async () => {
             size: 20,
           }}
           value={name}
-          placeholderTextColor={'#fff'} 
+          placeholderTextColor={'#fff'}
           onChangeText={text => setName(text)}
           style={styles.input}
-          inputContainerStyle={{borderBottomWidth: 0}}
+          inputContainerStyle={{ borderBottomWidth: 0 }}
         />
         <Input
           leftIcon={{
@@ -95,10 +91,10 @@ const getUserProfile = async () => {
           autoCapitalize="none"
           keyboardType="email-address"
           style={styles.input}
-          inputContainerStyle={{borderBottomWidth: 0}}
+          inputContainerStyle={{ borderBottomWidth: 0 }}
         />
-        <Pressable style={{alignSelf: 'center'}} onPress={resetPassword}>
-          <Text style={[styles.title, {fontWeight: '100'}]}>
+        <Pressable style={{ alignSelf: 'center' }} onPress={resetPassword}>
+          <Text style={[styles.title, { fontWeight: '100' }]}>
             Reset Password
           </Text>
         </Pressable>
@@ -106,13 +102,17 @@ const getUserProfile = async () => {
           <ActivityIndicator
             size="large"
             color="#00a6fb"
-            animating={closeLoader()}
+            
           />
         ) : (
-            <Button title="Save" onPress={() => updateProfile()} />
+          <Button title="Save" onPress={() => updateProfile()} />
         )}
+
       </View>
+
     </View>
+
+
   );
 };
 

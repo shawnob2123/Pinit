@@ -30,9 +30,7 @@ const Modal = ({ refRBSheet }) => {
     notes: '',
   });
 
-  const { data: profile } =  supabase.auth.getUser();
-  
-  console.log(profile)
+ 
   
   // DATE/TIME PICKER STATES
   const [startDate, setStartDate] = useState(new Date());
@@ -76,7 +74,7 @@ const Modal = ({ refRBSheet }) => {
           type: value,
           selected_days: selectedDays,
           created_at: new Date(),
-          user_id: supabase.auth.user()?.id,
+          user_id: supabase.auth.getUser().id,
         },
       ])
       .single();
@@ -95,6 +93,16 @@ const Modal = ({ refRBSheet }) => {
         icon: 'success',
       })
       setLoading(false);
+      setFormData({
+        anabolic_used: '',
+        count: 0,
+        notes: '',
+        
+      }); // clear form data
+      setValue(null); // clear dropdown
+      setStartDate(new Date()); // clear start date
+      setEndDate(new Date()); // clear end date
+
       refRBSheet.current.close();
     }
   }

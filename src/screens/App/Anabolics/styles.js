@@ -58,5 +58,6 @@ export const styles = StyleSheet.create({
   },
   anabolicsContent: {
     paddingTop: 50
-  }
+  },
+  
 })

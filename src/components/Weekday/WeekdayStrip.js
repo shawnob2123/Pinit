@@ -52,7 +52,6 @@ const WeekdayStrip = ({selectedDays}) => {
     } else {
       addSelectedDay(day)
     }
-    console.log(selectedDays)
   }
 
   return (

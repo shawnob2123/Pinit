@@ -63,7 +63,7 @@ const SupportScreen = () => {
         <Text style={styles.text}>
           For any questions, comments, concerns, or any other inquires about
           Pinit, please submit a valid form below. Please include your name,
-          email. We will get back to you via chat or email.
+          email. We will get back to you via chat or email us at support@pinitllc.com
         </Text>
         <View style={{paddingTop: 50}}>
           <Input

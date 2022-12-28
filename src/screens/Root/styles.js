@@ -5,8 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-   
-    justifyContent: 'center',
+    paddingTop: 70,
     backgroundColor: colors.background
   },
   title: {
@@ -72,6 +71,13 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
     alignSelf: 'center',
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 20,
   }
 
 })

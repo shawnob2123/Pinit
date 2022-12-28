@@ -5,7 +5,6 @@ import {colors} from './src/theme/theme';
 import Tabs from './navigation/Tabs';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { AuthStack } from './navigation/AuthStack';
-import { AuthProvider } from './navigation/AuthProvider';
 import { supabase } from './server/server';
 import FlashMessage from 'react-native-flash-message';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -30,10 +29,11 @@ const App = () => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-  }, [])
+  }, []);
+
 
   return (
-    <AuthProvider>
+    
     <View style={styles.app}>
       <NavigationContainer theme={DarkTheme}>
         <StatusBar barStyle="light-content" />
@@ -43,7 +43,7 @@ const App = () => {
         <FlashMessage position="top" />
         </NavigationContainer>
       </View>
-    </AuthProvider>
+   
 
   )
 };

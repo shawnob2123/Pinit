@@ -28,10 +28,10 @@ export const styles = StyleSheet.create({
   toggle: {
     width: '100%',
     padding: 2,
-    paddingVertical: 2,
+    paddingVertical: 10,
   },
   row: {
-     flexDirection: 'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
 

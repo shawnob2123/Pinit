@@ -17,27 +17,7 @@ const AgendaList = () => {
   const [loading, setLoading] = useState(true);
   const [markedDates, setMarkedDates] = useState({});
   
-  useEffect(() => {
-  const loadItems = async () => { 
-    const { data, error } = await supabase.from('cycles').select('*, user_id (id)').eq('user_id', supabase.auth.user()?.id);
-    if (error) {
-      console.log(error);
-    }
-    const newItems = {};
-    data.map(item => {
-      const date = timeToString(new Date(item.start_date));
-      if (!newItems[date]) {
-        newItems[date] = [];
-        newItems[date].push(item);
-      } else {
-        newItems[date].push(item);
-      }
-    });
-    setItems(newItems);
-    setLoading(false);
-  }
-    loadItems();
-  }, []);
+  
   const renderItem = item => {
     return (
       <Pressable style={styles.item}>
@@ -78,19 +58,17 @@ const AgendaList = () => {
           todayBackgroundColor: colors.primary,
           dotColor: colors.orange,
         }}
-        loadItemsForMonth={month => { 
-          console.log('trigger items loading');
-        }}
+        
         markedDates={markedDates}
         showOnlySelectedDayItems={true}
-        items={renderItem}
+        items={items}
         showClosingKnob={true}
         rowHasChanged={(r1, r2) => {
           return r1.text !== r2.text;
         }}  
        
         selected={new Date()}
-        
+        nestedScrollEnabled={true}
         renderEmptyData={() => {
           return (
             <View style={styles.emptyDate}>
