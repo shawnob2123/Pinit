@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Linking } from 'react-native'
 import React, {useState, useEffect} from 'react';
 import { styles } from './styles';
 import { supabase } from '../../../server/server';
@@ -48,11 +48,16 @@ const SettingScreen = ({ navigation }) => {
             screenName='Support'
             onPress={() => navigation.navigate('Support')}
           />
-          {/* <Settings
-              icon='flash-outline'
+          <Settings
+            icon='flash-outline'
             screenName='Upgrade'
             onPress={() => navigation.navigate('Upgrade')}
-          /> */}
+              />
+              <Settings
+                icon='document-text-outline'
+                screenName='Privacy Policy'
+                onPress={() => Linking.openURL('https://tinyurl.com/2jh7ur6c')}
+          />
         </View>
       <View style={{ paddingTop: 40, paddingHorizontal: 10 }}>
         {loading ? (

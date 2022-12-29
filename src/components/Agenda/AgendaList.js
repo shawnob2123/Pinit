@@ -17,7 +17,7 @@ const AgendaList = () => {
   const [loading, setLoading] = useState(true);
   const [markedDates, setMarkedDates] = useState({});
   
-  
+    
   const renderItem = item => {
     return (
       <Pressable style={styles.item}>
@@ -66,7 +66,6 @@ const AgendaList = () => {
         rowHasChanged={(r1, r2) => {
           return r1.text !== r2.text;
         }}  
-       
         selected={new Date()}
         nestedScrollEnabled={true}
         renderEmptyData={() => {

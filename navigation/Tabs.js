@@ -15,7 +15,7 @@ import EditProfileScreen from '../src/screens/Settings/EditProfileScreen';
 import RemindersScreen from '../src/screens/Settings/RemindersScreen';
 import UpgradeScreen from '../src/screens/Settings/UpgradeScreen';
 import SupportScreen from '../src/screens/Settings/SupportScreen';
-
+import PrivacyPolicyScreen from '../src/screens/Settings/PrivacyPolicyScreen';
 // ANABOLICS STACK
 import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScreen';
 
@@ -108,6 +108,7 @@ export const Settings = () => {
       <Stack.Screen name='Reminders' component={RemindersScreen} />
       <Stack.Screen name='Support' component={SupportScreen} />
       <Stack.Screen name='Upgrade' component={UpgradeScreen} />
+      <Stack.Screen name='Privacy Policy' component={PrivacyPolicyScreen} />
     </Stack.Navigator>
   );
 };

@@ -12,10 +12,6 @@ export const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 80,
   },
-  composeButton: {
-    alignSelf: 'flex-end',
-    paddingTop: 60,
-  },
   title: {
     fontSize: sizes.xl,
     fontFamily: fonts.primary,
@@ -37,17 +33,20 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
   },
-  addButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 50,
-    width: 30,
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+  iconsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignSelf: 'flex-end',
+    width: 80,
   },
   calendarView: {
     flex: 1,
     marginTop: 20,
 
+  },
+  progressView: {
+    flex: 1,
+    marginTop: 40,
+    paddingHorizontal: 10,
   }
 })
