@@ -3,7 +3,7 @@ import React from 'react';
 import { styles } from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const Icon = ({name, color, onPress}) => {
+const Icons = ({name, color, onPress}) => {
   return (
     <Pressable
       onPress={onPress}
@@ -13,4 +13,4 @@ const Icon = ({name, color, onPress}) => {
   )
 }
 
-export default Icon;
+export default Icons;

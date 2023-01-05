@@ -1,9 +1,9 @@
-import {Pressable, Text, View} from 'react-native';
+import {Pressable, Text, View, Image} from 'react-native';
 import React, {useContext, useState} from 'react';
 import {styles} from './styles';
 import Button from '../../components/Button/Button';
 import {Input} from '@rneui/themed';
-import {AuthContext} from '../../../navigation/AuthProvider';
+import {AuthContext} from '../../../navigation/context/withAuth';
 import Loader from '../../components/Loader/Loader';
 import {supabase} from '../../../server/server';
 
@@ -38,7 +38,8 @@ const SignInScreen = ({navigation}) => {
   // const { signIn, error, setError } = useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: 120  }]}>
+      
       <Text style={styles.title}>Welcome back, please log in</Text>
       <View style={{marginTop: 20}}>
         <Input

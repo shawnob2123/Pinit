@@ -26,11 +26,9 @@ const Modal = ({ refRBSheet }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     anabolic_used: '',
-    dosage: 0,
+    dosage: '',
     notes: '',
   });
-
- 
   
   // DATE/TIME PICKER STATES
   const [startDate, setStartDate] = useState(new Date());
@@ -60,27 +58,29 @@ const Modal = ({ refRBSheet }) => {
 
 
   // use supabase realtime to add to the database
-  const addAnabolic = async () => { 
+  const addAnabolic = async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from('cycles')
       .insert([
         {
           anabolic_used: formData.anabolic_used,
-          dosage: count,
+          dosage: formData.dosage,
+          frequency: count,
           notes: formData.notes,
           start_date: startDate,
           end_date: endDate,
           type: value,
           selected_days: selectedDays,
           created_at: new Date(),
-          user_id: supabase.auth.getUser().id,
+          user_id: supabase.auth.user().id,
         },
       ])
       .single();
-    if (error) {
+    if (error || formData.anabolic_used === '' || formData.dosage === '' || value === null || count === 0 || selectedDays.length === 0) {
       showMessage({
         message: 'Error',
+        // description: 'Error adding anabolic. Please try again.',
         description: error.message,
         type: 'danger',
         icon: 'danger',
@@ -93,15 +93,17 @@ const Modal = ({ refRBSheet }) => {
         icon: 'success',
       })
       setLoading(false);
+      // clear the entire modal
       setFormData({
         anabolic_used: '',
-        count: 0,
+        dosage: '',
         notes: '',
-        
-      }); // clear form data
-      setValue(null); // clear dropdown
-      setStartDate(new Date()); // clear start date
-      setEndDate(new Date()); // clear end date
+
+      })
+      setValue(null);
+      setCount(0);
+      selectedDays = [];
+
 
       refRBSheet.current.close();
     }
@@ -142,11 +144,26 @@ const Modal = ({ refRBSheet }) => {
               onChangeText={(text) =>
                 setFormData({ ...formData, anabolic_used: text })
               }
-              placeholder='Ex. Testosterone Cypionat 250mg'
+              placeholder='Ex. Testosterone Cypionat'
               inputContainerStyle={{ borderBottomWidth: 0 }}
             />
 
-            <Heading title='Dosage (per week)' icon='jekyll' />
+            <Heading title='Dosage (mg)' icon='jekyll' />
+            <Input
+              autoCorrect={false}
+              style={styles.input}
+              value={formData.dosage}
+              onChangeText={(text) =>
+                setFormData({ ...formData, dosage: text })
+              }
+              placeholder='Ex. 250'
+              keyboardType='numeric'
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+
+            />
+            
+            {/* FREQUENCY */}
+            <Heading title='Frequency' icon='prescription' />
             <Counter count={count} />
             
             <Heading title='Anabolic Type' icon='pills' />
@@ -194,7 +211,8 @@ const Modal = ({ refRBSheet }) => {
               <Text style={styles.text}>End</Text>
               <DateTimePicker
                 testID='dateTimePicker'
-                value={endDate}
+                // value={endDate}
+                value={endDate}        
                 mode={mode}
                 is24Hour={true}
                 display='default'
@@ -218,7 +236,7 @@ const Modal = ({ refRBSheet }) => {
             value={formData.notes}
             autoCorrect={false}
             onChangeText={(text) => setFormData({ ...formData, notes: text })}
-            placeholder='Notes'
+            placeholder='Ex. Take Test Cypionate 250mg every Monday and Thursday. Weigh yourself every morning.'
             inputContainerStyle={{ borderBottomWidth: 0, padding: 5 }}
             multiline={true}
           />

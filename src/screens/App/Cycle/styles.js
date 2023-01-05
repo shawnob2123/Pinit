@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   contentContainer: {
-    padding: 10,
+  
     paddingTop: 80,
   },
   title: {
@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: 20,
+    paddingHorizontal: 20,
   },
   iconsContainer: {
     flexDirection: 'row',
@@ -47,6 +48,6 @@ export const styles = StyleSheet.create({
   progressView: {
     flex: 1,
     marginTop: 40,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   }
 })

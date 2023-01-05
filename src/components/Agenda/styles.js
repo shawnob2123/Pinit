@@ -5,9 +5,11 @@ export const styles = StyleSheet.create({
   calendar: {
     borderRadius: 10, 
     overflow: 'hidden',
-    height: Dimensions.get('window').height / 2.5
+    height: 500,
   },  
   item: {
+    height: 50,
+    padding: 10,
     shadowColor: colors.white,
     shadowOffset: {
       width: 0,
@@ -17,23 +19,22 @@ export const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
     backgroundColor: colors.white,
-
     flex: 1,
-    borderRadius: 10,
+    borderRadius: 25,
     padding: 10,
     marginRight: 10,
     marginTop: 17,
 
   },
+
   itemsContent: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingLeft: 30,
+    padding: 5,
 
   },
   text: {
     color: colors.black,
     fontFamily: fonts.primary,
     fontSize: sizes.md,
+  
   }
 })

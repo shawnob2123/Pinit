@@ -5,34 +5,60 @@ import { styles } from './styles';
 import { colors } from '../../theme/theme';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { supabase } from '../../../server/server';
-
-const timeToString = time => {
-  const date = new Date(time);
-  return date.toISOString().split('T')[0];
-};
-
+import anabolics from '../../../assets/data/dummyAgenda.json';
 const AgendaList = () => {
 
   const [items, setItems] = useState({});
   const [loading, setLoading] = useState(true);
   const [markedDates, setMarkedDates] = useState({});
   
+  // useEffect(() => { 
+  //   fetchItems();
+  // }, [items]);
+
+  // const fetchItems = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const { data, error } = await supabase
+  //       .from('cycles')
+  //       .select('*')
+  //       .eq('user_id', supabase.auth.user().id);
+  //     console.log(data);
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       const newItems = {};
+  //       data.forEach(item => {
+  //         const date = item.date;
+  //         if (!newItems[date]) {
+  //           newItems[date] = [];
+  //         }
+  //         newItems[date].push(item);
+  //       });
+  //       setItems(newItems);
+  //       setLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+     
+  // }
     
-  const renderItem = item => {
+  
+  const renderItem = (anabolics) => {
     return (
-      <Pressable style={styles.item}>
-        <Fontisto
-          name={item.name === 'injection' ? 'injection-syringe' : 'pills'}
-          size={20}
-          color={item.name === 'injection' ? colors.primary : colors.orange}
-          style={{ top: 20 }}
-        />
+      <Pressable style={[styles.item, {height: anabolics.height}]}>
+        
         <View style={styles.itemsContent}>
-          <Text style={styles.text}>{item.anabolic_used}</Text>
-          <Text style={[styles.text, { color: 'gray', paddingTop: 5 }]}>
-            {item.count}{' '}
-          </Text>
+          <Text style={styles.text}>{anabolics.name}</Text>
+          <Text style={styles.text}>{anabolics.dosage}</Text>
         </View>
+        <Fontisto
+          name={anabolics.type === 'injection' ? 'injection-syringe' : 'pills'}
+          size={20}
+          color={anabolics.type === 'injection' ? colors.primary : colors.orange}
+          style={{ alignSelf: 'center' }}
+        />
       </Pressable>
     );
   };
@@ -59,9 +85,9 @@ const AgendaList = () => {
           dotColor: colors.orange,
         }}
         
-        markedDates={markedDates}
+        items={anabolics}
         showOnlySelectedDayItems={true}
-        items={items}
+        renderItem={renderItem}
         showClosingKnob={true}
         rowHasChanged={(r1, r2) => {
           return r1.text !== r2.text;

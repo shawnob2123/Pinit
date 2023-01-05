@@ -1,0 +1,31 @@
+{
+  "2023-1-4": [
+    {
+      "id": "1",
+      "name": "Testosterone Cypionate 250mg",
+      "height": "50",
+      "dosage": "250mg",
+      "type": "oral",
+      "day": "2023-1-4"
+
+
+    },
+    {
+      "id": "2",
+      "name": "Testosterone Enanthate 250mg",
+      "height": "50",
+      "dosage": "250mg",
+      "type": "injection",
+      "day": "2023-1-4"
+    },
+    {
+      "id": "2",
+      "name": "Testosterone Enanthate 250mg",
+      "height": "50",
+      "dosage": "250mg",
+      "type": "injection",
+      "day": "2023-1-4"
+    }
+  ]
+ 
+}

@@ -6,7 +6,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { colors, fonts, sizes, weights } from '../src/theme/theme';
 
 // APP STACK
-import CalendarScreen from '../src/screens/App/Calendar/CalendarScreen';
 import CycleScreen from '../src/screens/App/Cycle/CycleScreen';
 import AnabolicsScreen from '../src/screens/App/Anabolics/AnabolicsScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';

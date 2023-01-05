@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   text: {
     color: colors.white,
     fontSize: sizes.md,
-    fontWeight: weights.bold,
+    
     fontFamily: fonts.primary,
     paddingLeft: 10,
   },
@@ -20,5 +20,13 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  delete: {
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    padding: 15,
+   
+
+
   }
 })
