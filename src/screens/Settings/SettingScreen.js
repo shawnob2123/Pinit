@@ -12,14 +12,14 @@ const SettingScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   
     const signOut = async () => {
-      setLoading(true);
       try {
-        await supabase.auth.signOut();
+        setLoading(true)
+        await supabase.auth.signOut()
+      
       } catch (error) {
-        console.log('Error: ', error.message);
-      } finally {
-        setLoading(false);
+        console.log(error)
       }
+      setLoading(false)
     }
     
   
@@ -71,7 +71,7 @@ const SettingScreen = ({ navigation }) => {
               size={20}
               color='#fff'
               title="Sign out"
-              onPress={signOut}
+              onPress={() => signOut()}
             />
               )}
                <Text style={[styles.title, {color: '#fff', paddingTop: 40, fontSize: 12, fontWeight: '300'}]}>Pinit version 1.0</Text>

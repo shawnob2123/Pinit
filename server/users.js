@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from './server';
-import { Session } from "@supabase/supabase-js";
+
 
 
 export const getUserProfile = async () => {
-
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (session) {
-      fetchUser();
-    }
-  }, [session]);
+    fetchUser();
+  }, []);
 
   const fetchUser = async () => {
     try {
       setLoading(true)
-      session ? console.log(session) : console.log('no session')
+      
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+      console.log(user)
     } catch (error) {
       console.log(error)
     }
+    
+    setLoading(false)
   }
+  return user;
 }
+

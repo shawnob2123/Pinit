@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { styles } from './styles';
 import BadgedIcon from '../../../components/Icons/BadgedIcon';
@@ -11,7 +11,8 @@ import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
 
-const CycleScreen = (props) => {
+const CycleScreen = () => {
+
   const [loading, setLoading] = useState(false);
   const refRBSheet = useRef();
 
@@ -23,6 +24,7 @@ const CycleScreen = (props) => {
       day: 'numeric',
     });
   };
+
 
 
   return (
@@ -42,7 +44,6 @@ const CycleScreen = (props) => {
           delay={500}
         >
           <View style={styles.todayContainer}>
-            <Text style={styles.text}>Hello</Text>
             <Text style={styles.title}>Today</Text>
             <View style={styles.iconsContainer}>
               <Icons
@@ -61,8 +62,8 @@ const CycleScreen = (props) => {
             <AgendaList />
           </View>
           <View style={styles.progressView}>
-            <Text style={styles.title}>Daily Progress</Text>
-            <Progress />
+            <Text style={styles.title}>Weigh In</Text>
+           
           </View>
         </Animatable.View>
       )}
@@ -70,4 +71,4 @@ const CycleScreen = (props) => {
   );
 };
 
-export default withAuth(CycleScreen);
+export default CycleScreen;

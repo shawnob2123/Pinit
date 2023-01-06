@@ -3,7 +3,6 @@ import React, {useContext, useState} from 'react';
 import {styles} from './styles';
 import Button from '../../components/Button/Button';
 import {Input} from '@rneui/themed';
-import {AuthContext} from '../../../navigation/context/withAuth';
 import Loader from '../../components/Loader/Loader';
 import {supabase} from '../../../server/server';
 
@@ -27,15 +26,13 @@ const SignInScreen = ({navigation}) => {
           setError('');
         }, 3000);
       } else {
-        navigation.navigate('Cycles');
+        setLoading(false);
       }
     } catch (error) {
       setError(error.message);
       setError('');
     }
   };
-
-  // const { signIn, error, setError } = useContext(AuthContext);
 
   return (
     <View style={[styles.container, {paddingTop: 120  }]}>
