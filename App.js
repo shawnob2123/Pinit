@@ -10,24 +10,16 @@ import FlashMessage from 'react-native-flash-message';
 
 const App = () => {
 
-  const [session, setSession] = React.useState(null);
-  const [user, setUser] = React.useState(null);
+  const [auth, setAuth] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => { 
-    const session = supabase.auth.getSession();
-    setSession(session);
-    setUser(session?.user ?? null);
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => {
-      authListener.unsubscribe();
-    };  
-  }, []);
+  useEffect(() => {
+    setAuth(supabase.auth.getSession());
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setAuth(session);
+      setLoading(false);
+    });
+   }, []);
 
   
   return (
@@ -36,7 +28,7 @@ const App = () => {
         <NavigationContainer theme={DarkTheme}>
           <StatusBar barStyle='light-content' />
 
-          {session ? <Tabs /> : <AuthStack />}
+          {auth ? <Tabs /> : <AuthStack />}
 
           <FlashMessage position='top' />
         </NavigationContainer>

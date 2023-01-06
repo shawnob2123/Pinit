@@ -10,13 +10,16 @@ import CycleScreen from '../src/screens/App/Cycle/CycleScreen';
 import AnabolicsScreen from '../src/screens/App/Anabolics/AnabolicsScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
-import EditProfileScreen from '../src/screens/Settings/EditProfileScreen';
+
 import RemindersScreen from '../src/screens/Settings/RemindersScreen';
 import UpgradeScreen from '../src/screens/Settings/UpgradeScreen';
 import SupportScreen from '../src/screens/Settings/SupportScreen';
 import PrivacyPolicyScreen from '../src/screens/Settings/PrivacyPolicyScreen';
 // ANABOLICS STACK
 import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScreen';
+// EDIT PROFILE STACK
+import EditProfileScreen from '../src/screens/Settings/EditProfile/EditProfileScreen';
+import ResetPasswordScreen from '../src/screens/Settings/EditProfile/ResetPasswordScreen';
 
 
 
@@ -103,7 +106,7 @@ export const Settings = () => {
       }}
     >
       <Stack.Screen name="Settings Nav" component={SettingScreen} />
-      <Stack.Screen name='Edit Profile' component={EditProfileScreen} />
+      <Stack.Screen name='Edit Profile' component={EditProfile} />
       <Stack.Screen name='Reminders' component={RemindersScreen} />
       <Stack.Screen name='Support' component={SupportScreen} />
       <Stack.Screen name='Upgrade' component={UpgradeScreen} />
@@ -140,6 +143,20 @@ export const Anabolics = () => {
         }}
         name='View Anabolics' component={ViewAnabolicsScreen} />
     </AnabolicsStack.Navigator>
+  );
+};
+
+const EditProfileStack = createNativeStackNavigator();
+export const EditProfile = () => { 
+  return (
+    <EditProfileStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <EditProfileStack.Screen name="Edit Profile Stack" component={EditProfileScreen} />
+      <EditProfileStack.Screen name='Reset Password' component={ResetPasswordScreen} />
+    </EditProfileStack.Navigator>
   );
 }
   

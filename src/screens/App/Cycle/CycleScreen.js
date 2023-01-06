@@ -6,7 +6,7 @@ import Icons from '../../../components/Icons/Icons';
 import Modal from '../../../components/Modal/Modal';
 import AgendaList from '../../../components/Agenda/AgendaList';
 import Loader from '../../../components/Loader/Loader';
-import Progress from '../../../components/Progress/Progress';
+import { supabase } from '../../../../server/server';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
@@ -44,7 +44,7 @@ const CycleScreen = () => {
           delay={500}
         >
           <View style={styles.todayContainer}>
-            <Text style={styles.title}>Today</Text>
+              <Text style={styles.title}>Today</Text>
             <View style={styles.iconsContainer}>
               <Icons
                 name='plus'

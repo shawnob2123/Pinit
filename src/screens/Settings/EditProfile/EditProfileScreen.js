@@ -1,13 +1,13 @@
 import { Pressable, Text, View, ActivityIndicator, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../../../server/server';
-import { styles } from './styles';
+import { supabase } from '../../../../server/server';
+import { styles } from '../styles';
 import { Input } from '@rneui/themed';
-import Button from '../../components/Button/Button';
+import Button from '../../../components/Button/Button';
 import { showMessage } from 'react-native-flash-message';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../../components/Loader/Loader';
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [name, setName] = useState('');
@@ -38,24 +38,48 @@ const EditProfileScreen = () => {
   };
   // UPDATE
 
-
-  const resetPassword = async () => {
+  const updateProfile = async () => { 
+    setLoading(true);
     try {
-      setLoading(true);
-      const { error } = await supabase.auth.api.resetPasswordForEmail(email);
-      if (error) {
-        setError(error.message);
-      } else {
+      const { data, error } = await supabase.auth.updateUser({
+      email: email,
+        data: {
+          name: name,
+        }
+      })
+      if (data) {
+        supabase
+          .from('profiles')
+          .update({
+            updated_at: new Date(), 
+            data: {
+              name: name,
+            }
+          })
+        .eq('id', data.id)
         showMessage({
-          message: 'Password reset email sent.',
+          message: 'Profile updated',
           type: 'success',
-          duration: 3000,
-        });
+          animationDuration: 200,
+          icon: 'success',
+
+        })
+      } else { 
+        null;
       }
     } catch (error) {
-      setError(error.message);
+      showMessage({
+        message: 'Error updating profile',
+        type: 'danger',
+        animationDuration: 200,
+        icon: 'danger',
+      })
     }
+    setLoading(false);
   };
+
+
+  
 
   return (
 
@@ -93,15 +117,13 @@ const EditProfileScreen = () => {
           style={styles.input}
           inputContainerStyle={{ borderBottomWidth: 0 }}
         />
-        <Pressable style={{ alignSelf: 'center' }} onPress={resetPassword}>
+        <Pressable style={{ alignSelf: 'center' }} onPress={() => navigation.navigate('Reset Password')}>
           <Text style={[styles.title, { fontWeight: '100' }]}>
             Reset Password
           </Text>
         </Pressable>
         {loading ? (
-          <ActivityIndicator
-            size="large"
-            color="#00a6fb"
+          <Loader
             
           />
         ) : (

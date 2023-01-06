@@ -9,14 +9,14 @@ export const styles = StyleSheet.create({
 
   },
   contentContainer: {
-    paddingTop: 20,
+    paddingTop: 10,
     paddingHorizontal: 15,
   },
   title: {
     fontSize: sizes.lg,
-    fontWeight: weights.bold,
+
     color: colors.primary,
-    fontFamily: fonts.primary,
+    fontFamily: fonts.bold,
     alignSelf: 'flex-start',
     marginBottom: 20,
     paddingLeft: 10,
