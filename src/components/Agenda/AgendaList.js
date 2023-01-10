@@ -4,64 +4,45 @@ import { Agenda } from 'react-native-calendars';
 import { styles } from './styles';
 import { colors } from '../../theme/theme';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { supabase } from '../../../server/server';
-import anabolics from '../../../assets/data/dummyAgenda.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const AgendaList = () => {
 
   const [items, setItems] = useState({});
   const [loading, setLoading] = useState(true);
-  const [markedDates, setMarkedDates] = useState({});
   
-  // useEffect(() => { 
-  //   fetchItems();
-  // }, [items]);
+  // use async storage to get the anabolics
 
-  // const fetchItems = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const { data, error } = await supabase
-  //       .from('cycles')
-  //       .select('*')
-  //       .eq('user_id', supabase.auth.user().id);
-  //     console.log(data);
-  //     if (error) {
-  //       console.log(error);
-  //     } else {
-  //       const newItems = {};
-  //       data.forEach(item => {
-  //         const date = item.date;
-  //         if (!newItems[date]) {
-  //           newItems[date] = [];
-  //         }
-  //         newItems[date].push(item);
-  //       });
-  //       setItems(newItems);
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-     
-  // }
-    
-  
-  const renderItem = (anabolics) => {
+  const getAnabolics = async () => { 
+    try {
+      const value = await AsyncStorage.getItem('@anabolic');
+      if (value !== null) { 
+        setItems(JSON.parse(value));
+        console.log(JSON.parse(value));
+        setLoading(false);
+      } 
+    } catch (e) { 
+      console.log(e);
+    }
+  }
+
+  useEffect(() => { 
+    getAnabolics();
+  }, []);
+
+  const renderItems = (items) => { 
     return (
-      <Pressable style={[styles.item, {height: anabolics.height}]}>
-        
-        <View style={styles.itemsContent}>
-          <Text style={styles.text}>{anabolics.name}</Text>
-          <Text style={styles.text}>{anabolics.dosage}</Text>
+      <View style={styles.item}>
+        <View style={styles.itemContent}>
+          <Text>
+            {items.anabolic.used}
+          </Text>
         </View>
-        <Fontisto
-          name={anabolics.type === 'injection' ? 'injection-syringe' : 'pills'}
-          size={20}
-          color={anabolics.type === 'injection' ? colors.primary : colors.orange}
-          style={{ alignSelf: 'center' }}
-        />
-      </Pressable>
-    );
-  };
+      </View>
+    )
+  }
+
+  
 
   
 
@@ -85,9 +66,11 @@ const AgendaList = () => {
           dotColor: colors.orange,
         }}
         
-        items={anabolics}
+        items={items}
+        
+        renderItem={renderItems}
         showOnlySelectedDayItems={true}
-        renderItem={renderItem}
+        
         showClosingKnob={true}
         rowHasChanged={(r1, r2) => {
           return r1.text !== r2.text;

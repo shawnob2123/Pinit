@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   calendar: {
     borderRadius: 10, 
     overflow: 'hidden',
-    height: 500,
+    height: 600,
   },  
   item: {
     height: 50,
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
 
   },
 
-  itemsContent: {
+  itemContent: {
     padding: 5,
 
   },

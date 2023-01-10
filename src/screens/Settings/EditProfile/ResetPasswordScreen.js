@@ -22,9 +22,9 @@ const ResetPasswordScreen = ({}) => {
       })
       if (data) {
         showMessage({
-          message: 'Check your email for the link to reset your password',
+          message: 'Check your email for the link to reset your password. Please check your spam if the email has not arrived.',
           type: 'success',
-          animationDuration: 200,
+          animationDuration: 800,
           icon: 'success',
         })
         setLoading(false);

@@ -20,8 +20,8 @@
     "@rneui/themed": "^4.0.0-rc.6",
     "@shopify/flash-list": "^1.3.1",
     "@supabase/supabase-js": "^2.0.3",
-    "axios": "^1.1.3",
     "lottie-react-native": "^5.1.4",
+    "moment": "^2.29.4",
     "react": "18.1.0",
     "react-native": "0.70.3",
     "react-native-animatable": "^1.3.3",
@@ -45,7 +45,6 @@
     "react-native-swipeable-item": "^2.0.9",
     "react-native-url-polyfill": "^1.3.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-query": "^3.39.2",
     "zustand": "^4.1.5"
   },
   "devDependencies": {

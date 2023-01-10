@@ -61,10 +61,7 @@ const CycleScreen = () => {
           <View style={styles.calendarView}>
             <AgendaList />
           </View>
-          <View style={styles.progressView}>
-            <Text style={styles.title}>Weigh In</Text>
-           
-          </View>
+          
         </Animatable.View>
       )}
     </KeyboardAwareScrollView>

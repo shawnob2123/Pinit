@@ -3,13 +3,12 @@ import {
   Text,
   Platform,
   LayoutAnimation,
-  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
-import { supabase, writeItemData } from '../../../server/server';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -17,12 +16,14 @@ import Counter from '../Counter/Counter';
 import Heading from './Heading';
 import Loader from '../Loader/Loader';
 import WeekdayStrip from '../Weekday/WeekdayStrip';
-// import { showMessage, hideMessage } from 'react-native-flash-message';
 import  {useStore, useDaySelector}  from '../../store/store';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { showMessage } from 'react-native-flash-message';
+import moment from 'moment';
+
 
 const Modal = ({ refRBSheet }) => {
+ 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     anabolic_used: '',
@@ -56,58 +57,51 @@ const Modal = ({ refRBSheet }) => {
   // SELECTED DAYS
   const selectedDays = useDaySelector(state => state.selectedDays);
 
+  // use async storage to add the anabolic 
+  const addAnabolic = async () => { 
+    try {
+      const anabolic = {
+        id: Math.random().toString(24).substr(2, 9),
+        anabolic_used: formData.anabolic_used,
+        dosage: formData.dosage,
+        notes: formData.notes,
+        start_date: startDate,
+        end_date: endDate,
+        type: value,
+        days: selectedDays,
+        count: count,
 
-  // use supabase realtime to add to the database
-  const addAnabolic = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('cycles')
-      .insert([
-        {
-          anabolic_used: formData.anabolic_used,
-          dosage: formData.dosage,
-          frequency: count,
-          notes: formData.notes,
-          start_date: startDate,
-          end_date: endDate,
-          type: value,
-          selected_days: selectedDays,
-          created_at: new Date(),
-          user_id: supabase.auth.user().id,
-        },
-      ])
-      .single();
-    if (error || formData.anabolic_used === '' || formData.dosage === '' || value === null || count === 0 || selectedDays.length === 0) {
-      showMessage({
-        message: 'Error',
-        // description: 'Error adding anabolic. Please try again.',
-        description: error.message,
-        type: 'danger',
-        icon: 'danger',
-      })
-    } else {
+      }
+      const jsonValue = JSON.stringify(anabolic)
+      await AsyncStorage.setItem('@anabolic', jsonValue);
       showMessage({
         message: 'Success',
-        description: 'Anabolic successfully added.',
+        description: 'Anabolic added successfully',
         type: 'success',
-        icon: 'success',
-      })
-      setLoading(false);
-      // clear the entire modal
+      });
+      // clear all the states
       setFormData({
         anabolic_used: '',
         dosage: '',
         notes: '',
-
       })
+      setStartDate(new Date());
+      setEndDate(new Date());
       setValue(null);
-      setCount(0);
-      selectedDays = [];
-
+      setOpen(false);
+      useStore.setState({ count: 0 });
+      useDaySelector.setState({ selectedDays: [] });
 
       refRBSheet.current.close();
+    } catch (error) { 
+      showMessage({
+        message: 'Error',
+        description: 'Something went wrong',
+        type: 'danger',
+      });
     }
-  }
+   }
+  
   return (
     <>
       <RBSheet
@@ -216,10 +210,11 @@ const Modal = ({ refRBSheet }) => {
                 mode={mode}
                 is24Hour={true}
                 display='default'
-                onChange={(event, selectedDate) => {
+                onChange={(event, selectedDate) => { 
                   const currentDate = selectedDate || endDate;
                   setShow(Platform.OS === 'ios');
                   setEndDate(currentDate);
+                
                 }}
               />
             </View>
