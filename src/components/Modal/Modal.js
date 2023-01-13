@@ -21,18 +21,19 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { showMessage } from 'react-native-flash-message';
 import moment from 'moment';
 
-
 const Modal = ({ refRBSheet }) => {
  
+  // create a wrapper around the modal data stored as a date string
+  
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    anabolic_used: '',
+    anabolicUsed: '',
     dosage: '',
     notes: '',
   });
   
   // DATE/TIME PICKER STATES
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] =   useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
@@ -42,7 +43,7 @@ const Modal = ({ refRBSheet }) => {
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
     { label: 'Oral', value: 'Oral' },
-    { label: 'Injectable', value: 'Injectable' },
+    { label: 'Injection', value: 'Injection' },
   ]);
 
   // DROPDOWN PICKER
@@ -59,21 +60,30 @@ const Modal = ({ refRBSheet }) => {
 
   // use async storage to add the anabolic 
   const addAnabolic = async () => { 
+    const items = [];
     try {
       const anabolic = {
-        id: Math.random().toString(24).substr(2, 9),
-        anabolic_used: formData.anabolic_used,
+        
+        [startDate.toISOString().substring(0,10)]: [{
+          
+        id: Math.random().toString(24).substring(2, 9),
+        anabolicUsed: formData.anabolicUsed,
         dosage: formData.dosage,
         notes: formData.notes,
-        start_date: startDate,
-        end_date: endDate,
+        startDate: startDate.toISOString().substring(0,10),
+        endDate: endDate.toISOString().substring(0,10),
         type: value,
         days: selectedDays,
         count: count,
+         
+        }]
+        
 
       }
       const jsonValue = JSON.stringify(anabolic)
+
       await AsyncStorage.setItem('@anabolic', jsonValue);
+      items.push(anabolic);
       showMessage({
         message: 'Success',
         description: 'Anabolic added successfully',
@@ -81,7 +91,7 @@ const Modal = ({ refRBSheet }) => {
       });
       // clear all the states
       setFormData({
-        anabolic_used: '',
+        anabolicUsed: '',
         dosage: '',
         notes: '',
       })
@@ -134,9 +144,9 @@ const Modal = ({ refRBSheet }) => {
             <Input
               autoCorrect={false}
               style={styles.input}
-              value={formData.anabolic_used}
+              value={formData.anabolicUsed}
               onChangeText={(text) =>
-                setFormData({ ...formData, anabolic_used: text })
+                setFormData({ ...formData, anabolicUsed: text })
               }
               placeholder='Ex. Testosterone Cypionat'
               inputContainerStyle={{ borderBottomWidth: 0 }}

@@ -20,7 +20,8 @@ import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScree
 // EDIT PROFILE STACK
 import EditProfileScreen from '../src/screens/Settings/EditProfile/EditProfileScreen';
 import ResetPasswordScreen from '../src/screens/Settings/EditProfile/ResetPasswordScreen';
-
+// CYCLE STACK
+import ViewCycleScreen from '../src/screens/App/Cycle/ViewCycleScreen';
 
 
 
@@ -63,7 +64,7 @@ export default Tabs = ({children}) => {
         options={{
           tabBarLabel: <Text style={styles.text}>Cycles</Text>,
         }}
-        component={CycleScreen}
+        component={Cycle}
       />
       {/* <Tab.Screen
         name="Forum"
@@ -87,6 +88,20 @@ export default Tabs = ({children}) => {
     </Tab.Navigator>
   );
 };
+
+const CycleStack = createNativeStackNavigator();
+export const Cycle = () => { 
+  return (
+    <CycleStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <CycleStack.Screen name="Cycle" component={CycleScreen} />
+      <CycleStack.Screen name='View Cycle' component={ViewCycleScreen} />
+    </CycleStack.Navigator>
+  );
+}
 
 const Stack = createNativeStackNavigator();
 export const Settings = () => {

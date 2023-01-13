@@ -28,7 +28,7 @@ const EditProfileScreen = ({navigation}) => {
       setEmail(profile.user.email);
     } catch (error) {
       showMessage({
-        message: 'Error retrieving profile',
+        message: error.message,
         type: 'danger',
         animationDuration: 200,
         icon: 'danger',
