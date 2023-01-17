@@ -28,7 +28,6 @@ const Modal = ({ refRBSheet }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     anabolicUsed: '',
-    dosage: '',
     notes: '',
   });
   
@@ -53,14 +52,15 @@ const Modal = ({ refRBSheet }) => {
   };
 
   // COUNT
-  const count = useStore(state => state.count);
+  const quantity = useStore(state => state.count);
 
   // SELECTED DAYS
   const selectedDays = useDaySelector(state => state.selectedDays);
 
   // use async storage to add the anabolic 
   const addAnabolic = async () => { 
-    const items = [];
+    setLoading(true);
+
     try {
       const anabolic = {
         
@@ -68,22 +68,20 @@ const Modal = ({ refRBSheet }) => {
           
         id: Math.random().toString(24).substring(2, 9),
         anabolicUsed: formData.anabolicUsed,
-        dosage: formData.dosage,
+        quantity: quantity,
         notes: formData.notes,
         startDate: startDate.toISOString().substring(0,10),
         endDate: endDate.toISOString().substring(0,10),
         type: value,
         days: selectedDays,
-        count: count,
          
         }]
         
 
       }
       const jsonValue = JSON.stringify(anabolic)
-
-      await AsyncStorage.setItem('@anabolic', jsonValue);
-      items.push(anabolic);
+      await AsyncStorage.setItem(startDate.toISOString().substring(0, 10), jsonValue)
+      setLoading(false);
       showMessage({
         message: 'Success',
         description: 'Anabolic added successfully',
@@ -92,7 +90,6 @@ const Modal = ({ refRBSheet }) => {
       // clear all the states
       setFormData({
         anabolicUsed: '',
-        dosage: '',
         notes: '',
       })
       setStartDate(new Date());
@@ -148,30 +145,18 @@ const Modal = ({ refRBSheet }) => {
               onChangeText={(text) =>
                 setFormData({ ...formData, anabolicUsed: text })
               }
-              placeholder='Ex. Testosterone Cypionat'
+              placeholder='Ex. Testosterone Cypionate 250mg'
               inputContainerStyle={{ borderBottomWidth: 0 }}
             />
 
-            <Heading title='Dosage (mg)' icon='jekyll' />
-            <Input
-              autoCorrect={false}
-              style={styles.input}
-              value={formData.dosage}
-              onChangeText={(text) =>
-                setFormData({ ...formData, dosage: text })
-              }
-              placeholder='Ex. 250'
-              keyboardType='numeric'
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-
+            <Heading title='Quantity' icon='jekyll' />
+            <Counter 
+              count={quantity}
             />
-            
-            {/* FREQUENCY */}
-            <Heading title='Frequency' icon='prescription' />
-            <Counter count={count} />
             
             <Heading title='Anabolic Type' icon='pills' />
             <DropDownPicker
+              dropDownDirection='BOTTOM'
               placeholder='Select Type'
               open={open}
               value={value}
@@ -247,8 +232,7 @@ const Modal = ({ refRBSheet }) => {
           />
           {loading ? (
             <Loader
-              source={require('../../../assets/lottie/loader.json')}
-              onAnimationFinish={() => setLoading(false)}
+             
             />
           ) : (
             <Button title='Add' onPress={() => addAnabolic()} />

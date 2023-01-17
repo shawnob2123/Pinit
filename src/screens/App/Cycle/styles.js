@@ -5,11 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    height: '100%',
-    overflow: 'hidden'
   },
   contentContainer: {
-  
     paddingTop: 80,
   },
   title: {
@@ -24,8 +21,9 @@ export const styles = StyleSheet.create({
   text: {
     fontSize: sizes.md,
     fontFamily: fonts.primary,
-    fontWeight: weights.regular,
-    paddingBottom: 20
+    paddingBottom: 20,
+    color: colors.white,
+    lineHeight: 25,
   },
   todayContainer: {
     flexDirection: 'row',
@@ -43,11 +41,11 @@ export const styles = StyleSheet.create({
   calendarView: {
     flex: 1,
     marginTop: 20,
-
   },
-  progressView: {
+  upcomingContainer: {
     flex: 1,
-    marginTop: 40,
+    marginTop: 20,
     paddingHorizontal: 20,
+
   }
 })

@@ -6,10 +6,12 @@ import Icons from '../../../components/Icons/Icons';
 import Modal from '../../../components/Modal/Modal';
 import AgendaList from '../../../components/Agenda/AgendaList';
 import Loader from '../../../components/Loader/Loader';
-import { supabase } from '../../../../server/server';
+import Cycle from '../../../components/Cycle/Cycle';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
+import CalendarStripAgenda from '../../../components/CalendarStrip/CalendarStrip';
+import { FlashList } from '@shopify/flash-list';
 
 const CycleScreen = () => {
 
@@ -27,11 +29,12 @@ const CycleScreen = () => {
 
 
 
+
+
   return (
     <KeyboardAwareScrollView
-      showsVerticalScrollIndicator={false}
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 100 }}
+      edges={['top', 'left', 'right']}
     >
       {loading ? (
         <Loader />
@@ -51,17 +54,25 @@ const CycleScreen = () => {
                 onPress={() => refRBSheet.current.open()}
                 color={colors.primary}
               />
-              <BadgedIcon count={5} color={colors.primary} />
+              <BadgedIcon count={0} color={colors.primary} />
             </View>
             <Modal refRBSheet={refRBSheet} />
           </View>
           <Text style={[styles.text, { color: '#fff', paddingLeft: 30 }]}>
             {getCurrentDate()}
           </Text>
-          <View style={styles.calendarView}>
-            <AgendaList />
+            <View style={styles.calendarView}>
+              
+              {/* <AgendaList /> */}
+              <CalendarStripAgenda/>
           </View>
-          
+            <View style={styles.upcomingContainer}>
+              <Text style={styles.title}>Upcoming</Text>
+              <Text style={[styles.text, { paddingHorizontal: 10, paddingTop: 10, fontSize: 14 }]}>View your compounds listed for the day. Tap the compound to mark as complete.</Text>
+              <View>
+                
+              </View>
+            </View>
         </Animatable.View>
       )}
     </KeyboardAwareScrollView>

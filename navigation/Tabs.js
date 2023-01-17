@@ -98,7 +98,7 @@ export const Cycle = () => {
       }}
     >
       <CycleStack.Screen name="Cycle" component={CycleScreen} />
-      <CycleStack.Screen name='View Cycle' component={ViewCycleScreen} />
+      <CycleStack.Screen name="View Cycle" component={ViewCycleScreen} />
     </CycleStack.Navigator>
   );
 }

@@ -1,37 +1,38 @@
-import { View, Text, Pressable, Image } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useState, useMemo, useEffect } from 'react';
 import { Agenda } from 'react-native-calendars';
 import { styles } from './styles';
 import { colors } from '../../theme/theme';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { showMessage } from 'react-native-flash-message';
+
+
 
 const AgendaList = ({navigation}) => {
   const [items, setItems] = useState({});
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAnabolics();
+    getCycle();
   }, []);
 
-  const getAnabolics = async () => {
+  const getCycle = async () => {
     try {
       const value = await AsyncStorage.getItem('@anabolic');
       if (value !== null) {
-        setItems(JSON.parse(value));
+        const newItems = JSON.parse(value);
+        setItems(newItems);
         setLoading(false);
       }
     } catch (e) {
       showMessage({
         message: 'Error',
-        description: 'Something went wrong. Your anabolics could not be loaded',
+        description: 'Something went wrong. Your data could not be loaded',
         type: 'danger',
       });
     }
   };
-
-  
 
   //clear async storage
   // const clearAsyncStorage = async () => {
@@ -42,35 +43,37 @@ const AgendaList = ({navigation}) => {
   const renderItem = (item) => {
     return (
       <Pressable
-        onPress={() => navigation.navigate('View Cycle', {
-          item: item, id: item.id, anabolicUsed: item.anabolicUsed, dosage: item.dosage, notes: item.notes, startDate: item.startDate, endDate: item.endDate, type: item.type, days: item.days, count: item.count,
-        })}
+        onPress={() => navigation.navigate('View Cycle', { item })}
         style={styles.item}>
         <View style={styles.itemContent}>
           <View
-            style={{ backgroundColor: item.type === 'Oral' ? colors.orange : colors.primary, height: 50, width: 50, borderRadius: 50, padding: 10, justifyContent: 'center',  }}
+            style={{ backgroundColor: item.type === 'Oral' ? colors.orange : colors.primary, height: 50, width: 50, borderRadius: 50, padding: 10, justifyContent: 'center', }}
           >
-          <Fontisto
-            name={item.type === 'Oral' ? 'pills' : 'injection-syringe'}
-            size={24}
-            color={colors.white}
+            <Fontisto
+              name={item.type === 'Oral' ? 'pills' : 'injection-syringe'}
+              size={24}
+              color={colors.white}
             
             />
-            </View>
+          </View>
           <View style={styles.itemHeader}>
             <Text style={styles.title}>{item.anabolicUsed}</Text>
-            <Text style={styles.text}>{item.dosage} mg <Text style={styles.text}>({item.type})</Text></Text>
+            <Text style={styles.text}>{item.dosage}mg <Text style={styles.text}>({item.type})</Text></Text>
           </View>
         </View>
       </Pressable>
-    );
-  };
+    )
+  }
 
+  const refreshing = () => { 
+    setLoading(true);
+    getCycle();
+  }
   
 
 
   return (
-    <View>
+    <>
       <Agenda
         style={styles.calendar}
         theme={{
@@ -88,8 +91,10 @@ const AgendaList = ({navigation}) => {
           todayBackgroundColor: colors.primary,
           dotColor: colors.orange,
         }}
+        
         renderItem={renderItem}
         items={items}
+       
         scrollEnabled={true}
         pastScrollRange={50}
         showOnlySelectedDayItems={true}
@@ -100,9 +105,7 @@ const AgendaList = ({navigation}) => {
         selected={new Date()}
         nestedScrollEnabled={true}
         refreshing={loading}
-        onRefresh={() => {
-          getAnabolics();
-        }}
+        onRefresh={refreshing}
         renderEmptyData={() => {
           return (
             <View style={styles.emptyDate}>
@@ -126,7 +129,7 @@ const AgendaList = ({navigation}) => {
           );
         }}
       />
-    </View>
+    </>
   );
 };
 
