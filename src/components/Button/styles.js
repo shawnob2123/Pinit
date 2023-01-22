@@ -21,12 +21,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  delete: {
-    backgroundColor: colors.background,
+  coffee: {
+    backgroundColor: '#FFFF00',
     borderRadius: 10,
-    padding: 15,
-   
-
-
+    padding: 10,
+  },
+  image: {
+    width: 25,
+    height: 25,
+    borderRadius: 10,
+    resizeMode: 'contain',
   }
 })

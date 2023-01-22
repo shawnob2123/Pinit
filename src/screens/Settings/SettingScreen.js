@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { styles } from './styles';
 import { supabase } from '../../../server/server';
 import Button from '../../components/Button/Button';
-import Delete from '../../components/Button/Delete';
+import Coffee from '../../components/Button/Coffee';
 import Settings from '../../components/Settings/Settings';
 import Loader from '../../components/Loader/Loader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+
 const SettingScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
@@ -81,10 +83,9 @@ const SettingScreen = ({ navigation }) => {
               Pinit version 1.0
             </Text>
             <View style={{ paddingTop: 50 }}>
-              {/* <Delete
-                title='Delete Account'
-                
-                /> */}
+                <Coffee 
+                  onPress={() => Linking.openURL('https://www.buymeacoffee.com/pinitllc')}
+              />
             </View>
           </View>
         </>

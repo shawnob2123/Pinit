@@ -1,15 +1,14 @@
 // component used for rendering the users cycle
-import {  Text, View } from 'react-native'
+import {  Text, View, Image } from 'react-native'
 import React, {useState, useEffect} from 'react';
 import { styles } from './styles';
+import { showMessage } from 'react-native-flash-message'; 
+import { colors } from '../../theme/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlashList } from '@shopify/flash-list';
-import { showMessage } from 'react-native-flash-message';
-
-
 const Cycle = () => {
 
-  const [items, setItems] = useState([]);
+    const [items, setItems] = useState([]);
 
  useEffect(() => {
     getCycle();
@@ -20,6 +19,7 @@ const Cycle = () => {
       const value = await AsyncStorage.getItem('@anabolic');
       if (value !== null) {
         const newItems = JSON.parse(value);
+        console.log(newItems)
         setItems(newItems);
         setLoading(false);
       }
@@ -32,12 +32,14 @@ const Cycle = () => {
     }
   };
 
-  const renderItem = ({ item }) => { 
+    const renderItem = ({ item }) => { 
     return (
       <View style={styles.item}>
         <View style={styles.itemContent}>
-          <Text style={styles.itemText}>{item.anabolicUsed}</Text>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title}>{item.anabolicUsed}</Text>
           </View>
+        </View>
       </View>
     )
   }

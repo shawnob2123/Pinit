@@ -4,7 +4,7 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 
 const Progress = () => {
   return (
-    <View style={{ alignSelf: 'center', paddingVertical: 20 }}>
+    <View style={styles.card}}>
       <CircularProgress
         value={100}
         activeStrokeColor={'#00a6fb'}

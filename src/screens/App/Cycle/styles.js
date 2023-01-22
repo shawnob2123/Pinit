@@ -46,6 +46,17 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     paddingHorizontal: 20,
+    height: 600,
+    backgroundColor: '#f8f8ff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
 
-  }
+  },
+  linearGradient: {
+    flex: 1,
+    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    height: 600,
+  },
 })
