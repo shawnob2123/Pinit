@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MMKV } from 'react-native-mmkv';
+import { storage } from '../../store/mmkv';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -19,11 +20,9 @@ import WeekdayStrip from '../Weekday/WeekdayStrip';
 import  {useStore, useDaySelector}  from '../../store/store';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { showMessage } from 'react-native-flash-message';
-import moment from 'moment';
+
 
 const Modal = ({ refRBSheet }) => {
- 
-  // create a wrapper around the modal data stored as a date string
   
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,30 +56,23 @@ const Modal = ({ refRBSheet }) => {
   // SELECTED DAYS
   const selectedDays = useDaySelector(state => state.selectedDays);
 
-  // use async storage to add the anabolic 
+  // use mmkv to store the data
   const addAnabolic = async () => { 
     setLoading(true);
 
     try {
       const anabolic = {
-        
-        [startDate.toISOString().substring(0,10)]: [{
-          
-        id: Math.random().toString(24).substring(2, 9),
+        id: Math.random().toString(36).substring(2, 9),
         anabolicUsed: formData.anabolicUsed,
-        quantity: quantity,
         notes: formData.notes,
-        startDate: startDate.toISOString().substring(0,10),
-        endDate: endDate.toISOString().substring(0,10),
+        quantity: quantity,
+        startDate: startDate.toISOString().slice(0, 10),
+        endDate: endDate.toISOString().slice(0, 10),
+        selectedDays: selectedDays,
         type: value,
-        days: selectedDays,
-         
-        }]
-        
-
+      
       }
-      const jsonValue = JSON.stringify(anabolic)
-      await AsyncStorage.setItem(startDate.toISOString().substring(0, 10), jsonValue)
+      storage.set('anabolic', JSON.stringify(anabolic));
       setLoading(false);
       showMessage({
         message: 'Success',
@@ -149,7 +141,7 @@ const Modal = ({ refRBSheet }) => {
               inputContainerStyle={{ borderBottomWidth: 0 }}
             />
 
-            <Heading title='Quantity' icon='jekyll' />
+            <Heading title='Quantity (how many per week)' icon='jekyll' />
             <Counter 
               count={quantity}
             />

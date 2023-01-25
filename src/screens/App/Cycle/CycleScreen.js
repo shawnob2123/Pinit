@@ -4,7 +4,6 @@ import { styles } from './styles';
 import BadgedIcon from '../../../components/Icons/BadgedIcon';
 import Icons from '../../../components/Icons/Icons';
 import Modal from '../../../components/Modal/Modal';
-import AgendaList from '../../../components/Agenda/AgendaList';
 import Loader from '../../../components/Loader/Loader';
 import Cycle from '../../../components/Cycle/Cycle';
 import * as Animatable from 'react-native-animatable';
@@ -12,10 +11,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { colors } from '../../../theme/theme';
 import CalendarStripAgenda from '../../../components/CalendarStrip/CalendarStrip';
 import { FlashList } from '@shopify/flash-list';
-import LinearGradient from 'react-native-linear-gradient';
+import { storage } from '../../../store/mmkv';
 
 const CycleScreen = () => {
-
   const [loading, setLoading] = useState(false);
   const refRBSheet = useRef();
 
@@ -28,10 +26,9 @@ const CycleScreen = () => {
     });
   };
 
+  const anabolic = storage.getString('anabolic');
 
-
-
-
+  
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
@@ -49,7 +46,7 @@ const CycleScreen = () => {
           delay={500}
         >
           <View style={styles.todayContainer}>
-              <Text style={styles.title}>Today</Text>
+            <Text style={styles.title}>Today</Text>
             <View style={styles.iconsContainer}>
               <Icons
                 name='plus'
@@ -62,37 +59,44 @@ const CycleScreen = () => {
           </View>
           <Text style={[styles.text, { color: '#fff', paddingLeft: 30 }]}>
             {getCurrentDate()}
-            </Text>
-            
-            <View style={styles.calendarView}>
-              <CalendarStripAgenda/>
-            </View>
+          </Text>
 
-            {/* <LinearGradient
+          <View style={styles.calendarView}>
+            <CalendarStripAgenda />
+          </View>
+
+          {/* <LinearGradient
               style={styles.linearGradient}
             colors={['#191919', '#141E30']}
             > */}
-            <View style={styles.upcomingContainer}>
-              <Text style={[styles.title, {paddingTop: 20, color: 'black'}]}>Upcoming</Text>
-              <Text style={[styles.text, { paddingHorizontal: 10, paddingTop: 10, fontSize: 14, color: 'black' }]}>View your compounds listed for the day. Tap the compound to mark as complete.</Text>
-              <View>
-              {/* RENDER FLASHLIST OF DATA */}
-                <FlashList
-                  data={[]}
-                  estimatedItemSize={100}
-                  renderItem={({ item }) => <Cycle item={item} />}
-                  keyExtractor={(item) => item.id}
-                  ListEmptyComponent={() => (
-                    <Text style={[styles.text, { color: 'black' }]}>
-                      No compounds for today
-                    </Text>
-                  )}
+          <View style={styles.upcomingContainer}>
+            <Text style={[styles.title, { paddingTop: 20, color: 'black' }]}>
+              Upcoming
+            </Text>
+            <Text
+              style={[
+                styles.text,
+                {
+                  paddingHorizontal: 10,
+                  paddingTop: 10,
+                  fontSize: 14,
+                  color: 'black',
+                },
+              ]}
+            >
+              View your compounds listed for the day. Tap the compound to mark
+              as complete.
+              </Text>
+              
+            <>
+               <Cycle
+
 
               />
-                </View>
-                
-              </View>
-              {/* </LinearGradient> */}
+              </>
+              
+          </View>
+          {/* </LinearGradient> */}
         </Animatable.View>
       )}
     </KeyboardAwareScrollView>

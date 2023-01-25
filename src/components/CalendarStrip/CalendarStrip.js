@@ -25,12 +25,13 @@ const CalendarStripAgenda = (props) => {
         highlightDateContainerStyle={{ backgroundColor: colors.primary, borderRadius: 10,  borderWidth: 1, padding: 5 }}
         disabledDateNameStyle={{ color: 'grey' }}
         disabledDateNumberStyle={{ color: 'grey' }}
-        iconContainer={{ flex: 0.05, alignItems: 'center', justifyContent: 'center' }}
+        iconContainer={{ flex: 0.05}}
         markedDatesStyle={{ backgroundColor: colors.orange }}
         markedDates={props.markedDates}
         selectedDate={moment()}
-        iconRightStyle={{ color: 'white' }}
-        iconLeftStyle={{ color: 'white' }}
+        
+       
+        
 
       />
     </View>

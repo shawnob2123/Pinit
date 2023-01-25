@@ -1,59 +1,69 @@
 // component used for rendering the users cycle
-import {  Text, View, Image } from 'react-native'
-import React, {useState, useEffect} from 'react';
+import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { styles } from './styles';
-import { showMessage } from 'react-native-flash-message'; 
+import { showMessage } from 'react-native-flash-message';
 import { colors } from '../../theme/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FlashList } from '@shopify/flash-list';
+import { MMKV } from 'react-native-mmkv';
+import { storage } from '../../store/mmkv';
+import { useNavigation } from '@react-navigation/native';
+
 const Cycle = () => {
+  const [anabolic, setAnabolic] = useState(null);
 
-    const [items, setItems] = useState([]);
-
- useEffect(() => {
-    getCycle();
-  }, []);
-
-  const getCycle = async () => {
+  const navigation = useNavigation();
+  useEffect(() => {
     try {
-      const value = await AsyncStorage.getItem('@anabolic');
-      if (value !== null) {
-        const newItems = JSON.parse(value);
-        console.log(newItems)
-        setItems(newItems);
-        setLoading(false);
-      }
-    } catch (e) {
+      const jsonAnabolic = storage.getString('anabolic');
+      const anabolicObject = JSON.parse(jsonAnabolic);
+      setAnabolic(anabolicObject);
+    } catch (error) {
       showMessage({
         message: 'Error',
-        description: 'Something went wrong. Your data could not be loaded',
+        description: 'There was an error loading your cycle',
         type: 'danger',
+        icon: 'danger',
+        duration: 3000,
       });
+    }
+  }, []);
+
+  const renderType = () => {
+    if (anabolic.type === 'Oral') {
+      return (
+        <View style={[styles.type, { backgroundColor: '#FFE3C6' }]}>
+          <Text style={[styles.title, { color: colors.orange }]}>
+            {anabolic.type}
+          </Text>
+        </View>
+      );
+    } else if (anabolic.type === 'Injectable') {
+      return (
+        <View style={[styles.type, { backgroundColor: '#b4dcff' }]}>
+          <Text style={[styles.title, { color: colors.primary }]}>
+            {anabolic.type}
+          </Text>
+        </View>
+      );
     }
   };
 
-    const renderItem = ({ item }) => { 
-    return (
-      <View style={styles.item}>
-        <View style={styles.itemContent}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.title}>{item.anabolicUsed}</Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
   return (
     <>
-      <FlashList
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        estimatedItemSize={50}
-      />
+      {anabolic && (
+        <TouchableOpacity
+          // onPress={() => Alert.alert('Are you sure you want to mark this as done?')}
+          style={styles.item}>
+          <View style={styles.itemContent}>
+            <View style={styles.itemHeader}>
+              <Text style={styles.title}>{anabolic.anabolicUsed}</Text>
+              {renderType()}
+            </View>
+          </View>
+        </TouchableOpacity>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Cycle
+export default Cycle;

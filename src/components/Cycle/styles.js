@@ -23,15 +23,7 @@ export const styles = StyleSheet.create({
     padding: 10,
 
   },
-  
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    padding: 10
-  },
-  headerContainer: {
+  itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -49,8 +41,8 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   type: {
-    fontFamily: fonts.primary,
-    fontSize: sizes.md,
-    fontWeight: weights.bold,
+    padding: 10,
+    borderRadius: 50,
+
   }
 })
