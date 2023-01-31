@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { styles } from './styles';
 import BadgedIcon from '../../../components/Icons/BadgedIcon';
 import Icons from '../../../components/Icons/Icons';
 import Modal from '../../../components/Modal/Modal';
 import Loader from '../../../components/Loader/Loader';
-import Cycle from '../../../components/Cycle/Cycle';
+import Cycle from '../../../components/Cycle/Compound';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
@@ -13,7 +13,7 @@ import CalendarStripAgenda from '../../../components/CalendarStrip/CalendarStrip
 import { FlashList } from '@shopify/flash-list';
 import { storage } from '../../../store/mmkv';
 
-const CycleScreen = () => {
+const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const refRBSheet = useRef();
 
@@ -26,9 +26,6 @@ const CycleScreen = () => {
     });
   };
 
-  const anabolic = storage.getString('anabolic');
-
-  
   return (
     <KeyboardAwareScrollView
       showsVerticalScrollIndicator={false}
@@ -65,14 +62,13 @@ const CycleScreen = () => {
             <CalendarStripAgenda />
           </View>
 
-          {/* <LinearGradient
-              style={styles.linearGradient}
-            colors={['#191919', '#141E30']}
-            > */}
           <View style={styles.upcomingContainer}>
-            <Text style={[styles.title, { paddingTop: 20, color: 'black' }]}>
-              Upcoming
-            </Text>
+            <View style={styles.upcomingHeader}>
+              <Text style={[styles.title, { color: 'black' }]}>Upcoming</Text>
+              <Pressable>
+                <Text style={[styles.title, { fontSize: 14 }]}>View all</Text>
+              </Pressable>
+            </View>
             <Text
               style={[
                 styles.text,
@@ -86,21 +82,16 @@ const CycleScreen = () => {
             >
               View your compounds listed for the day. Tap the compound to mark
               as complete.
-              </Text>
-              
-            <>
-               <Cycle
+            </Text>
 
-
-              />
-              </>
-              
+            <View>
+              <Cycle />
+            </View>
           </View>
-          {/* </LinearGradient> */}
         </Animatable.View>
       )}
     </KeyboardAwareScrollView>
   );
 };
 
-export default CycleScreen;
+export default HomeScreen;

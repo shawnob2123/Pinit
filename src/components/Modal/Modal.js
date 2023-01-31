@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
-import { MMKV } from 'react-native-mmkv';
 import { storage } from '../../store/mmkv';
 import Button from '../Button/Button';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -141,7 +140,7 @@ const Modal = ({ refRBSheet }) => {
               inputContainerStyle={{ borderBottomWidth: 0 }}
             />
 
-            <Heading title='Quantity (how many per week)' icon='jekyll' />
+            <Heading title='Quantity (how many per selected day)' icon='jekyll' />
             <Counter 
               count={quantity}
             />

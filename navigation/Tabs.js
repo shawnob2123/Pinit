@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { colors, fonts, sizes, weights } from '../src/theme/theme';
 
 // APP STACK
-import CycleScreen from '../src/screens/App/Cycle/CycleScreen';
+import HomeScreen from '../src/screens/App/Cycle/HomeScreen';
 import AnabolicsScreen from '../src/screens/App/Anabolics/AnabolicsScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
@@ -21,7 +21,7 @@ import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScree
 import EditProfileScreen from '../src/screens/Settings/EditProfile/EditProfileScreen';
 import ResetPasswordScreen from '../src/screens/Settings/EditProfile/ResetPasswordScreen';
 // CYCLE STACK
-import ViewCycleScreen from '../src/screens/App/Cycle/ViewCycleScreen';
+import ViewCompoundScreen from '../src/screens/App/Cycle/ViewCompoundScreen';
 
 
 
@@ -49,7 +49,7 @@ export default Tabs = ({children}) => {
 
           if (route.name === 'Forum') {
             iconName = focused ? 'chatbox' : 'chatbox-outline';
-          } else if (route.name === 'Cycles') {
+          } else if (route.name === 'Home') {
             iconName = focused ? 'layers' : 'layers-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
@@ -60,7 +60,7 @@ export default Tabs = ({children}) => {
         },
       })}>
       <Tab.Screen
-        name="Cycles"
+        name="Home"
         options={{
           tabBarLabel: <Text style={styles.text}>Cycles</Text>,
         }}
@@ -94,11 +94,14 @@ export const Cycle = () => {
   return (
     <CycleStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}
     >
-      <CycleStack.Screen name="Cycle" component={CycleScreen} />
-      <CycleStack.Screen name="View Cycle" component={ViewCycleScreen} />
+      <CycleStack.Screen
+        headerShown={false}
+        name="Home"
+        component={HomeScreen} />
+      <CycleStack.Screen name="View Compound" component={ViewCompoundScreen} />
     </CycleStack.Navigator>
   );
 }

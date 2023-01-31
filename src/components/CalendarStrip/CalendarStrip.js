@@ -10,22 +10,22 @@ const CalendarStripAgenda = (props) => {
 
   
   return (
-    <View>
+    <>
       <CalendarStrip
         useNativeDriver={true}
         scrollable={true}
         calendarAnimation={{ type: 'sequence', duration: 30 }}
-        daySelectionAnimation={{ type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white' }}
+        daySelectionAnimation={{ type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: colors.primary, borderRadius: 10 }}
         style={{ height: 100, paddingTop: 5, paddingBottom: 5 }}
-        calendarHeaderStyle={{ color: 'white', fontFamily: fonts.primary, fontSize: sizes.lg }}
+        calendarHeaderStyle={{ color: 'white', fontFamily: fonts.primary, fontSize: sizes.md }}
         dateNumberStyle={{ color: 'white', fontFamily: fonts.primary, fontSize: sizes.md}}
         dateNameStyle={{ color: 'white', fontFamily: fonts.primary, fontSize: sizes.sm }}
-        highlightDateNumberStyle={{ color: colors.white, fontFamily: fonts.primary }}
-        highlightDateNameStyle={{ color: colors.white, fontFamily: fonts.primary, fontSize: sizes.sm }}
-        highlightDateContainerStyle={{ backgroundColor: colors.primary, borderRadius: 10,  borderWidth: 1, padding: 5 }}
+        highlightDateNumberStyle={{ color: colors.primary, fontFamily: fonts.primary }}
+        highlightDateNameStyle={{ color: colors.primary, fontFamily: fonts.primary, fontSize: sizes.sm }}
+        highlightDateContainerStyle={{ backgroundColor: 'white', borderRadius: 10 }}
         disabledDateNameStyle={{ color: 'grey' }}
         disabledDateNumberStyle={{ color: 'grey' }}
-        iconContainer={{ flex: 0.05}}
+        iconContainer={{ flex: 0.1}}
         markedDatesStyle={{ backgroundColor: colors.orange }}
         markedDates={props.markedDates}
         selectedDate={moment()}
@@ -34,7 +34,7 @@ const CalendarStripAgenda = (props) => {
         
 
       />
-    </View>
+    </>
   )
 }
 

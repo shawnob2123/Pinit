@@ -7,8 +7,9 @@ import { colors } from '../../theme/theme';
 import { MMKV } from 'react-native-mmkv';
 import { storage } from '../../store/mmkv';
 import { useNavigation } from '@react-navigation/native';
+import SwipeableItem from 'react-native-swipeable-item';
 
-const Cycle = () => {
+const Compound = () => {
   const [anabolic, setAnabolic] = useState(null);
 
   const navigation = useNavigation();
@@ -37,7 +38,7 @@ const Cycle = () => {
           </Text>
         </View>
       );
-    } else if (anabolic.type === 'Injectable') {
+    } else {
       return (
         <View style={[styles.type, { backgroundColor: '#b4dcff' }]}>
           <Text style={[styles.title, { color: colors.primary }]}>
@@ -48,22 +49,31 @@ const Cycle = () => {
     }
   };
 
+
   return (
     <>
       {anabolic && (
+        
         <TouchableOpacity
-          // onPress={() => Alert.alert('Are you sure you want to mark this as done?')}
-          style={styles.item}>
+          onPress={() => navigation.navigate('View Compound')}
+          style={styles.item}
+          >
+        
           <View style={styles.itemContent}>
             <View style={styles.itemHeader}>
               <Text style={styles.title}>{anabolic.anabolicUsed}</Text>
               {renderType()}
             </View>
+            <View style={styles.itemFooter}>
+              <Text style={styles.title}>{anabolic.quantity}</Text>
+            </View>
           </View>
-        </TouchableOpacity>
+      
+          </TouchableOpacity>
+          
       )}
     </>
   );
 };
 
-export default Cycle;
+export default Compound;

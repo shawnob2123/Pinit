@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   contentContainer: {
-    paddingTop: 80,
+    paddingTop: 20,
   },
   title: {
     fontSize: sizes.xl,
@@ -43,7 +43,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   upcomingContainer: {
-    flex: 1,
     marginTop: 20,
     paddingHorizontal: 20,
     height: 600,
@@ -52,11 +51,10 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 20,
 
   },
-  linearGradient: {
-    flex: 1,
-    borderRadius: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    height: 600,
+  upcomingHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
   },
 })
