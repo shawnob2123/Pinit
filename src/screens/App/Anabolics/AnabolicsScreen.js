@@ -22,7 +22,7 @@ const ProductScreen = () => {
 
   const fetchProducts = useCallback(async () => {
     const {data, error} = await supabase
-      .from('steroids')
+      .from('compounds')
       .select('*')
       .order('name', {ascending: true});
     if (error) {
@@ -74,16 +74,16 @@ const ProductScreen = () => {
         onChangeText={text => searchFilterFunction(text)}
         onClear={() => searchFilterFunction('')}
       />
-
+      
       <FlashList
         data={filteredDataSource}
         renderItem={renderItems}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 20}}
+        contentContainerStyle={{paddingBottom: 20, height: '100%', width: '100%'}}
         estimatedItemSize={100}
       />
-
+       
       <View style={styles.disclaimerContainer}>
         <Text style={styles.disclaimer}>*Disclaimer*</Text>
         <Text style={styles.disclaimerText}>

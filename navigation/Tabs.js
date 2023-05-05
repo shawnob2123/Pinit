@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { colors, fonts, sizes, weights } from '../src/theme/theme';
 
 // APP STACK
-import HomeScreen from '../src/screens/App/Cycle/HomeScreen';
+import HomeScreen from '../src/screens/App/Home/HomeScreen';
 import AnabolicsScreen from '../src/screens/App/Anabolics/AnabolicsScreen';
 import SettingScreen from '../src/screens/Settings/SettingScreen';
 // SETTING STACK
@@ -21,7 +21,7 @@ import ViewAnabolicsScreen from '../src/screens/App/Anabolics/ViewAnabolicsScree
 import EditProfileScreen from '../src/screens/Settings/EditProfile/EditProfileScreen';
 import ResetPasswordScreen from '../src/screens/Settings/EditProfile/ResetPasswordScreen';
 // CYCLE STACK
-import ViewCompoundScreen from '../src/screens/App/Cycle/ViewCompoundScreen';
+import AddCompoundScreen from '../src/screens/App/Home/AddCompoundScreen';
 
 
 
@@ -49,7 +49,7 @@ export default Tabs = ({children}) => {
 
           if (route.name === 'Forum') {
             iconName = focused ? 'chatbox' : 'chatbox-outline';
-          } else if (route.name === 'Home') {
+          } else if (route.name === 'HomeNav') {
             iconName = focused ? 'layers' : 'layers-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
@@ -60,11 +60,11 @@ export default Tabs = ({children}) => {
         },
       })}>
       <Tab.Screen
-        name="Home"
+        name="HomeNav"
         options={{
           tabBarLabel: <Text style={styles.text}>Cycles</Text>,
         }}
-        component={Cycle}
+        component={Home}
       />
       {/* <Tab.Screen
         name="Forum"
@@ -89,20 +89,25 @@ export default Tabs = ({children}) => {
   );
 };
 
-const CycleStack = createNativeStackNavigator();
-export const Cycle = () => { 
+const HomeStack = createNativeStackNavigator();
+export const Home = () => { 
   return (
-    <CycleStack.Navigator
+    <HomeStack.Navigator
       screenOptions={{
         headerShown: true,
+        headerTitle: '',
+        headerStyle: {
+          backgroundColor: colors.background,
+          
+        }
       }}
     >
-      <CycleStack.Screen
+      <HomeStack.Screen
         headerShown={false}
         name="Home"
         component={HomeScreen} />
-      <CycleStack.Screen name="View Compound" component={ViewCompoundScreen} />
-    </CycleStack.Navigator>
+      <HomeStack.Screen name="Add Compound" component={AddCompoundScreen} />
+    </HomeStack.Navigator>
   );
 }
 

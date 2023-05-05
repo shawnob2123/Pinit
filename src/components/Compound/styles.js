@@ -7,17 +7,10 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     margin: 10,
-    
-    shadowColor: colors.secondary,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
     elevation: 5,
-
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
   },
   itemContent: {
     padding: 10,
@@ -27,7 +20,10 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-
+  },
+  itemFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     fontFamily: fonts.primary,

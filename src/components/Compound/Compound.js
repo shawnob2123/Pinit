@@ -4,20 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { styles } from './styles';
 import { showMessage } from 'react-native-flash-message';
 import { colors } from '../../theme/theme';
-import { MMKV } from 'react-native-mmkv';
-import { storage } from '../../store/mmkv';
+
 import { useNavigation } from '@react-navigation/native';
-import SwipeableItem from 'react-native-swipeable-item';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Compound = () => {
-  const [anabolic, setAnabolic] = useState(null);
+  const [compound, setCompound] = useState(null);
 
   const navigation = useNavigation();
   useEffect(() => {
     try {
-      const jsonAnabolic = storage.getString('anabolic');
-      const anabolicObject = JSON.parse(jsonAnabolic);
-      setAnabolic(anabolicObject);
+      const jsonCompound = storage.getString('compound');
+      const compoundObject = JSON.parse(jsonCompound);
+      setCompound(compoundObject);
     } catch (error) {
       showMessage({
         message: 'Error',
@@ -29,12 +28,26 @@ const Compound = () => {
     }
   }, []);
 
+  const renderRightActions = () => { 
+    return (
+      <TouchableOpacity style={styles.delete} onPress={() => Alert.alert('Delete', 'Are you sure you want to delete this compound?', [
+        {text: 'No', onPress: () => console.log('no')},
+        {text: 'Yes', onPress: () => {
+          storage.delete('compound');
+          navigation.navigate('Home');
+        }}
+      ])}>
+        <Text style={{color: colors.white}}>Delete</Text>
+      </TouchableOpacity>
+    )
+  }
+
   const renderType = () => {
-    if (anabolic.type === 'Oral') {
+    if (compound.type === 'Oral') {
       return (
         <View style={[styles.type, { backgroundColor: '#FFE3C6' }]}>
           <Text style={[styles.title, { color: colors.orange }]}>
-            {anabolic.type}
+            {compound.type}
           </Text>
         </View>
       );
@@ -42,7 +55,7 @@ const Compound = () => {
       return (
         <View style={[styles.type, { backgroundColor: '#b4dcff' }]}>
           <Text style={[styles.title, { color: colors.primary }]}>
-            {anabolic.type}
+            {compound.type}
           </Text>
         </View>
       );
@@ -52,24 +65,26 @@ const Compound = () => {
 
   return (
     <>
-      {anabolic && (
+      {compound && (
         
-        <TouchableOpacity
-          onPress={() => navigation.navigate('View Compound')}
-          style={styles.item}
-          >
         
+        
+        <Swipeable
+          renderRightActions={renderRightActions}
+          onSwipeableRightOpen={() => console.log('swiped')}
+        >
           <View style={styles.itemContent}>
             <View style={styles.itemHeader}>
-              <Text style={styles.title}>{anabolic.anabolicUsed}</Text>
+              <Text style={styles.title}>{compound.compoundUsed}</Text>
               {renderType()}
             </View>
             <View style={styles.itemFooter}>
-              <Text style={styles.title}>{anabolic.quantity}</Text>
+              <Text style={[styles.title, { fontWeight: '300' }]}>Dosage: {compound.dose} {''}</Text>
+              <Text style={[styles.title, { fontWeight: '300' }]}>({compound.time})</Text>
             </View>
           </View>
-      
-          </TouchableOpacity>
+          </Swipeable>
+          
           
       )}
     </>

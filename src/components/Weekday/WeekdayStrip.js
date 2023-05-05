@@ -69,7 +69,7 @@ const WeekdayStrip = ({selectedDays}) => {
               {
                 backgroundColor: selectedDays.includes(item)
                   ? colors.primary
-                  : colors.white,
+                  : colors.background,
                 borderColor: selectedDays.includes(item)
                   ? colors.primary
                   : colors.primary,

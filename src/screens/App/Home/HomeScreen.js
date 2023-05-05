@@ -3,18 +3,18 @@ import React, { useRef, useState } from 'react';
 import { styles } from './styles';
 import BadgedIcon from '../../../components/Icons/BadgedIcon';
 import Icons from '../../../components/Icons/Icons';
-import Modal from '../../../components/Modal/Modal';
+
 import Loader from '../../../components/Loader/Loader';
-import Cycle from '../../../components/Cycle/Compound';
+import Compound from '../../../components/Compound/Compound';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
 import CalendarStripAgenda from '../../../components/CalendarStrip/CalendarStrip';
 import { FlashList } from '@shopify/flash-list';
-import { storage } from '../../../store/mmkv';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const refRBSheet = useRef();
 
   const getCurrentDate = () => {
@@ -25,6 +25,7 @@ const HomeScreen = () => {
       day: 'numeric',
     });
   };
+
 
   return (
     <KeyboardAwareScrollView
@@ -47,12 +48,12 @@ const HomeScreen = () => {
             <View style={styles.iconsContainer}>
               <Icons
                 name='plus'
-                onPress={() => refRBSheet.current.open()}
+                onPress={() => navigation.navigate('Add Compound')}
                 color={colors.primary}
               />
               <BadgedIcon count={0} color={colors.red} />
             </View>
-            <Modal refRBSheet={refRBSheet} />
+       
           </View>
           <Text style={[styles.text, { color: '#fff', paddingLeft: 30 }]}>
             {getCurrentDate()}
@@ -64,9 +65,9 @@ const HomeScreen = () => {
 
           <View style={styles.upcomingContainer}>
             <View style={styles.upcomingHeader}>
-              <Text style={[styles.title, { color: 'black' }]}>Upcoming</Text>
+              <Text style={styles.title}>Upcoming</Text>
               <Pressable>
-                <Text style={[styles.title, { fontSize: 14 }]}>View all</Text>
+                <Text style={[styles.title, { fontSize: 14, color: 'white' }]}>View all</Text>
               </Pressable>
             </View>
             <Text
@@ -76,17 +77,19 @@ const HomeScreen = () => {
                   paddingHorizontal: 10,
                   paddingTop: 10,
                   fontSize: 14,
-                  color: 'black',
+                  color: 'lightgray',
                 },
               ]}
             >
-              View your compounds listed for the day. Tap the compound to mark
-              as complete.
+              View your compounds listed for the day. Swipe the compound to mark
+              as taken, skipped, or missed.
             </Text>
 
-            <View>
-              <Cycle />
-            </View>
+            <>
+                <FlashList
+                  data={data}
+              />
+            </>
           </View>
         </Animatable.View>
       )}

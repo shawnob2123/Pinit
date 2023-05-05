@@ -15,13 +15,13 @@ export const styles = StyleSheet.create({
     fontWeight: weights.bold,
     alignSelf: 'flex-start',
     paddingLeft: 10,
-    color: colors.primary
+    color: colors.white
     
   },
   text: {
-    fontSize: sizes.md,
+    fontSize: sizes.sm,
     fontFamily: fonts.primary,
-    paddingBottom: 20,
+    paddingBottom: 10,
     color: colors.white,
     lineHeight: 25,
   },
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
     height: 600,
-    backgroundColor: '#f8f8ff',
+    backgroundColor: '#171717',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
 
@@ -56,5 +56,28 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 15,
+  },
+  input:  {
+    backgroundColor: '#141414',
+    borderRadius: 10,
+    padding: 15,
+    fontSize: sizes.md,
+    fontFamily: fonts.primary,
+    color: colors.white,
+    borderBottomWidth: 0,
+
+  },
+  label: {
+    fontSize: sizes.sm,
+    fontFamily: fonts.primary,
+    
+    color: colors.white,
+    paddingBottom: 15
+  },
+  dosageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '50%'
   },
 })

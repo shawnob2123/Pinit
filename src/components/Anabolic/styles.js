@@ -47,5 +47,6 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
+    lineHeight: 25,
   }
 })
