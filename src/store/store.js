@@ -1,21 +1,18 @@
-import {create} from 'zustand';
-import { MMKV } from 'react-native-mmkv'
+import { create } from 'zustand';
 
-export const useStore = create((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
-  disable: () => set((state) => ({ count: state.count == 0 })),
-}));
 
+// SELECTED DAYS STORE
 export const useDaySelector = create((set) => ({
   selectedDays: [],
-  addSelectedDay: (day) => set((state) => ({ selectedDays: [...state.selectedDays, day] })),
-  removeSelectedDay: (day) => set((state) => ({ selectedDays: state.selectedDays.filter((item) => item !== day) })),
+  addSelectedDay: (day) =>
+    set((state) => ({ selectedDays: [...state.selectedDays, day] })),
+  removeSelectedDay: (day) =>
+    set((state) => ({
+      selectedDays: state.selectedDays.filter((item) => item !== day),
+    })),
 }));
 
-
-
+// MODAL STORE
 export const useModalStore = create((set) => ({
   formData: {},
   setFormData: (data) => set((state) => ({ formData: data })),
@@ -26,3 +23,22 @@ export const useCompoundTypeStore = create((set) => ({
   items: ['Capsule', 'Pill', 'Injection', 'Cream'],
   selectItem: (item) => set((state) => ({ selected: item })),
 }));
+
+//DATE STORE
+export const useDateStore = create((set) => ({
+  startDate: new Date(),
+  endDate: new Date(),
+  showDatePicker: false,
+  selectedDate: '',
+  setStartDate: (date) => set(() => ({ startDate: date })),
+  setEndDate: (date) => set(() => ({ endDate: date })),
+  setShowDatePicker: (show) => set(() => ({ showDatePicker: show })),
+  setSelectedDate: (date) => set(() => ({ selectedDate: date })),
+}));
+
+// RADIO BUTTON GROUP
+export const useRadioButtonStore = create((set) => ({
+  selectedTimeOfDay: null,
+  setSelectedTimeOfDay: (time) => set(() => ({ selectedTimeOfDay: time })),
+}))
+

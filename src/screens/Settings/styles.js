@@ -43,7 +43,6 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontSize: sizes.md,
     fontFamily: fonts.primary,
-    fontWeight: weights.regular,
     alignSelf: 'flex-start',
     paddingLeft: 10,
     lineHeight: 25

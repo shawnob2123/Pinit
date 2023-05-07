@@ -1,5 +1,5 @@
 import {View, Text, ScrollView} from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {styles} from './styles';
 import {FlashList} from '@shopify/flash-list';
 import {supabase} from '../../../../server/server';
@@ -10,15 +10,12 @@ import Loader from '../../../components/Loader/Loader';
 
 const ProductScreen = () => {
   const [fetchError, setFetchError] = useState(null);
-  // const [anabolics, setAnabolics] = useState(null);
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+  
 
   const fetchProducts = useCallback(async () => {
     const {data, error} = await supabase
@@ -28,12 +25,18 @@ const ProductScreen = () => {
     if (error) {
       setFetchError(error);
     } else {
-      // setAnabolics(data);
       setFilteredDataSource(data);
       setMasterDataSource(data);
       setLoading(false);
+  
     }
   }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const memoizedData = useMemo(() => filteredDataSource, [filteredDataSource]);
 
   const renderItems = ({item}) => {
     return <Anabolic key={item.id} anabolics={item} />;
@@ -76,11 +79,11 @@ const ProductScreen = () => {
       />
       
       <FlashList
-        data={filteredDataSource}
+        data={memoizedData}
         renderItem={renderItems}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 20, height: '100%', width: '100%'}}
+        contentContainerStyle={{ paddingBottom: 20}}
         estimatedItemSize={100}
       />
        
