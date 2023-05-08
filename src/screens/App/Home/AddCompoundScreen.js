@@ -14,7 +14,7 @@ import { showMessage } from 'react-native-flash-message';
 import RadioGroup from '../../../components/RadioGroup/RadioGroup';
 
 
-const AddCompoundScreen = () => {
+const AddCompoundScreen = ({navigation}) => {
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
@@ -80,7 +80,8 @@ const AddCompoundScreen = () => {
         description: 'Your cycle has been added',
         type: 'success',
       });
-      console.log(data)
+      // navigate back one screen
+      navigation.goBack();
     }
   }
 
@@ -101,6 +102,7 @@ const AddCompoundScreen = () => {
             inputContainerStyle={{ borderBottomWidth: 0 }}
             label='Compound Used'
             labelStyle={styles.label}
+            autoCorrect={false}
             placeholder='Ex. Testosterone Cypionate'
             onChangeText={(text) =>
               setFormData({ ...formData, compoundUsed: text })
@@ -122,6 +124,8 @@ const AddCompoundScreen = () => {
               style={[styles.input, { width: '20%' }]}
               inputContainerStyle={{ borderBottomWidth: 0 }}
               label='Dosage Unit'
+              autoCorrect={false}
+              autoCapitalize='none'
               labelStyle={styles.label}
               placeholder='mg, g, mcg, oz'
               onChangeText={(text) =>
@@ -184,6 +188,7 @@ const AddCompoundScreen = () => {
             style={styles.input}
             inputContainerStyle={{ borderBottomWidth: 0 }}
             label='Notes'
+            autoCorrect={false}
             labelStyle={styles.label}
             placeholder='Comments'
             onChangeText={(text) => setNotes(text)}
