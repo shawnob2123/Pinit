@@ -5,9 +5,11 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+
   },
   contentContainer: {
-    paddingTop: 20,
+    paddingTop: 60,
+
   },
   title: {
     fontSize: sizes.xl,

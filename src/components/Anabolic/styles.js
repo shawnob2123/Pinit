@@ -48,5 +48,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.primary,
     fontWeight: weights.regular,
     lineHeight: 25,
-  }
+  },
+  image: {
+    width: 20,
+    height: 20,
+  },
 })

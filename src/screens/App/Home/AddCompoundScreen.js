@@ -80,8 +80,7 @@ const AddCompoundScreen = ({navigation}) => {
         description: 'Your cycle has been added',
         type: 'success',
       });
-      // navigate back one screen
-      navigation.goBack();
+      navigation.navigate('Home')
     }
   }
 

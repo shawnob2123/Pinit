@@ -5,7 +5,7 @@ import BadgedIcon from '../../../components/Icons/BadgedIcon';
 import Icons from '../../../components/Icons/Icons';
 
 import Loader from '../../../components/Loader/Loader';
-import Compound from '../../../components/Compound/Compound';
+import CycleCard from '../../../components/Cycle/CycleCard';
 import * as Animatable from 'react-native-animatable';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { colors } from '../../../theme/theme';
@@ -14,8 +14,7 @@ import { FlashList } from '@shopify/flash-list';
 
 const HomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const refRBSheet = useRef();
+  const [refreshing, setRefreshing] = useState(false);
 
   const getCurrentDate = () => {
     const date = new Date();
@@ -25,6 +24,8 @@ const HomeScreen = ({navigation}) => {
       day: 'numeric',
     });
   };
+
+
 
 
   return (
@@ -38,21 +39,14 @@ const HomeScreen = ({navigation}) => {
       ) : (
         <Animatable.View
           style={styles.contentContainer}
-          animation='fadeInUpBig'
+          animation='fadeInLeftBig'
           duration={600}
           useNativeDriver={true}
           delay={500}
         >
           <View style={styles.todayContainer}>
             <Text style={styles.title}>Today</Text>
-            <View style={styles.iconsContainer}>
-              <Icons
-                name='plus'
-                onPress={() => navigation.navigate('Add Compound')}
-                color={colors.primary}
-              />
-              <BadgedIcon count={0} color={colors.red} />
-            </View>
+            
        
           </View>
           <Text style={[styles.text, { color: '#fff', paddingLeft: 30 }]}>
@@ -86,8 +80,7 @@ const HomeScreen = ({navigation}) => {
             </Text>
 
             <>
-                <FlashList
-                  data={data}
+              <CycleCard
               />
             </>
           </View>

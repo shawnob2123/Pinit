@@ -1,6 +1,7 @@
 export const colors = {
   background: '#191919',
   tab: '#1e1e1e',
+  shade: '#292929',
   primary: '#00a6fb',
   secondary: '#0582ca',
   white: '#ffffff',
@@ -17,6 +18,7 @@ export const fonts = {
 }
 
 export const sizes = {
+  xsm: 12,
   sm: 14,
   md: 16,
   lg: 18,

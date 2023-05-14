@@ -6,7 +6,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../../theme/theme';
-
+import FastImage from 'react-native-fast-image'
 
 const Anabolic = ({ anabolics }) => {
   const navigation = useNavigation();
@@ -16,10 +16,11 @@ const Anabolic = ({ anabolics }) => {
       onPress={() => navigation.navigate('View Anabolics', { anabolics })}
     >
       <View style={styles.contentContainer}>
-        <Fontisto
-          name={anabolics.type === 'injectable' ? 'injection-syringe' : 'pills'}
-          size={20}
-          color={anabolics.type === 'injectable' ? colors.primary : colors.orange} />
+        <FastImage
+          style={styles.image}
+          // if type is injection, reder synringe image else render capsule image
+          source={anabolics.type === 'injectable' ? require('../../../assets/images/syringe.png') : require('../../../assets/images/capsule.png')}
+        />
         <Text style={styles.name}>{anabolics.name}</Text>
         <FontAwesome name='angle-right' size={20} color="#00a6fb" style={styles.icon} />
         </View>
