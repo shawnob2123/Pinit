@@ -21,7 +21,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const AddCompoundScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    compoundUsed: '',
+    dosage: '',
+    dosageUnit: '',
+  });
   const [notes, setNotes] = useState('');
   const selectedDays = useDaySelector((state) => state.selectedDays);
   const {
@@ -35,8 +39,13 @@ const AddCompoundScreen = ({ navigation }) => {
     setSelectedDate,
   } = useDateStore();
   const type = useCompoundTypeStore((state) => state.selected);
-  const selectedTimeOfDay = useTimeStore((state) => state.time);
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  const { isPickerVisible, selectedTime, togglePicker, setTime } = useTimeStore();
+
+  const handleTimeConfirm = (time) => {
+    setTime(time);
+    togglePicker();
+  }
+
 
   // DATE SELECTION
   const handleStartDateFocus = () => {
@@ -75,7 +84,7 @@ const AddCompoundScreen = ({ navigation }) => {
           selected_days: selectedDays,
           notes: notes,
           type: type.value,
-          time_of_day: selectedTimeOfDay,
+          time_of_day: selectedTime.toLocaleTimeString(),
           created_at: new Date(),
         },
       ])
@@ -93,6 +102,17 @@ const AddCompoundScreen = ({ navigation }) => {
         description: 'Your cycle has been added',
         type: 'success',
       });
+      // clear fields
+      useCompoundTypeStore.setState({ selected: null });
+      useDaySelector.setState({ selectedDays: [] });
+      setFormData({
+        compoundUsed: '',
+        dosage: '',
+        dosageUnit: '',
+      });
+      setNotes('');
+      setStartDate(new Date());
+      setEndDate(new Date());
       navigation.navigate('Home');
     }
   };
@@ -193,28 +213,27 @@ const AddCompoundScreen = ({ navigation }) => {
 
           {/* TIME PICKER */}
           <Input
-            style={[styles.input, { width: '50%' }]}
+            style={[styles.input, { width: '30%' }]}
             inputContainerStyle={{ borderBottomWidth: 0 }}
             label='Time of Day'
             autoCorrect={false}
             labelStyle={styles.label}
             placeholder='Ex. 8:00 AM'
-            onChangeText={(text) =>
-              useTimeStore((state) => state.setTime(text))
-            }
-            onFocus={() => setShowTimePicker(true)}
+            
+            value={selectedTime.toLocaleTimeString().replace(/:\d+ /, ' ')}
+            onFocus={togglePicker}
           />
-          {showTimePicker && (
+          { 
+          isPickerVisible
+          && (
             <DateTimePicker
-              value={new Date()}
+              value={selectedTime}
               mode='time'
-              display='default'
-              onChange={(event, date) => {
-                setShowTimePicker(false);
-                useTimeStore((state) =>
-                  state.setTime(date.toLocaleTimeString())
-                );
-              }}
+              is24Hour={false}
+              textColor='white'
+              display='spinner'
+                onChange={(event, time) => handleTimeConfirm(time)}
+                onFocus={() => togglePicker()}
             />
           )}
           <Input

@@ -50,8 +50,11 @@ export const useMarkedDateStore = create((set) => ({
 
 // TIME STORE
 export const useTimeStore = create((set) => ({
-  time: new Date(),
-  setTime: (time) => set(() => ({ time: time })),
+  isPickerVisible: false,
+  selectedTime: new Date(),
+  togglePicker: () => set((state) => ({ isPickerVisible: !state.isPickerVisible })),
+  setTime: (newTime) => set({ selectedTime: newTime }),
+
 
 }));
 

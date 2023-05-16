@@ -7,11 +7,13 @@ import { Freshchat, FreshchatConfig, FreshchatUser, FreshchatMessage } from 'rea
 import { FRESHCHAT_APP_ID, FRESHCHAT_APP_KEY } from '@env';
 import { showMessage } from 'react-native-flash-message';
 import Loader from '../../components/Loader/Loader';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SupportScreen = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
   
 
   let freshchatConfig = new FreshchatConfig(FRESHCHAT_APP_ID, FRESHCHAT_APP_KEY);
@@ -57,7 +59,9 @@ const SupportScreen = () => {
 
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{paddingBottom: 100}}
+      style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Support</Text>
         <Text style={styles.text}>
@@ -82,6 +86,15 @@ const SupportScreen = () => {
             style={styles.input}
             inputContainerStyle={{borderBottomWidth: 0}}
           />
+          <Input
+            placeholder="Message"
+            autoCorrect={false}
+            style={[styles.input, {height: 100}]}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            value={message}
+            onChangeText={setMessage}
+            multiline={true}
+          />
         </View>
         {loading ? (
           <Loader
@@ -90,12 +103,12 @@ const SupportScreen = () => {
             }}
           />
         ) : (
-            <Button title="Start Chat" onPress={() => handleSend()} 
-            name="chatbubble-ellipses-outline" size={20} color="#fff"
+            <Button title="Submit" onPress={() => handleSend()} 
+            name="rocket" size={20} color="#fff"
           />
         )}
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
