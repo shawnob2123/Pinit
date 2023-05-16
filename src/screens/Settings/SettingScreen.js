@@ -23,7 +23,9 @@ const SettingScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAwareScrollView 
+      contentContainerStyle={{ paddingBottom: 100 }}
+      style={styles.container}>
       {loading ? (
         <Loader />
       ) : (

@@ -61,9 +61,10 @@ export default Tabs = ({ children }) => {
       barStyle={{
         backgroundColor: colors.tab,
         position: 'absolute',
-        borderRadius: 15,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         paddingHorizontal: 15,
-        height: 80,
+        
         
       }}
       activeColor={colors.white}

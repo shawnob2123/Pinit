@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   text: {
     color: colors.white,
     fontSize: sizes.md,
-    
+    fontWeight: weights.bold,
     fontFamily: fonts.primary,
     paddingLeft: 10,
   },

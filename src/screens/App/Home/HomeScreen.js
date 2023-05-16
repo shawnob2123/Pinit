@@ -71,7 +71,7 @@ const HomeScreen = ({navigation}) => {
                   paddingHorizontal: 10,
                   paddingTop: 10,
                   fontSize: 14,
-                  color: 'lightgray',
+                  color: '#fff',
                 },
               ]}
             >

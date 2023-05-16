@@ -2,28 +2,41 @@ import { View, Text } from 'react-native';
 import React, { useMemo, useState } from 'react';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
-import { useModalStore, useDaySelector, useCompoundTypeStore, useDateStore, useRadioButtonStore  } from '../../../store/store';
+import {
+  useModalStore,
+  useDaySelector,
+  useCompoundTypeStore,
+  useDateStore,
+  useTimeStore,
+} from '../../../store/store';
 import WeekdayStrip from '../../../components/Weekday/WeekdayStrip';
 import DatePicker from 'react-native-date-picker';
 import CompoundType from '../../../components/CompoundType/CompoundType';
 import Button from '../../../components/Button/Button';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Loader from '../../../components/Loader/Loader';
 import { supabase } from '../../../../server/server';
 import { showMessage } from 'react-native-flash-message';
-import RadioGroup from '../../../components/RadioGroup/RadioGroup';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-
-const AddCompoundScreen = ({navigation}) => {
-
+const AddCompoundScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [notes, setNotes] = useState('');
   const selectedDays = useDaySelector((state) => state.selectedDays);
-  const { startDate, setStartDate, endDate, setEndDate, showDatePicker, setShowDatePicker, selectedDate, setSelectedDate } = useDateStore();
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    showDatePicker,
+    setShowDatePicker,
+    selectedDate,
+    setSelectedDate,
+  } = useDateStore();
   const type = useCompoundTypeStore((state) => state.selected);
-  const selectedTimeOfDay = useRadioButtonStore((state) => state.selectedTimeOfDay);
-  
+  const selectedTimeOfDay = useTimeStore((state) => state.time);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   // DATE SELECTION
   const handleStartDateFocus = () => {
@@ -36,10 +49,10 @@ const AddCompoundScreen = ({navigation}) => {
     setSelectedDate('end');
   };
 
-  const handleStartDateChange = (date) => { 
+  const handleStartDateChange = (date) => {
     setStartDate(date);
     setShowDatePicker(false);
-  }
+  };
 
   const handleEndDateChange = (date) => {
     setEndDate(date);
@@ -48,7 +61,7 @@ const AddCompoundScreen = ({navigation}) => {
 
   // SUBMIT FORM
 
-  const handleSubmit = async () => { 
+  const handleSubmit = async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from('cycles')
@@ -80,11 +93,9 @@ const AddCompoundScreen = ({navigation}) => {
         description: 'Your cycle has been added',
         type: 'success',
       });
-      navigation.navigate('Home')
+      navigation.navigate('Home');
     }
-  }
-
- 
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -95,7 +106,7 @@ const AddCompoundScreen = ({navigation}) => {
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Add New Cycle</Text>
         <View style={{ paddingTop: 20 }}>
-            <CompoundType type={type}/>
+          <CompoundType type={type} />
           <Input
             style={styles.input}
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -152,19 +163,22 @@ const AddCompoundScreen = ({navigation}) => {
               labelStyle={styles.label}
               value={startDate.toLocaleDateString()}
               onFocus={() => handleStartDateFocus()}
-              
             />
 
             {showDatePicker && (
               <DatePicker
                 date={selectedDate === 'start' ? startDate : endDate}
                 mode='date'
-                textColor='black'
+                textColor='white'
                 modal
-                value={selectedDate ? startDate : endDate}           
+                value={selectedDate ? startDate : endDate}
                 open={showDatePicker}
                 onCancel={() => setShowDatePicker(false)}
-                onConfirm={selectedDate === 'start' ? handleStartDateChange : handleEndDateChange}
+                onConfirm={
+                  selectedDate === 'start'
+                    ? handleStartDateChange
+                    : handleEndDateChange
+                }
               />
             )}
             <Input
@@ -174,15 +188,35 @@ const AddCompoundScreen = ({navigation}) => {
               label='End Date'
               labelStyle={styles.label}
               onFocus={() => handleEndDateFocus()}
-              
             />
           </View>
-          <Text style={[styles.label, { paddingLeft: 10, fontWeight: 'bold' }]}>
-            Time of Day
-          </Text>
-          <RadioGroup
-            selectedTimeOfDay={selectedTimeOfDay}
+
+          {/* TIME PICKER */}
+          <Input
+            style={[styles.input, { width: '50%' }]}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            label='Time of Day'
+            autoCorrect={false}
+            labelStyle={styles.label}
+            placeholder='Ex. 8:00 AM'
+            onChangeText={(text) =>
+              useTimeStore((state) => state.setTime(text))
+            }
+            onFocus={() => setShowTimePicker(true)}
           />
+          {showTimePicker && (
+            <DateTimePicker
+              value={new Date()}
+              mode='time'
+              display='default'
+              onChange={(event, date) => {
+                setShowTimePicker(false);
+                useTimeStore((state) =>
+                  state.setTime(date.toLocaleTimeString())
+                );
+              }}
+            />
+          )}
           <Input
             style={styles.input}
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -192,14 +226,12 @@ const AddCompoundScreen = ({navigation}) => {
             placeholder='Comments'
             onChangeText={(text) => setNotes(text)}
           />
-            {loading ? (
-            <Loader
-              loading={loading}
-            />
+          {loading ? (
+            <Loader loading={loading} />
           ) : (
-              <View style={{paddingHorizontal: 20}}>
-                <Button title='Add' onPress={() => handleSubmit()} />
-                </View>
+            <View style={{ paddingHorizontal: 20 }}>
+              <Button title='Add' onPress={() => handleSubmit()} />
+            </View>
           )}
         </View>
       </View>

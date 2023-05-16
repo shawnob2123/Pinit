@@ -40,5 +40,18 @@ export const useDateStore = create((set) => ({
 export const useRadioButtonStore = create((set) => ({
   selectedTimeOfDay: null,
   setSelectedTimeOfDay: (time) => set(() => ({ selectedTimeOfDay: time })),
-}))
+}));
+
+// MARKED DATE STORE
+export const useMarkedDateStore = create((set) => ({
+  markedDates: [],
+  setMarkedDates: (dates) => set(() => ({ markedDates: dates })),
+}));
+
+// TIME STORE
+export const useTimeStore = create((set) => ({
+  time: new Date(),
+  setTime: (time) => set(() => ({ time: time })),
+
+}));
 
