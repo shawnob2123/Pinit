@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, useColorScheme } from 'react-native';
 import React, { useMemo, useState } from 'react';
 import { styles } from './styles';
 import { Input } from '@rneui/themed';
@@ -93,7 +93,7 @@ const AddCompoundScreen = ({ navigation }) => {
     if (error) {
       showMessage({
         message: 'Error',
-        description: error.message,
+        description: 'There was an error adding your cycle',
         type: 'danger',
       });
     } else {
@@ -116,6 +116,8 @@ const AddCompoundScreen = ({ navigation }) => {
       navigation.navigate('Home');
     }
   };
+
+  const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <KeyboardAwareScrollView
@@ -230,7 +232,7 @@ const AddCompoundScreen = ({ navigation }) => {
               value={selectedTime}
               mode='time'
               is24Hour={false}
-              textColor='white'
+                textColor={isDarkMode ? 'white' : 'black'}
               display='spinner'
                 onChange={(event, time) => handleTimeConfirm(time)}
                 onFocus={() => togglePicker()}
@@ -246,7 +248,9 @@ const AddCompoundScreen = ({ navigation }) => {
             onChangeText={(text) => setNotes(text)}
           />
           {loading ? (
-            <Loader loading={loading} />
+            <Loader
+              onAnimationFinish={() => setLoading(false)}
+            />
           ) : (
             <View style={{ paddingHorizontal: 20 }}>
               <Button title='Add' onPress={() => handleSubmit()} />

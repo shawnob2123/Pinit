@@ -27,7 +27,7 @@ const ViewAnabolicsScreen = ({route}) => {
         <View style={styles.anabolicsContent}>
           <Text style={styles.title}>{anabolics.name}</Text>
           <Text style={styles.text}>({anabolics.pharma_name})</Text>
-          <View style={{ paddingTop: 50 }}>
+          <View style={{ paddingTop: 20 }}>
             <ToggleAnabolic icon='file-1' title='Description' description={anabolics.description ? anabolics.description : 'No description available'} />
             <ToggleAnabolic title="Side Effects" description={mappedSideEffects} />
             <ToggleAnabolic title="PCT Required" description={anabolics.pct === true ? 'Yes' : 'No'} />

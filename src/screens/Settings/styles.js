@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 10,
-    paddingHorizontal: 15,
+    
   },
   title: {
     fontSize: sizes.lg,

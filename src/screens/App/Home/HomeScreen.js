@@ -1,8 +1,6 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, ScrollView, Dimensions } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { styles } from './styles';
-import BadgedIcon from '../../../components/Icons/BadgedIcon';
-import Icons from '../../../components/Icons/Icons';
 
 import Loader from '../../../components/Loader/Loader';
 import CycleCard from '../../../components/Cycle/CycleCard';
@@ -29,17 +27,18 @@ const HomeScreen = ({navigation}) => {
 
 
   return (
-    <KeyboardAwareScrollView
+    <ScrollView
       showsVerticalScrollIndicator={false}
       style={styles.container}
-      edges={['top', 'left', 'right']}
+      contentContainerStyle={{
+        flexGrow: 1, paddingBottom: 50 }}
     >
       {loading ? (
         <Loader />
       ) : (
         <Animatable.View
           style={styles.contentContainer}
-          animation='fadeInLeftBig'
+          animation='fadeInLeft'
           duration={600}
           useNativeDriver={true}
           delay={500}
@@ -78,15 +77,27 @@ const HomeScreen = ({navigation}) => {
               View your compounds listed for the day. Swipe the compound to mark
               as taken, skipped, or missed.
             </Text>
-
+              <View style={{paddingTop: 20}}>
+                <Text style={styles.title}>Morning ☀️</Text>
+              </View>
             <>
               <CycleCard
-              />
-            </>
+                />
+                <CycleCard/>
+              </>
+              <View style={{ paddingTop: 20 }}>
+                <Text style={styles.title}>Afternoon 🌤</Text>
+              </View>
+              <CycleCard/>
+              <View style={{ paddingTop: 20 }}>
+                <Text style={styles.title}>Evening 🌙</Text>
+              </View>
+              <CycleCard />
+              <CycleCard />
           </View>
         </Animatable.View>
       )}
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 

@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   anabolicsContent: {
-    paddingTop: 50
+    paddingTop: 10
   },
   
 })

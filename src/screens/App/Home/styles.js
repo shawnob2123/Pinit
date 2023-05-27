@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 60,
+    flex: 1,
 
   },
   title: {
@@ -47,7 +48,7 @@ export const styles = StyleSheet.create({
   upcomingContainer: {
     marginTop: 20,
     paddingHorizontal: 20,
-    height: 600,
+    flex: 1,
     backgroundColor: '#171717',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

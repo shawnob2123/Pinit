@@ -60,6 +60,7 @@ const SupportScreen = () => {
 
   return (
     <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={{paddingBottom: 100}}
       style={styles.container}>
       <View style={styles.contentContainer}>
